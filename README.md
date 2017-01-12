@@ -25,5 +25,5 @@ This README documents whatever steps are necessary to get the application up and
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
+* Repo admin Brandon Hunt
 * Other community or team contact
