@@ -1,9 +1,10 @@
 # README #
-Description and How-to's here...
 
-Team Name
+Bitsmiths
 
-Contributors
+Kyle Walsh
+Brandon Hunt
+Tyler Connors
 
 
 ### Contact ###
