@@ -1,9 +1,8 @@
 # BITSMITHS! #
 
 
-Kyle Walsh
-Brandon Hunt
-Tyler Connors
+This is the repository for the Bitsmiths team in Dr. Morse's CS 461 class.
+Class work and projects will be stored here. 
 
 
 ## Contact ##
