@@ -1,0 +1,16 @@
+Need 1- I want to have an account for the web app so that the app will store my information and provide security.
+Feature 1- A user can log-in via twitch authentication
+Feature 2- A user will have an account for the web app.
+
+Need 2- I want to be able to set my own streaming schedule so that my followers will know when I am streaming.
+Feature 3- A user can input their streaming times on the web app
+Feature 4- Times must be able to be stored and retrieved.
+Feature 5- Times will be linked to the users account.
+
+
+Need 3- I want to be able to see when streamers that I follow are going to be streaming so that I can plan my viewership.
+Feature 6- A user can see what times a followed streamer is streaming
+Feature 7- A user can filter what streamers they see displayed on their guide
+
+Need 4- I want to be able to change the time scope of my guide so that I can focus on the streams for one day or see the streams for multiple days.
+Feature 8- A user can click a button to change the time scope of the guide
