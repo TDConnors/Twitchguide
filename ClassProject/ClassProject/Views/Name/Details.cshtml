@@ -1,0 +1,31 @@
+﻿@model ClassProject.Models.Name
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Name</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name1)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Name1)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.NameID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
