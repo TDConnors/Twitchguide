@@ -12,9 +12,12 @@ namespace ClassProject.Controllers
         private NewsContext db = new NewsContext();
 
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(bool AscOrder = false)
         {
-            return View(db.Stories.ToList());
+            if (AscOrder == false)
+                return View(db.Stories.ToList());
+            else
+                return View(db.Stories.ToList().OrderByDescending(p => p.Timestamp));
         }
     }
 }
