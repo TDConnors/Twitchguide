@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color:white;
+    background-color:#dfe3ee!important;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -15,4 +15,23 @@ input,
 select,
 textarea {
     max-width: 600px;
+}
+
+.StoryItem {
+    background-color:#f7f7f7;
+    padding-left:10px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.StoryItem h3 {
+    color:#3b5998;
+}
+
+.StoryItem h4 {
+    color:#8b9dc3;
+}
+
+.StoryItem h5 {
+    color:#888888;
 }
