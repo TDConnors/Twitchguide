@@ -10,107 +10,107 @@ using ClassProject.Models;
 
 namespace ClassProject.Controllers
 {
-    public class NameController : Controller
+    public class StoriesController : Controller
     {
-        private classNameContext db = new classNameContext();
+        private NewsContext db = new NewsContext();
 
-        // GET: Name
+        // GET: Stories
         public ActionResult Index()
         {
-            return View(db.Names.ToList());
+            return View(db.Stories.ToList());
         }
 
-        // GET: Name/Details/5
+        // GET: Stories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Name name = db.Names.Find(id);
-            if (name == null)
+            Story story = db.Stories.Find(id);
+            if (story == null)
             {
                 return HttpNotFound();
             }
-            return View(name);
+            return View(story);
         }
 
-        // GET: Name/Create
+        // GET: Stories/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Name/Create
+        // POST: Stories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NameID,Name1")] Name name)
+        public ActionResult Create([Bind(Include = "StoryID,Name,Headline,Description,Timestamp,Likes")] Story story)
         {
             if (ModelState.IsValid)
             {
-                db.Names.Add(name);
+                db.Stories.Add(story);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(name);
+            return View(story);
         }
 
-        // GET: Name/Edit/5
+        // GET: Stories/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Name name = db.Names.Find(id);
-            if (name == null)
+            Story story = db.Stories.Find(id);
+            if (story == null)
             {
                 return HttpNotFound();
             }
-            return View(name);
+            return View(story);
         }
 
-        // POST: Name/Edit/5
+        // POST: Stories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NameID,Name1")] Name name)
+        public ActionResult Edit([Bind(Include = "StoryID,Name,Headline,Description,Timestamp,Likes")] Story story)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(name).State = EntityState.Modified;
+                db.Entry(story).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(name);
+            return View(story);
         }
 
-        // GET: Name/Delete/5
+        // GET: Stories/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Name name = db.Names.Find(id);
-            if (name == null)
+            Story story = db.Stories.Find(id);
+            if (story == null)
             {
                 return HttpNotFound();
             }
-            return View(name);
+            return View(story);
         }
 
-        // POST: Name/Delete/5
+        // POST: Stories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Name name = db.Names.Find(id);
-            db.Names.Remove(name);
+            Story story = db.Stories.Find(id);
+            db.Stories.Remove(story);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

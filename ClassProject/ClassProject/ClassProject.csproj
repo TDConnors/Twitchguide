@@ -119,31 +119,33 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NameController.cs" />
+    <Compile Include="Controllers\StoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\classNameContext.cs" />
-    <Compile Include="Models\Name.cs" />
+    <Compile Include="Models\NewsContext.cs" />
+    <Compile Include="Models\Story.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Name\Create.cshtml" />
-    <Content Include="Views\Name\Delete.cshtml" />
-    <Content Include="Views\Name\Details.cshtml" />
-    <Content Include="Views\Name\Edit.cshtml" />
-    <Content Include="Views\Name\Index.cshtml" />
+    <Content Include="Views\Stories\Create.cshtml" />
+    <Content Include="Views\Stories\Delete.cshtml" />
+    <Content Include="Views\Stories\Details.cshtml" />
+    <Content Include="Views\Stories\Edit.cshtml" />
+    <Content Include="Views\Stories\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -5,14 +5,15 @@ namespace ClassProject.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class classNameContext : DbContext
+    public partial class NewsContext : DbContext
     {
-        public classNameContext()
-            : base("name=classNameContext")
+        public NewsContext()
+            : base("name=NewsContext")
         {
         }
 
-        public virtual DbSet<Name> Names { get; set; }
+        public virtual DbSet<Story> Stories { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
