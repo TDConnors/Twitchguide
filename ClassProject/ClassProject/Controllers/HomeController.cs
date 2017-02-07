@@ -14,8 +14,8 @@ namespace ClassProject.Controllers
         // GET: Home
         public ActionResult Index(bool AscOrder = false)
         {
-            if (AscOrder == false)
-                return View(db.Stories.ToList());
+            if (AscOrder)
+                return View(db.Stories.ToList().OrderBy(p => p.Timestamp));
             else
                 return View(db.Stories.ToList().OrderByDescending(p => p.Timestamp));
         }
