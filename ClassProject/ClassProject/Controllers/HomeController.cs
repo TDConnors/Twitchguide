@@ -17,7 +17,7 @@ namespace ClassProject.Controllers
             if (AscOrder)
                 return View(db.Stories.ToList().OrderBy(p => p.Timestamp));
             else
-                return View(db.Stories.ToList().OrderByDescending(p => p.Timestamp));
+                return View(db.Stories.ToList().OrderByDescending(p => p.Timestamp).Take(10));
         }
     }
 }
