@@ -1,0 +1,12 @@
+Requirements
+
+Twitch API
+MVC
+Database
+Azure
+JQuery
+Razor
+JSON
+EntityFramework
+HTML
+CSS
