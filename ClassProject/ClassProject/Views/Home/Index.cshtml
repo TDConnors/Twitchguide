@@ -1,6 +1,24 @@
-﻿
+﻿@model IEnumerable<ClassProject.Models.Story>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home";
 }
 
-<h2>Welcome</h2>
+<h2>Stories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "../Stories/Create")
+</p>
+
+
+@foreach (var item in Model)
+{
+<div class="StoryItem">
+    <h3>@Html.DisplayFor(modelItem => item.Headline)</h3>
+    <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+    <h5>@Html.DisplayFor(modelItem => item.Name) at @Html.DisplayFor(modelItem => item.Timestamp)</h5>
+    <h5>Likes: @Html.DisplayFor(modelItem => item.Likes)</h5>
+</div>
+<br />
+}
+

@@ -1,0 +1,9 @@
+Non-functional Requirements
+
+Modifiability - Ability to make changes
+
+Usability -  How difficult it will be to learn and operate the app
+
+Security - Protection of user and data
+
+Operating Constraints - Run time constraints (Users, API)
