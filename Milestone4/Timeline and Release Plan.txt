@@ -1,0 +1,17 @@
+Timeline and Release Plan
+
+2/6-2/19 Sprint 1
+
+2/20-3/6 Sprint 2
+
+3/7-4/9 Sprint 3
+
+4/10-4/23 Sprint 4
+
+4/24-5/7 Sprint 5, Release Alpha
+
+5/8-5/21 Sprint 6, Release Beta
+
+5/22-28 Sprint 7
+
+5/29-6/12 Sprint 8, Last Bug fixes
