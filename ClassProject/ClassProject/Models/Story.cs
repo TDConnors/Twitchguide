@@ -29,6 +29,7 @@ namespace ClassProject.Models
 
         public Story()
         {
+            this.Timestamp = System.DateTime.Now;
             Likes = 0;
         }
     }
