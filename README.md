@@ -26,6 +26,20 @@ Please build our project using Visual Studio 2015
 * No auto-generated build files
 * Don't commit code that doesn't compile.
 
+### Construction Process
+We will be using Scrum to build our project. Reference [here](http://scrumreferencecard.com/ScrumReferenceCard.pdf).
+
+### Tools Used
+* Microsoft Visual Studio 2015
+* Twitch API
+* Git
+* Azure
+* Visual Studio Team Services
+* Nuget items:
+    * Entity
+    * Ninject
+    * Moq
+    
 
 * * *
 
