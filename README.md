@@ -20,14 +20,14 @@ Please build our project using Visual Studio 2015
 To Contribute, please fork our repository and then a pull request to merge changes. Please comment all methods/tricky lines of code.
 
 ### Guidelines
-*Use the table name in the Primary key name, i.e ProductID
-*All public methods include XML comments
-*Curly Braces on their own lines
-*All work is to be done on a new branch per pull request, no working off of the Develop branch.
-*Indenting
-*Good commit messages
-*No auto-generated build files
-*Don't commit code that doesn't compile.
+* Use the table name in the Primary key name, i.e ProductID
+* All public methods include XML comments
+* Curly Braces on their own lines
+* All work is to be done on a new branch per pull request, no working off of the Develop branch.
+* Indenting
+* Good commit messages
+* No auto-generated build files
+* Don't commit code that doesn't compile.
 
 
 * * *
