@@ -16,9 +16,6 @@ Deployed site:
 ### Building
 Please build our project using Visual Studio 2015
 
-### Contributing
-To Contribute, please fork our repository and then a pull request to merge changes. Please comment all methods/tricky lines of code.
-
 ### Guidelines
 * Use the table name in the Primary key name, i.e ProductID
 * All public methods include XML comments
