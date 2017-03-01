@@ -10,7 +10,7 @@ namespace TwitchGuide.DAL
 {
     public class TwitchContext : DbContext
     {
-        public TwitchContext() : base("name=DefaultConnection") { }
+        public TwitchContext() : base("name=AzureConnection") { }
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Timeblock> Timeblocks { get; set; }
