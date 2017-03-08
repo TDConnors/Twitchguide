@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using TwitchGuide.Models;
+using Owin.Security.Providers.Twitch;
 
 namespace TwitchGuide
 {
@@ -63,6 +64,15 @@ namespace TwitchGuide
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            /*
+             * Twitch sign-ins use /signin-Twitch as the URL for authentication
+             *
+             */
+
+            ////Simple Twitch Sign-in
+            app.UseTwitchAuthentication("kx6k6d64t0ok27s5sfyo1w5n1q3dn6", "APPSETTING_TwitchSecret");
+
         }
     }
 }
