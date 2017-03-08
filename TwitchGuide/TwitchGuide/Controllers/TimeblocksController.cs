@@ -16,9 +16,47 @@ namespace TwitchGuide.Controllers
         private TwitchContext db = new TwitchContext();
 
         // GET: Timeblocks
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Timeblocks.ToList());
+            if (id == null)
+            {
+                //replace with current user
+                var sched1 = db.Users.FirstOrDefault().Schedules.ToList();
+                var tb1 = sched1.Join(db.Timeblocks,
+                         p => p.TimeblockID,
+                         e => e.Index,
+                         (p, e) => new Timeblock
+                         {
+                             Index = e.Index,
+                             StartHour = e.StartHour,
+                             StartMinute = e.StartMinute,
+                             EndHour = e.EndHour,
+                             EndMinute = e.EndMinute,
+                             Day = e.Day
+                         }).ToList();
+                return View(tb1);
+            }
+
+
+            var uid = db.Users.Find(id);
+
+            if (uid == null)
+            {
+                return HttpNotFound();
+            }
+
+            var tb = uid.Schedules.ToList().Join(db.Timeblocks,
+                          p => p.TimeblockID,
+                          e => e.Index,
+                          (p, e) => new Timeblock {
+                              Index = e.Index,
+                              StartHour = e.StartHour,
+                              StartMinute = e.StartMinute,
+                              EndHour = e.EndHour,
+                              EndMinute = e.EndMinute,
+                              Day = e.Day }).ToList();
+
+            return View(tb);
         }
 
 
@@ -33,11 +71,14 @@ namespace TwitchGuide.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StartHour,StartMinute,EndHour,EndMinute,Day")] Timeblock timeblock)
+        public ActionResult Create([Bind(Include = "StartHour,StartMinute,EndHour,EndMinute,Day,Index")] Timeblock timeblock)
         {
             if (ModelState.IsValid)
             {
                 db.Timeblocks.Add(timeblock);
+                db.SaveChanges();
+                //Replace with current user
+                db.Schedules.Add(new Schedule { UserID = 1, TimeblockID = timeblock.Index });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -47,27 +88,22 @@ namespace TwitchGuide.Controllers
 
 
         // GET: Timeblocks/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(byte? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Timeblock timeblock = db.Timeblocks.Find(id);
+            Timeblock timeblock = db.Timeblocks.Where(p => p.Index == id).FirstOrDefault();
             if (timeblock == null)
             {
                 return HttpNotFound();
             }
-            return View(timeblock);
-        }
 
-        // POST: Timeblocks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Timeblock timeblock = db.Timeblocks.Find(id);
-            db.Timeblocks.Remove(timeblock);
+            db.Users.FirstOrDefault().Schedules.Where(p => p.TimeblockID == id).FirstOrDefault();
+
+            Schedule mapping = db.Users.FirstOrDefault().Schedules.Where(p => p.TimeblockID == id).FirstOrDefault();
+            db.Schedules.Remove(mapping);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
