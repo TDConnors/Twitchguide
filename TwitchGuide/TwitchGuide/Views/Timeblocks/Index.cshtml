@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add Timeblock", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,16 +15,7 @@
             @Html.DisplayNameFor(model => model.StartHour)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartMinute)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.EndHour)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndMinute)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Day)
         </th>
         <th></th>
     </tr>
@@ -35,19 +26,10 @@
             @Html.DisplayFor(modelItem => item.StartHour)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StartMinute)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.EndHour)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndMinute)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Day)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.TimeblockID })
+            @Html.ActionLink("Remove Timeblock", "Delete", new { id = item.Index })
         </td>
     </tr>
 }
