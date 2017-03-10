@@ -10,6 +10,7 @@ namespace TwitchGuide.DAL
     {
         public TwitchContext()
             : base("name=AzureConnection")
+            //: base("name=DefaultConnection")
         {
             //Disable Code-First Migrations
             Database.SetInitializer<TwitchContext>(null);
