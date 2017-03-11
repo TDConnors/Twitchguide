@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using TwitchGuide.Models;
 using Owin.Security.Providers.Twitch;
+using System.Configuration;
 
 namespace TwitchGuide
 {
@@ -71,7 +72,9 @@ namespace TwitchGuide
              */
 
             ////Simple Twitch Sign-in
-            app.UseTwitchAuthentication("kx6k6d64t0ok27s5sfyo1w5n1q3dn6", "tmw713qqpsq55pb0xaxdaobawkcb5k");
+            app.UseTwitchAuthentication("kx6k6d64t0ok27s5sfyo1w5n1q3dn6", ConfigurationManager.AppSettings["TwitchSecret"]);
+
+            
 
         }
     }
