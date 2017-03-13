@@ -11,7 +11,7 @@ The Twitch Channel Guide (TCG) is a web app that helps Twitch users better navig
 ### Project Status
 Base construction beginning soon!
 
-Deployed site:
+Deployed site: [TwitchChannelGuide.Azurewebsites.net](TwitchChannelGuide.Azurewebsites.net)
 
 ### Building
 Please build our project using Visual Studio 2015
@@ -45,5 +45,5 @@ We will be using Scrum to build our project. Reference [here](http://scrumrefere
 
 ## Team Members
 * Repo Admin/Developer Brandon Hunt Bhunt12@wou.edu
-* Developer Kyle Walsh Kwalsh@wou.edu
+* Developer Kyle Walsh Kwalsh15@wou.edu
 * Developer Tyler Connors Tconnors14@wou.edu
