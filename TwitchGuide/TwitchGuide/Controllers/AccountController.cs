@@ -55,8 +55,12 @@ namespace TwitchGuide.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl=null)
         {
+            if(Request.Cookies["Identity.External"] != null)
+            {
+                return RedirectToAction(nameof(ExternalLoginCallback),returnUrl);
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
