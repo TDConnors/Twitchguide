@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StartHour)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.EndHour)
         </th>
         <th></th>
@@ -23,10 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.StartHour)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndHour)
+            @Html.DisplayFor(modelItem => item.StartHour):00 - @Html.DisplayFor(modelItem => item.EndHour):00
         </td>
         <td>
             @Html.ActionLink("Remove Timeblock", "Delete", new { id = item.Index })
