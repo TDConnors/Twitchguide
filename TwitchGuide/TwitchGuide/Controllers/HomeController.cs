@@ -6,10 +6,15 @@ using System.Web.Mvc;
 
 namespace TwitchGuide.Controllers
 {
-    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Test()
         {
             return View();
         }
