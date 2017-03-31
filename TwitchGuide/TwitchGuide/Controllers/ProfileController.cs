@@ -11,13 +11,15 @@ using TwitchGuide.Models;
 
 namespace TwitchGuide.Controllers
 {
-    public class TimeblocksController : Controller
+    public class ProfileController : Controller
     {
         private TwitchContext db = new TwitchContext();
 
-        // GET: Timeblocks
+        // Index
         public ActionResult Index(int? id)
         {
+            var profileModel = new ProfileModel { };
+
             if (id == null)
             {
                 //replace with current user
@@ -34,7 +36,13 @@ namespace TwitchGuide.Controllers
                              EndMinute = e.EndMinute,
                              Day = e.Day
                          }).ToList();
-                return View(tb1);
+
+                profileModel = new ProfileModel
+                {
+                    TimeblockObj = tb1,
+                    UserObj = db.Users.FirstOrDefault()
+                            };
+                return View(profileModel);
             }
 
 
@@ -56,19 +64,27 @@ namespace TwitchGuide.Controllers
                               EndMinute = e.EndMinute,
                               Day = e.Day }).ToList();
 
-            return View(tb);
+
+            profileModel = new ProfileModel
+                            {
+                                TimeblockObj = tb,
+                                UserObj = db.Users.FirstOrDefault()
+            };
+            return View(profileModel);
         }
 
 
-        // GET: Timeblocks/Create
+        //
+        //CRUD Functionality Below
+        //
+
+        // GET: Profile/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Timeblocks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Profile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "StartHour,StartMinute,EndHour,EndMinute,Day,Index")] Timeblock timeblock)
@@ -87,7 +103,7 @@ namespace TwitchGuide.Controllers
         }
 
 
-        // GET: Timeblocks/Delete/5
+        // GET: Timeblocks/Delete/#
         public ActionResult Delete(byte? id)
         {
             if (id == null)
