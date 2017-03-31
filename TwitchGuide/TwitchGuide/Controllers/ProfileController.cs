@@ -19,11 +19,11 @@ namespace TwitchGuide.Controllers
         private TwitchContext db = new TwitchContext();
 
         // Index
-        public ActionResult Index(string name = null)
+        public ActionResult Search(string name = null)
         {
             var profileModel = new ProfileModel { };
             string username = "";
-            var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ViewBag.edit = "False";
 
             if (name == null) //load current user's profile if logged in
             {
@@ -31,6 +31,7 @@ namespace TwitchGuide.Controllers
                 if (User.Identity.IsAuthenticated)
                 {
                     username = User.Identity.GetUserName();
+                    ViewBag.edit = "True";
                 }
                 else
                 {
@@ -93,24 +94,31 @@ namespace TwitchGuide.Controllers
         //
 
         // GET: Profile/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            return base.View();
         }
 
         // POST: Profile/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "StartHour,StartMinute,EndHour,EndMinute,Day,Index")] Timeblock timeblock)
         {
+
             if (ModelState.IsValid)
             {
                 db.Timeblocks.Add(timeblock);
                 db.SaveChanges();
-                //Replace with current user
-                db.Schedules.Add(new Schedule { UserID = 1, TimeblockID = timeblock.Index });
+
+                var username = User.Identity.GetUserName();
+                var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
+
+                db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = timeblock.Index });
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Search");
             }
 
             return View(timeblock);
@@ -118,6 +126,7 @@ namespace TwitchGuide.Controllers
 
 
         // GET: Timeblocks/Delete/#
+        [Authorize]
         public ActionResult Delete(byte? id)
         {
             if (id == null)
@@ -130,12 +139,13 @@ namespace TwitchGuide.Controllers
                 return HttpNotFound();
             }
 
-            db.Users.FirstOrDefault().Schedules.Where(p => p.TimeblockID == id).FirstOrDefault();
+            var username = User.Identity.GetUserName();
+            var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
 
-            Schedule mapping = db.Users.FirstOrDefault().Schedules.Where(p => p.TimeblockID == id).FirstOrDefault();
+            Schedule mapping = currentUser.Schedules.Where(p => p.TimeblockID == id).FirstOrDefault();
             db.Schedules.Remove(mapping);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Search");
         }
 
         protected override void Dispose(bool disposing)

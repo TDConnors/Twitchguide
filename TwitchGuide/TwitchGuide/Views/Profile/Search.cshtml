@@ -11,6 +11,13 @@
 <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->    
 }
 
+@if (ViewBag.edit == "True")
+{
+    <p>
+        @Html.ActionLink("Add Timeblock", "Create")
+    </p>
+}
+
 <div class="cd-schedule loading">
     <div class="timeline">
         <ul>
@@ -53,7 +60,14 @@
                         {
                             
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index }) 
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }   
@@ -67,7 +81,14 @@
                         if (item.Day == 2)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }
@@ -82,7 +103,14 @@
                         if (item.Day == 3)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }
@@ -97,7 +125,14 @@
                         if (item.Day == 4)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }
@@ -112,7 +147,14 @@
                         if (item.Day == 5)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }
@@ -127,7 +169,14 @@
                         if (item.Day == 6)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }
@@ -142,7 +191,14 @@
                         if (item.Day == 7)
                         {
                             <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
-                                <a href="#0"></a>
+                                @if (ViewBag.edit == "True")
+                                {
+                                    @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                }
+                                else
+                                {
+                                    <a href="#0" style="background: #4d94ff"></a>
+                                }
                             </li>
                         }
                     }

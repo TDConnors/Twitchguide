@@ -15,8 +15,8 @@ namespace TwitchGuide
 
             routes.MapRoute(
                 name: "UserSearch",
-                url: "Profile/{name}",
-                defaults: new { controller = "Profile", action = "Index", name = UrlParameter.Optional }
+                url: "Profile/{action}/{name}",
+                defaults: new { controller = "Profile", action = "Search", name = UrlParameter.Optional }
             );
 
             routes.MapRoute(
