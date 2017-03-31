@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
 
@@ -16,14 +19,25 @@ namespace TwitchGuide.Controllers
         private TwitchContext db = new TwitchContext();
 
         // Index
-        public ActionResult Index(int? id)
+        public ActionResult Index(string name = null)
         {
             var profileModel = new ProfileModel { };
+            string username = "";
+            var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-            if (id == null)
+            if (name == null) //load current user's profile if logged in
             {
-                //replace with current user
-                var sched1 = db.Users.FirstOrDefault().Schedules.ToList();
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    username = User.Identity.GetUserName();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var sched1 = db.Users.Where(p => p.Username == username).FirstOrDefault().Schedules.ToList();
                 var tb1 = sched1.Join(db.Timeblocks,
                          p => p.TimeblockID,
                          e => e.Index,
@@ -40,20 +54,20 @@ namespace TwitchGuide.Controllers
                 profileModel = new ProfileModel
                 {
                     TimeblockObj = tb1,
-                    UserObj = db.Users.FirstOrDefault()
-                            };
+                    UserObj = db.Users.Where(p => p.Username == username).FirstOrDefault()
+                };
                 return View(profileModel);
             }
 
 
-            var uid = db.Users.Find(id);
+            var findUser = db.Users.Where(p => p.Username == name).FirstOrDefault();
 
-            if (uid == null)
+            if (findUser == null)
             {
                 return HttpNotFound();
             }
 
-            var tb = uid.Schedules.ToList().Join(db.Timeblocks,
+            var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
                           p => p.TimeblockID,
                           e => e.Index,
                           (p, e) => new Timeblock {
