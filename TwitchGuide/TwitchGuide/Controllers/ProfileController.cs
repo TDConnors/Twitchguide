@@ -109,18 +109,62 @@ namespace TwitchGuide.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Timeblocks.Add(timeblock);
-                db.SaveChanges();
+                //make sure the start time is before the end time
+                if (timeblock.StartHour > timeblock.EndHour)
+                {
+                    ViewBag.message = "The End Time cannot be before the Start Time.";
+                    return View(timeblock);
+                }
+                if (timeblock.StartHour == timeblock.EndHour)
+                {
+                    if (timeblock.StartMinute >= timeblock.EndMinute)
+                    {
+                        ViewBag.message = "The End Time cannot be before the Start Time.";
+                        return View(timeblock);
+                    }
+                    if ((timeblock.EndMinute - timeblock.StartMinute) < 15)
+                    {
+                        ViewBag.message = "The timeblock duration cannot be less than 15 minutes.";
+                        return View(timeblock);
+                    }
+                }
 
-                var username = User.Identity.GetUserName();
-                var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
+                //Check if timeblock already exists in DB
+                var check = db.Timeblocks.Where(p =>
+                    (p.Day == timeblock.Day) &&
+                    (p.StartHour == timeblock.StartHour) &&
+                    (p.StartMinute == timeblock.StartMinute) &&
+                    (p.EndHour == timeblock.EndHour) &&
+                    (p.EndMinute == timeblock.EndMinute)).FirstOrDefault();
 
-                db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = timeblock.Index });
-                db.SaveChanges();
+                if (check == null) //Timeblock doesn't exist yet
+                {
+                    db.Timeblocks.Add(timeblock);
+                    db.SaveChanges();
 
-                return RedirectToAction("Search");
+                    var username = User.Identity.GetUserName();
+                    var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
+
+                    db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = timeblock.Index });
+                    db.SaveChanges();
+                    return RedirectToAction("Search");
+                }
+                else
+                {
+                    var username = User.Identity.GetUserName();
+                    var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
+
+                    //check if the user already has that timeblock
+                    var check2 = db.Schedules.Where(p => (p.UserID == currentUser.UserID) && (p.TimeblockID == check.Index)).FirstOrDefault();
+
+                    if (check2 == null) //User does not have the timeblock
+                    {
+                        db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = check.Index });
+                        db.SaveChanges();
+                        return RedirectToAction("Search");
+                    }                    
+                }     
             }
-
             return View(timeblock);
         }
 
