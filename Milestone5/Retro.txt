@@ -1,0 +1,14 @@
+1.    What did you learn from the Sprint?
+Difficult to gauge effort points
+Working out dependencies so there wouldn’t be conflicts
+Writing User stories that prove architecture
+
+2.    What still puzzles you?
+Continuous Deployment
+Lessening dependencies
+
+3.    What can the team do better during the next Sprint? Make a specific Action Plan.
+Weekly progress meeting to go over User Stories
+Setting small deadlines/Setting priorities
+
+4.    Are there any items that need to be brought up with someone outside the team? (i.e. in this case the instructor)
