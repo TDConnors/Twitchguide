@@ -13,11 +13,5 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult Test()
-        {
-            return View();
-        }
-
     }
 }
