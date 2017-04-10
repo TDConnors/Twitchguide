@@ -11,8 +11,8 @@
     url = 'https://api.twitch.tv/kraken/user?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var myArr = JSON.parse(this.responseText);
-                document.getElementById('userstats').innerHTML += myArr.display_name;
+                var info = JSON.parse(this.responseText);
+                document.getElementById('userstats').innerHTML = info;
             }
         }
         xmlhttp.open('GET', url, true);
