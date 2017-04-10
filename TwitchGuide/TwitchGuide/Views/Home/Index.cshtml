@@ -1,11 +1,22 @@
 ﻿@{
     ViewBag.Title = "Home";
 }<p>
-    
+
 </p>
-<h3 id="userstats"></h3>
+<h3 id="userstats" onload="getName()">Null</h3>
 <script src="~/Scripts/jquery-3.1.1.js"></script>
-<script src="~/Scripts/username.js"></script>
+<script>
+    function getName() {
+        var xmlhttp = new XMLHttpRequest(),
+    url = 'https://api.twitch.tv/kraken/user?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                document.getElementById('userstats').innerHTML += myArr.display_name;
+            }
+        }
+    }
+</script>
 
 
 
