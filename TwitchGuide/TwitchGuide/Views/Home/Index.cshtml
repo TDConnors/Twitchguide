@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<a href="#" class="click">click here for avatar</a>
+<br />
+<div id="userstats"></div>
+
+@section Scripts {
+<script>
+    $('.click').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/streams/?game=Overwatch',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $("#userstats").html(result);
+            },
+            beforeSend: setHeader
+        });
+        return false;
+    });
+
+    function setHeader(xhr) {
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+    };
+</script>
+}
+
