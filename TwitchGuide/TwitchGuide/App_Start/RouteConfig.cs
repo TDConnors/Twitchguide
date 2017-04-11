@@ -15,8 +15,14 @@ namespace TwitchGuide
 
             routes.MapRoute(
                 name: "UserSearch",
-                url: "Profile/{action}/{name}",
+                url: "Users/{name}",
                 defaults: new { controller = "Profile", action = "Search", name = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "signin-Twitch",
+                url: "signin-Twitch",
+                defaults: new {controller = "[AccountController]", action = "ExternalLoginCallback", code = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -25,11 +31,7 @@ namespace TwitchGuide
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "signin-Twitch",
-                url: "signin-Twitch",
-                defaults: new {controller = "[AccountController]", action = "ExternalLoginCallback"}
-            );
+
         }
     }
 }
