@@ -17,8 +17,7 @@ namespace TwitchGuide.Controllers
 
         public ActionResult LoginSuccess()
         {
-            var query = this.Request.QueryString.GetValues("code");
-            string code = query[0];
+            string code = this.Request.QueryString["code"];
             ViewBag.code = code;
             return View();
         }
