@@ -1,24 +1,29 @@
 ﻿@{
     ViewBag.Title = "Home";
-}<p>
+}
 
-</p>
-<h3 id="userstats" onload="getName()">Null</h3>
-<script src="~/Scripts/jquery-3.1.1.js"></script>
+<a href="#" class="click">click here for avatar</a>
+<br />
+<div id="userstats"></div>
+
+@section Scripts {
 <script>
-    function getName() {
-        var xmlhttp = new XMLHttpRequest(),
-    url = 'https://api.twitch.tv/kraken/user?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var info = JSON.parse(this.responseText);
-                document.getElementById('userstats').innerHTML = info;
-            }
-        }
-        xmlhttp.open('GET', url, true);
-        xmlhttp.send();
-    }
+    $('.click').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/streams/?game=Overwatch',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $("#userstats").html(result);
+            },
+            beforeSend: setHeader
+        });
+        return false;
+    });
+
+    function setHeader(xhr) {
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+    };
 </script>
-
-
+}
 
