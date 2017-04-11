@@ -15,9 +15,9 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
-        public ActionResult LoginSuccess()
+        [HttpGet]
+        public ActionResult LoginSuccess(string code)
         {
-            string code = this.Request.QueryString["code"];
             ViewBag.code = code;
             return View();
         }
