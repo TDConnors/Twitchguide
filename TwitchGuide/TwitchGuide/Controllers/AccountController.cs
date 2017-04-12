@@ -9,14 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TwitchGuide.Models;
-
 namespace TwitchGuide.Controllers
 {
+    
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        public string token;
 
         public AccountController()
         {
@@ -337,7 +338,9 @@ namespace TwitchGuide.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    ViewBag.code = code;
                     return RedirectToAction("LoginSuccess", "Home", new { code = code });
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
