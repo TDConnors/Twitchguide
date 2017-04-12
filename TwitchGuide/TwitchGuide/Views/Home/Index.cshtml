@@ -10,7 +10,7 @@
 <script>
     $('.click').click(function () {
         $.ajax({
-            url: 'https://api.twitch.tv/kraken/streams/?game=Overwatch',
+            url: 'https://api.twitch.tv/kraken/user?',
             type: 'GET',
             dataType: 'json',
             success: function (result) {
