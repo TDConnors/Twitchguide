@@ -16,15 +16,15 @@ namespace TwitchGuide.Controllers
         }
 
         [HttpGet]
-        public ActionResult LoginSuccess(string code = null)
+        public ActionResult LoginSuccess()
         {
-            if (code == null)
+
+            if (ViewBag.code == null)
             {
                 ViewBag.code = "no code because code = null";
                 return View();
             }
 
-            ViewBag.code = code;
             return View();
         }
 
