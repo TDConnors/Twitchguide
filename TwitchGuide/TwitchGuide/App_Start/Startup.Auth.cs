@@ -92,7 +92,6 @@ namespace TwitchGuide
 
                         context.Identity.AddClaim(new Claim("urn:twitch:access_token", context.AccessToken));
                         return Task.FromResult(0);
-
                     }
 
                 }
