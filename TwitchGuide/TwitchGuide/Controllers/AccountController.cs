@@ -335,15 +335,15 @@ namespace TwitchGuide.Controllers
                 return RedirectToAction("Login");
             }
             var user = await UserManager.FindAsync(loginInfo.Login);
-            if (user != null)
-            {
-                var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
-                a => a.Type == "Picture");
-                user.Claims.Add(new IdentityUserClaim() { ClaimType = claim.Type, ClaimValue = claim.Value });
-                await SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
-            }
-            // Sign in the user with this external login provider if the user already has a login
+            //if (user != null)
+            //{
+            //    var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
+            //    a => a.Type == "Picture");
+            //    user.Claims.Add(new IdentityUserClaim() { ClaimType = claim.Type, ClaimValue = claim.Value });
+            //    await SignInAsync(user, isPersistent: false);
+            //    return RedirectToLocal(returnUrl);
+            //}
+            //// Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
