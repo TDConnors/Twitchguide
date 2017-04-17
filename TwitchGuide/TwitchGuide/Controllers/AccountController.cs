@@ -368,7 +368,7 @@ namespace TwitchGuide.Controllers
         {
             var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
             var userId = this.AuthenticationManager.User.Identity.GetUserId();
-            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:wordpress", StringComparison.Ordinal)))
+            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitchpress", StringComparison.Ordinal)))
             {
                 await UserManager.AddClaimAsync(userId, claim);
             }
@@ -420,14 +420,14 @@ namespace TwitchGuide.Controllers
                             {
                                 // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim
                 var currentClaims = await UserManager.GetClaimsAsync(user.Id);
-                var wordpressToken = claimsIdentity.Claims.Where(a => a.Type.Contains("wordpress:access_token")).FirstOrDefault();
-                                if (wordpressToken != null)
+                var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+                                if (twitchToken != null)
                                     {
-                                        if (currentClaims.Count(a => a.Type.Contains("wordpress:access_token")) > 0)
+                                        if (currentClaims.Count(a => a.Type.Contains("twitchpress:access_token")) > 0)
                                             {
-                        await UserManager.RemoveClaimAsync(user.Id, wordpressToken);
+                        await UserManager.RemoveClaimAsync(user.Id, twitchToken);
                                             }
-                    await UserManager.AddClaimAsync(user.Id, wordpressToken);
+                    await UserManager.AddClaimAsync(user.Id, twitchToken);
                                     }
                             }
         }
