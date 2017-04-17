@@ -9,6 +9,8 @@ using TwitchGuide.Models;
 using Owin.Security.Providers.Twitch;
 using System.Configuration;
 using System.Security.Claims;
+using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 
 namespace TwitchGuide
 {
@@ -82,10 +84,15 @@ namespace TwitchGuide
                 ClientSecret = ConfigurationManager.AppSettings["TwitchSecret"],
                 Provider = new TwitchAuthenticationProvider()
                 {
-                    OnAuthenticated = async z =>
+                    //OnAuthenticated = async z =>
+                    OnAuthenticated = context =>
                     {
-                        //            Getting the twitch users picture
-                        z.Identity.AddClaim(new Claim("Picture", z.User.GetValue("logo").ToString()));
+                        //Getting the twitch users picture
+                        //z.Identity.AddClaim(new Claim("Picture", z.User.GetValue("logo").ToString()));
+
+                        context.Identity.AddClaim(new Claim("urn:wordpress:access_token", context.AccessToken));
+                        return Task.FromResult(0);
+
                     }
 
                 }
