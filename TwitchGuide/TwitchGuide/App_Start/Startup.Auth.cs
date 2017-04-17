@@ -90,7 +90,7 @@ namespace TwitchGuide
                         //Getting the twitch users picture
                         //z.Identity.AddClaim(new Claim("Picture", z.User.GetValue("logo").ToString()));
 
-                        context.Identity.AddClaim(new Claim("urn:wordpress:access_token", context.AccessToken));
+                        context.Identity.AddClaim(new Claim("urn:twitch:access_token", context.AccessToken));
                         return Task.FromResult(0);
 
                     }
