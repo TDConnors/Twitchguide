@@ -231,6 +231,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scheduler.js" />
+    <Content Include="Scripts\username.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -268,6 +269,7 @@
     <Content Include="Views\Profile\Search.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Home\LoginSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
