@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TwitchGuide.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace TwitchGuide.Controllers
 {
     
@@ -332,7 +334,15 @@ namespace TwitchGuide.Controllers
             {
                 return RedirectToAction("Login");
             }
-
+            var user = await UserManager.FindAsync(loginInfo.Login);
+                       if (user != null)
+                            {
+                                var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
+                                a => a.Type == "Picture");
+                                user.Claims.Add(new IdentityUserClaim() { ClaimType = claim.Type, ClaimValue = claim.Value });
+                                await SignInAsync(user, isPersistent: false);
+                                return RedirectToLocal(returnUrl);
+                            }
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
@@ -440,6 +450,13 @@ namespace TwitchGuide.Controllers
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
+        }
+
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
 
         private void AddErrors(IdentityResult result)
