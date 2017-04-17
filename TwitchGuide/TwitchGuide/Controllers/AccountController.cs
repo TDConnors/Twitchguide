@@ -368,7 +368,7 @@ namespace TwitchGuide.Controllers
         {
             var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
             var userId = this.AuthenticationManager.User.Identity.GetUserId();
-            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitchpress", StringComparison.Ordinal)))
+            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitch", StringComparison.Ordinal)))
             {
                 await UserManager.AddClaimAsync(userId, claim);
             }
@@ -423,7 +423,7 @@ namespace TwitchGuide.Controllers
                 var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
                                 if (twitchToken != null)
                                     {
-                                        if (currentClaims.Count(a => a.Type.Contains("twitchpress:access_token")) > 0)
+                                        if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
                                             {
                         await UserManager.RemoveClaimAsync(user.Id, twitchToken);
                                             }
