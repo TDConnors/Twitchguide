@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using Microsoft.AspNet.Identity;
 
 namespace TwitchGuide.Controllers
 {
@@ -11,7 +12,6 @@ namespace TwitchGuide.Controllers
     {
         public ActionResult Index()
         {
-
             return View();
         }
 
