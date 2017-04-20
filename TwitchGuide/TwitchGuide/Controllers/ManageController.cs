@@ -20,10 +20,10 @@ namespace TwitchGuide.Controllers
         {
         }
 
-        public string WhatIsTwitchToken()
+        public void WhatIsTwitchToken()
         {
             //this shouldnt really exist, but this is a way to view the actual users twitch token claim
-            return UserManager.GetClaims(this.User.Identity.GetUserId()).Where(a => a.Type.Contains("twitch:access_token")).Select(a => a.Value).FirstOrDefault() ?? string.Empty;
+           string token = UserManager.GetClaims(this.User.Identity.GetUserId()).Where(a => a.Type.Contains("twitch:access_token")).Select(a => a.Value).FirstOrDefault() ?? string.Empty;
         }
 
     public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -323,6 +323,7 @@ namespace TwitchGuide.Controllers
                 // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim
                 var currentClaims = await UserManager.GetClaimsAsync(user.Id);
                 var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+                @ViewBag.token = twitchToken.ToString();
                 if (twitchToken != null)
                 {
                     if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
