@@ -20,11 +20,11 @@ namespace TwitchGuide.Controllers
         {
         }
 
-        public void WhatIsTwitchToken()
-        {
-            //this shouldnt really exist, but this is a way to view the actual users twitch token claim
-           string token = UserManager.GetClaims(this.User.Identity.GetUserId()).Where(a => a.Type.Contains("twitch:access_token")).Select(a => a.Value).FirstOrDefault() ?? string.Empty;
-        }
+        //public void WhatIsTwitchToken()
+        //{
+           ////this shouldnt really exist, but this is a way to view the actual users twitch token claim
+           //string token = UserManager.GetClaims(this.User.Identity.GetUserId()).Where(a => a.Type.Contains("twitch:access_token")).Select(a => a.Value).FirstOrDefault() ?? string.Empty;
+        //}
 
     public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
