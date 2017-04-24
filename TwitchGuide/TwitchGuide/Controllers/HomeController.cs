@@ -15,10 +15,7 @@ namespace TwitchGuide.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-            if (token == null)
-            {
-                return View();
-            }
+            ViewBag.token = token;
             return View(token);
         }
 
