@@ -14,7 +14,7 @@ namespace TwitchGuide.Controllers
         public ActionResult Index()
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault().Value;
+            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
             ViewBag.token = token;
             return View(token);
         }
