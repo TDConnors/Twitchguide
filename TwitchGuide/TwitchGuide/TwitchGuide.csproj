@@ -186,7 +186,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="DAL\NewsContext.cs" />
+    <Compile Include="Models\News.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\Timeblock.cs" />
@@ -279,6 +282,11 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Home\LoginSuccess.cshtml" />
+    <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\News\Delete.cshtml" />
+    <Content Include="Views\News\Details.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
