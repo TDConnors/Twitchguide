@@ -41,8 +41,11 @@
     });
 
     function setHeader(xhr) {
+        var token = @ViewBag.token;
+        token = token.toString();
+        token = rnum.split("F0").pop()
         xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-        xhr.setRequestHeader('Authorization:',"@ViewBag.token.Remove(0,25)");
+        xhr.setRequestHeader('Authorization:', token);
     };
 </script>
 }
