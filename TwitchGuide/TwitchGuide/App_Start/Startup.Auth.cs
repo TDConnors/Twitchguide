@@ -8,6 +8,9 @@ using Owin;
 using TwitchGuide.Models;
 using Owin.Security.Providers.Twitch;
 using System.Configuration;
+using System.Security.Claims;
+using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 
 namespace TwitchGuide
 {
@@ -72,9 +75,28 @@ namespace TwitchGuide
              */
 
             ////Simple Twitch Sign-in
-            app.UseTwitchAuthentication("kx6k6d64t0ok27s5sfyo1w5n1q3dn6", ConfigurationManager.AppSettings["TwitchSecret"]);
+            //app.UseTwitchAuthentication("kx6k6d64t0ok27s5sfyo1w5n1q3dn6", ConfigurationManager.AppSettings["TwitchSecret"]);
 
-            
+            //More complex Twitch Sign-in
+            var opt = new TwitchAuthenticationOptions()
+            {
+                ClientId = "kx6k6d64t0ok27s5sfyo1w5n1q3dn6",
+                ClientSecret = ConfigurationManager.AppSettings["TwitchSecret"],
+                Provider = new TwitchAuthenticationProvider()
+                {
+                    //OnAuthenticated = async z =>
+                    OnAuthenticated = context =>
+                    {
+                        //Getting the twitch users picture
+                        //z.Identity.AddClaim(new Claim("Picture", z.User.GetValue("logo").ToString()));
+
+                        context.Identity.AddClaim(new Claim("urn:twitch:access_token", context.AccessToken));
+                        return Task.FromResult(0);
+                    }
+
+                }
+            };
+            app.UseTwitchAuthentication(opt);
 
         }
     }

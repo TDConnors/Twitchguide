@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace TwitchGuide.Controllers
 {
@@ -11,8 +13,10 @@ namespace TwitchGuide.Controllers
     {
         public ActionResult Index()
         {
-
-            return View();
+            var identity = (ClaimsIdentity)User.Identity;
+            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+            ViewBag.token = token;
+            return View(token);
         }
 
         [HttpGet]

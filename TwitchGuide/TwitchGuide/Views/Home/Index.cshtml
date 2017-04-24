@@ -5,7 +5,7 @@
 <a href="#" class="click">click here for avatar</a>
 <a href="#" class="click2">click here</a>
 <br />
-<div id="userstats">@ViewBag.code</div>
+<div id="userstats"></div>
 
 @section Scripts {
 <script>
@@ -41,7 +41,11 @@
     });
 
     function setHeader(xhr) {
+        var token = "@ViewBag.token";
+        token = token.toString();
+        token = token.split("urn:twitch:access_token").pop();
         xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+        xhr.setRequestHeader('Authorization:', token);
     };
 </script>
 }
