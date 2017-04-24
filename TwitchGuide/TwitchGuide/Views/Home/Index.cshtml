@@ -3,6 +3,7 @@
 }
 
 <a href="#" class="click">click here for avatar</a>
+<a href="#" class="click2">click here</a>
 <br />
 <div id="userstats"></div>
 
@@ -23,6 +24,25 @@
 
     function setHeader(xhr) {
         xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+    };
+</script>
+<script>
+    $('.click2').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/user?',
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                $("#userstats").html(result);
+            },
+            beforeSend: setHeader
+        });
+        return false;
+    });
+
+    function setHeader(xhr) {
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+        xhr.setRequestHeader('Authorization:', @ViewBag.token);
     };
 </script>
 }
