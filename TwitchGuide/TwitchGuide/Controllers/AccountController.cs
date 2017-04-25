@@ -354,6 +354,7 @@ namespace TwitchGuide.Controllers
             {
                 case SignInStatus.Success:
                     await StoreTwitchToken(await UserManager.FindAsync(loginInfo.Login));
+                    addTokenToDB();
                     return RedirectToAction("LoginSuccess", "Home", new { code = code });
                     
                 case SignInStatus.LockedOut:
@@ -407,6 +408,7 @@ namespace TwitchGuide.Controllers
                     if (result.Succeeded)
                     {
                         await StoreTwitchToken(user);
+                        addTokenToDB();
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
@@ -434,19 +436,21 @@ namespace TwitchGuide.Controllers
                     }
 
                     await UserManager.AddClaimAsync(user.Id, twitchToken);
-
-                    //store into our own Users table
-                    var identity = (ClaimsIdentity)User.Identity;
-                    var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-
-                    ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-                    var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
-
-                    ourUser.AuthToken = token.Value;
-                    db.Entry(ourUser).State = EntityState.Modified;
-                    db.SaveChanges();
                 }
             }
+        }
+        private void addTokenToDB()
+        {
+            //store into our own Users table
+            var identity = (ClaimsIdentity)User.Identity;
+            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+
+            ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+
+            ourUser.AuthToken = token.Value;
+            db.Entry(ourUser).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         //

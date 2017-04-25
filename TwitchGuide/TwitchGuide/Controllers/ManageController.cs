@@ -309,26 +309,6 @@ namespace TwitchGuide.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
-        //private async Task StoreTwitchToken(ApplicationUser user)
-        //{
-        //    var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-        //    if (claimsIdentity != null)
-        //    {
-        //        // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim
-        //        var currentClaims = await UserManager.GetClaimsAsync(user.Id);
-        //        var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-        //        @ViewBag.token = twitchToken.ToString();
-        //        if (twitchToken != null)
-        //        {
-        //            if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
-        //            {
-        //                await UserManager.RemoveClaimAsync(user.Id, twitchToken);
-        //            }
-        //            await UserManager.AddClaimAsync(user.Id, twitchToken);
-        //        }
-        //    }
-        //}
-
         //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
@@ -342,7 +322,6 @@ namespace TwitchGuide.Controllers
             if (result.Succeeded)
             {
                 var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                //await StoreTwitchToken(currentUser);
             }
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
