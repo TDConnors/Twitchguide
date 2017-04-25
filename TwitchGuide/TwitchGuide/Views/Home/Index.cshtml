@@ -2,15 +2,17 @@
     ViewBag.Title = "Home";
 }
 
+<br />
 <a href="#" class="click">Show the Top Game</a>
+ | 
 <a href="#" class="click3">Show my logo</a>
 
 @if (ViewBag.Token != null)
 {
-    
-    <a href="#" class="click2">click here</a>
-    <br />
+    <a href="#" class="click2">Show My Info</a>
 }
+
+<hr />
 <div id="userstats"></div>
 
 @section Scripts {
@@ -23,15 +25,10 @@
             success: function (result) {
                 $("#userstats").html("Top Game: " + result.top[0].game.name);
             },
-            beforeSend: setHeader
+            beforeSend: setNoAuthHeader
         });
         return false;
     });
-
-    function setHeader(xhr) {
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-    };
 
     $('.click3').click(function () {
         $.ajax({
@@ -41,15 +38,10 @@
             success: function (result) {
                 $("#userstats").html("<img src='" + result.logo + "'></img>");
             },
-            beforeSend: setHeader3
+            beforeSend: setNoAuthHeader
         });
         return false;
     });
-
-    function setHeader3(xhr) {
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-    };
 
     $('.click2').click(function () {
         $.ajax({
@@ -57,16 +49,23 @@
             type: 'GET',
             dataType: 'json',
             success: function (result) {
-                var data = JSON.stringify(result, null, 2);
+                var data = JSON.stringify(result, null, 1);
                 $("#userstats").html('<pre>' + data + '<pre>');
             },
-            beforeSend: setHeader2
+            beforeSend: setAuthHeader
         });
         return false;
     });
 
-    function setHeader2(xhr) {
+
+    function setNoAuthHeader(xhr) {
+        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+    };
+
+    function setAuthHeader(xhr) {
         var token = "@ViewBag.token";
+        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
         xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
         xhr.setRequestHeader('Authorization', 'OAuth ' + token);
     };
