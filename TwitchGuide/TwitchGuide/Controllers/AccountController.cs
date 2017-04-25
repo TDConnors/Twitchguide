@@ -339,23 +339,12 @@ namespace TwitchGuide.Controllers
             }
             var user = await UserManager.FindAsync(loginInfo.Login);
 
-            //if (user != null)
-            //{
-            //    var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
-            //    a => a.Type == "Picture");
-            //    user.Claims.Add(new IdentityUserClaim() { ClaimType = claim.Type, ClaimValue = claim.Value });
-            //    await SignInAsync(user, isPersistent: false);
-            //    return RedirectToLocal(returnUrl);
-            //}
-            //// Sign in the user with this external login provider if the user already has a login
-
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     await StoreTwitchToken(await UserManager.FindAsync(loginInfo.Login));
-                    addTokenToDB();
-                    return RedirectToAction("LoginSuccess", "Home", new { code = code });
+                    return RedirectToAction("addTokenToDB", "Account");
                     
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -369,16 +358,6 @@ namespace TwitchGuide.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
-        //private async Task ProcessExternalClaims(ExternalLoginInfo loginInfo)
-        //{
-        //    var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
-        //    var userId = this.AuthenticationManager.User.Identity.GetUserId();
-        //    foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitch", StringComparison.Ordinal)))
-        //    {
-        //        await UserManager.AddClaimAsync(userId, claim);
-        //    }
-        //}
 
 //
 // POST: /Account/ExternalLoginConfirmation
@@ -408,7 +387,7 @@ namespace TwitchGuide.Controllers
                     if (result.Succeeded)
                     {
                         await StoreTwitchToken(user);
-                        addTokenToDB();
+                        //addTokenToDB();
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
@@ -439,18 +418,31 @@ namespace TwitchGuide.Controllers
                 }
             }
         }
-        private void addTokenToDB()
+
+        [Authorize]
+        public ActionResult addTokenToDB()
         {
             //store into our own Users table
             var identity = (ClaimsIdentity)User.Identity;
             var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
 
+            if(token == null)
+            {
+                return RedirectToAction("TokenNULL", "Home");
+            }
+
             ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
             var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+
+            if (ourUser == null)
+            {
+                return RedirectToAction("ourUserNULL", "Home");
+            }
 
             ourUser.AuthToken = token.Value;
             db.Entry(ourUser).State = EntityState.Modified;
             db.SaveChanges();
+            return RedirectToAction("LoginSuccess", "Home", new { code = "blank" });
         }
 
         //
