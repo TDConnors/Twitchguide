@@ -6,17 +6,23 @@ using System.Web.Mvc;
 using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using TwitchGuide.Models;
+using TwitchGuide.DAL;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
 {
     public class HomeController : Controller
     {
+        private TwitchContext db = new TwitchContext();
+
         public ActionResult Index()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).Last();
-            ViewBag.token = token;
-            return View(token);
+            var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+            ViewBag.token = ourUser.AuthToken;
+            return View();
         }
 
         [HttpGet]
