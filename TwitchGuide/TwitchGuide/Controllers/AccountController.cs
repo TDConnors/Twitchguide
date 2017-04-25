@@ -387,9 +387,8 @@ namespace TwitchGuide.Controllers
                     if (result.Succeeded)
                     {
                         await StoreTwitchToken(user);
-                        //addTokenToDB();
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction("addTokenToDB", "Account");
                     }
                 }
                 AddErrors(result);
@@ -436,13 +435,21 @@ namespace TwitchGuide.Controllers
 
             if (ourUser == null)
             {
-                return RedirectToAction("ourUserNULL", "Home");
+                User newUser = new Models.User
+                {
+                    Username = currentUser.UserName
+                };
+                db.Users.Add(newUser);
+                db.SaveChanges();
+
+                ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
             }
 
             ourUser.AuthToken = token.Value;
             db.Entry(ourUser).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("LoginSuccess", "Home", new { code = "blank" });
+            //TODO: Add getting the Twitch User ID and add getting the actual Twitch Username instead of email
+            return RedirectToAction("LoginSuccess", "Home");
         }
 
         //

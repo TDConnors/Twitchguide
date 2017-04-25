@@ -19,25 +19,20 @@ namespace TwitchGuide.Controllers
         public ActionResult Index()
         {
 
-            //Get the AuthToken for the current user, store in a ViewBag
-            var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-            var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
-            ViewBag.token = ourUser.AuthToken;
-
+            if (User.Identity.IsAuthenticated)
+            {
+                //Get the AuthToken for the current user, store in a ViewBag
+                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+                var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+                ViewBag.token = ourUser.AuthToken;
+            }
             return View();
         }
 
         [HttpGet]
         public ActionResult LoginSuccess()
         {
-
-            if (ViewBag.code == null)
-            {
-                ViewBag.code = "no code because code = null";
-                return View();
-            }
-
             return View();
         }
 
