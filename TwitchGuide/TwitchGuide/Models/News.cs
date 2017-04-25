@@ -1,6 +1,5 @@
 namespace TwitchGuide.Models
 {
-    using DAL;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,9 @@ namespace TwitchGuide.Models
 
     public partial class News
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int NewsId { get; set; }
 
         [Required]
@@ -19,10 +20,11 @@ namespace TwitchGuide.Models
         [Required]
         public string Content { get; set; }
 
-        [Required]
         public DateTime DateAdded { get; set; }
 
-        [Required]
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AddedBy { get; set; }
     }
 }

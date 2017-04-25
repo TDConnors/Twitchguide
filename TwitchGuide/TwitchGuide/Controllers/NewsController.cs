@@ -6,14 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TwitchGuide.DAL;
 using TwitchGuide.Models;
-
 namespace TwitchGuide.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : BaseController
     {
-        private NewsContext db = new NewsContext();
 
+        public TwitchContext db = new TwitchContext();
         // GET: News
         public ActionResult Index()
         {
@@ -42,7 +42,7 @@ namespace TwitchGuide.Controllers
         }
 
         // POST: News/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from posting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,6 +50,10 @@ namespace TwitchGuide.Controllers
         {
             if (ModelState.IsValid)
             {
+                int useID = getUserID();
+                if (useID > 0)
+                    news.AddedBy = useID; 
+                news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
                 return RedirectToAction("Index");
