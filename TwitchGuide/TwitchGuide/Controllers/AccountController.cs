@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TwitchGuide.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
+using TwitchGuide.DAL;
+using System.Data.Entity;
 
 namespace TwitchGuide.Controllers
 {
@@ -19,7 +22,7 @@ namespace TwitchGuide.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public string token;
+        private TwitchContext db = new TwitchContext();
 
         public AccountController()
         {
@@ -335,6 +338,7 @@ namespace TwitchGuide.Controllers
                 return RedirectToAction("Login");
             }
             var user = await UserManager.FindAsync(loginInfo.Login);
+
             //if (user != null)
             //{
             //    var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
@@ -344,6 +348,7 @@ namespace TwitchGuide.Controllers
             //    return RedirectToLocal(returnUrl);
             //}
             //// Sign in the user with this external login provider if the user already has a login
+
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
@@ -364,15 +369,15 @@ namespace TwitchGuide.Controllers
             }
         }
 
-        private async Task ProcessExternalClaims(ExternalLoginInfo loginInfo)
-        {
-            var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
-            var userId = this.AuthenticationManager.User.Identity.GetUserId();
-            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitch", StringComparison.Ordinal)))
-            {
-                await UserManager.AddClaimAsync(userId, claim);
-            }
-        }
+        //private async Task ProcessExternalClaims(ExternalLoginInfo loginInfo)
+        //{
+        //    var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
+        //    var userId = this.AuthenticationManager.User.Identity.GetUserId();
+        //    foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitch", StringComparison.Ordinal)))
+        //    {
+        //        await UserManager.AddClaimAsync(userId, claim);
+        //    }
+        //}
 
 //
 // POST: /Account/ExternalLoginConfirmation
@@ -383,7 +388,7 @@ namespace TwitchGuide.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "LoginSuccess");
             }
 
             if (ModelState.IsValid)
@@ -416,20 +421,32 @@ namespace TwitchGuide.Controllers
         private async Task StoreTwitchToken(ApplicationUser user)
         {
             var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-                        if (claimsIdentity != null)
-                            {
-                                // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim
+            if (claimsIdentity != null)
+            {
+                // Retrieve the existing claims for the user and add the TwitchAccessTokenClaim
                 var currentClaims = await UserManager.GetClaimsAsync(user.Id);
                 var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-                                if (twitchToken != null)
-                                    {
-                                        if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
-                                            {
+                if (twitchToken != null)
+                {
+                    if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
+                    {
                         await UserManager.RemoveClaimAsync(user.Id, twitchToken);
-                                            }
+                    }
+
                     await UserManager.AddClaimAsync(user.Id, twitchToken);
-                                    }
-                            }
+
+                    //store into our own Users table
+                    var identity = (ClaimsIdentity)User.Identity;
+                    var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+
+                    ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+                    var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+
+                    ourUser.AuthToken = token.Value;
+                    db.Entry(ourUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
         }
 
         //
@@ -450,6 +467,10 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

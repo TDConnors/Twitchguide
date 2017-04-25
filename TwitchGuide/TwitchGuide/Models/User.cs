@@ -21,6 +21,9 @@ namespace TwitchGuide.Models
         [StringLength(100)]
         public string Username { get; set; }
 
+        [StringLength(40)]
+        public string AuthToken { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Schedule> Schedules { get; set; }
     }
