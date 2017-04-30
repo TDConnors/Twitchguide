@@ -26,6 +26,11 @@ namespace TwitchGuide.DAL
                 .HasMany(e => e.Schedules)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Follows)
+                .WithMany()
+                .Map(m => m.ToTable("Followers").MapLeftKey("UserID").MapRightKey("FollowingID"));
         }
     }
 }
