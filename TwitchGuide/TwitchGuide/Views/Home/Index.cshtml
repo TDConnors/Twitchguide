@@ -1,4 +1,9 @@
-﻿@{
+﻿@if (Request.IsAuthenticated)
+{
+    @model TwitchGuide.Models.User
+}
+
+@{
     ViewBag.Title = "Home";
 }
 
@@ -14,6 +19,18 @@
 
 <hr />
 <div id="userstats"></div>
+
+@if (Request.IsAuthenticated)
+{
+    <ul>
+        @foreach (var item in Model.Follows)
+        {
+            <li>a</li>
+        }
+    </ul>
+}
+
+
 
 @section Scripts {
 <script>
