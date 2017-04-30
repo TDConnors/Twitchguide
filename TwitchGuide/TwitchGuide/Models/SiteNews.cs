@@ -19,5 +19,7 @@ namespace TwitchGuide.Models
         public int NewsID { get; set; }
 
         public virtual News News { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

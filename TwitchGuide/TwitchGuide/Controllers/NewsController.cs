@@ -18,7 +18,7 @@ namespace TwitchGuide.Controllers
         // GET: News
         public ActionResult Index()
         {
-            return View(db.News.ToList());
+            return View(db.SiteNews.ToList());
         }
 
         // GET: News/Create
@@ -40,8 +40,8 @@ namespace TwitchGuide.Controllers
                 news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
-                int current = 1;
-                //current = getUserID();
+                int current = 7;
+                current = getUserID();
                 db.SiteNews.Add(new SiteNews { UserID = current, NewsID = news.NewsID });
                 db.SaveChanges();
                 return RedirectToAction("Index");
