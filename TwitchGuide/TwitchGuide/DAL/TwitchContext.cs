@@ -19,7 +19,8 @@ namespace TwitchGuide.DAL
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Timeblock> Timeblocks { get; set; }
         public virtual DbSet<User> Users { get; set; }
-
+        public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<SiteNews> SiteNews { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
