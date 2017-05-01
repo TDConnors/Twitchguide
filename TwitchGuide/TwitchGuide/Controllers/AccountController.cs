@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TwitchGuide.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
+using TwitchGuide.DAL;
+using System.Data.Entity;
 
 namespace TwitchGuide.Controllers
 {
@@ -19,7 +22,7 @@ namespace TwitchGuide.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public string token;
+        private TwitchContext db = new TwitchContext();
 
         public AccountController()
         {
@@ -335,21 +338,13 @@ namespace TwitchGuide.Controllers
                 return RedirectToAction("Login");
             }
             var user = await UserManager.FindAsync(loginInfo.Login);
-            //if (user != null)
-            //{
-            //    var claim = (await AuthenticationManager.GetExternalLoginInfoAsync()).ExternalIdentity.Claims.First(
-            //    a => a.Type == "Picture");
-            //    user.Claims.Add(new IdentityUserClaim() { ClaimType = claim.Type, ClaimValue = claim.Value });
-            //    await SignInAsync(user, isPersistent: false);
-            //    return RedirectToLocal(returnUrl);
-            //}
-            //// Sign in the user with this external login provider if the user already has a login
+
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     await StoreTwitchToken(await UserManager.FindAsync(loginInfo.Login));
-                    return RedirectToAction("LoginSuccess", "Home", new { code = code });
+                    return RedirectToAction("addTokenToDB", "Account");
                     
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -364,16 +359,6 @@ namespace TwitchGuide.Controllers
             }
         }
 
-        private async Task ProcessExternalClaims(ExternalLoginInfo loginInfo)
-        {
-            var currentIdentity = await UserManager.FindByIdAsync(loginInfo.ExternalIdentity.GetUserId());
-            var userId = this.AuthenticationManager.User.Identity.GetUserId();
-            foreach (var claim in loginInfo.ExternalIdentity.Claims.Where(a => a.Type.StartsWith("urn:twitch", StringComparison.Ordinal)))
-            {
-                await UserManager.AddClaimAsync(userId, claim);
-            }
-        }
-
 //
 // POST: /Account/ExternalLoginConfirmation
 [HttpPost]
@@ -383,7 +368,7 @@ namespace TwitchGuide.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "LoginSuccess");
             }
 
             if (ModelState.IsValid)
@@ -403,7 +388,7 @@ namespace TwitchGuide.Controllers
                     {
                         await StoreTwitchToken(user);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction("addTokenToDB", "Account");
                     }
                 }
                 AddErrors(result);
@@ -416,20 +401,55 @@ namespace TwitchGuide.Controllers
         private async Task StoreTwitchToken(ApplicationUser user)
         {
             var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-                        if (claimsIdentity != null)
-                            {
-                                // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim
+            if (claimsIdentity != null)
+            {
+                // Retrieve the existing claims for the user and add the TwitchAccessTokenClaim
                 var currentClaims = await UserManager.GetClaimsAsync(user.Id);
                 var twitchToken = claimsIdentity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-                                if (twitchToken != null)
-                                    {
-                                        if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
-                                            {
+                if (twitchToken != null)
+                {
+                    if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
+                    {
                         await UserManager.RemoveClaimAsync(user.Id, twitchToken);
-                                            }
+                    }
+
                     await UserManager.AddClaimAsync(user.Id, twitchToken);
-                                    }
-                            }
+                }
+            }
+        }
+
+        [Authorize]
+        public ActionResult addTokenToDB()
+        {
+            //store into our own Users table
+            var identity = (ClaimsIdentity)User.Identity;
+            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
+
+            if(token == null)
+            {
+                return RedirectToAction("TokenNULL", "Home");
+            }
+
+            ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+
+            if (ourUser == null)
+            {
+                User newUser = new Models.User
+                {
+                    Username = currentUser.UserName
+                };
+                db.Users.Add(newUser);
+                db.SaveChanges();
+
+                ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+            }
+
+            ourUser.AuthToken = token.Value;
+            db.Entry(ourUser).State = EntityState.Modified;
+            db.SaveChanges();
+            //TODO: Add getting the Twitch User ID and add getting the actual Twitch Username instead of email
+            return RedirectToAction("LoginSuccess", "Home");
         }
 
         //
@@ -450,6 +470,10 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

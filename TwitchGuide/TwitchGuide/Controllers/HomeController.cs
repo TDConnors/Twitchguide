@@ -6,29 +6,33 @@ using System.Web.Mvc;
 using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using TwitchGuide.Models;
+using TwitchGuide.DAL;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
 {
     public class HomeController : Controller
     {
+        private TwitchContext db = new TwitchContext();
+
         public ActionResult Index()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-            ViewBag.token = token;
-            return View(token);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                //Get the AuthToken for the current user, store in a ViewBag
+                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+                var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+                ViewBag.token = ourUser.AuthToken;
+            }
+            return View();
         }
 
         [HttpGet]
         public ActionResult LoginSuccess()
         {
-
-            if (ViewBag.code == null)
-            {
-                ViewBag.code = "no code because code = null";
-                return View();
-            }
-
             return View();
         }
 
