@@ -55,7 +55,17 @@
                     beforeSend: setAuthHeader
                 });
             });
-
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'https://api.twitch.tv/kraken/user',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#UserNameDisplay").html(result.name);
+                    },
+                    beforeSend: setAuthHeader
+                });
+            });
             function setAuthHeader(xhr) {
                 var token = "@ViewBag.token";
                 xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
