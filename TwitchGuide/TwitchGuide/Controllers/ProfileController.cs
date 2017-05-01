@@ -32,6 +32,10 @@ namespace TwitchGuide.Controllers
                 {
                     username = User.Identity.GetUserName();
                     ViewBag.edit = "True";
+                    var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+                    var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+                    ViewBag.token = ourUser.AuthToken;
                 }
                 else
                 {
@@ -57,7 +61,7 @@ namespace TwitchGuide.Controllers
                     TimeblockObj = tb1,
                     UserObj = db.Users.Where(p => p.Username == username).FirstOrDefault()
                 };
-                return View(profileModel);
+                return View(profileModel,ourUser);
             }
 
 
