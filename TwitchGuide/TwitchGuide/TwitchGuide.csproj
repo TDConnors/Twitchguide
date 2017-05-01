@@ -190,7 +190,6 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\SiteNews.cs" />
-    <Compile Include="Models\Timeblock.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="DAL\TwitchContext.cs" />
