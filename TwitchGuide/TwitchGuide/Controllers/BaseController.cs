@@ -15,10 +15,10 @@ namespace TwitchGuide.Controllers
 
         public User GetUser()
         {
-            string Username = (Session["UserId"] != null) ? Session["UserName"].ToString() : User.Identity.GetUserName();
+            string Username = (Session["UserId"] != null) ? Session["Username"].ToString() : User.Identity.GetUserName();
 
             var Data = from a in db.Users
-                       where a.UserName.Equals(Username)
+                       where a.Username.Equals(Username)
                        select a;
 
             return Data.FirstOrDefault();
@@ -29,12 +29,12 @@ namespace TwitchGuide.Controllers
         }
         public int getUserID()
         {
-            if (isLoggedIn())
-            {
-                int myID = GetUser().UserID;
-                return myID;
-            }
-            else
+            //if (isLoggedIn())
+            //{
+            //   int myID = GetUser().UserID;
+            //   return myID;
+            //}
+            //else
                 return 7;
         }
     }

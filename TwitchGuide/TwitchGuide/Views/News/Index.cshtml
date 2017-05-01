@@ -16,7 +16,7 @@
         <div class="StoryItem">
             <h3>@Html.DisplayFor(modelItem => item.News.Title)</h3>
             <h4>@Html.DisplayFor(modelItem => item.News.Content)</h4>
-            <h5>Added by @Html.DisplayFor(modelItem => item.User.UserName) on @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</h5>
+            <h5>Added by @Html.DisplayFor(modelItem => item.User.Username) on @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</h5>
             <br />
             @Html.ActionLink("Edit", "Edit", new { id = item.NewsID })              @Html.ActionLink("Delete", "Delete", new { id = item.NewsID })
 

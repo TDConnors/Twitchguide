@@ -42,3 +42,7 @@ textarea {
 .StoryItem h5 {
     color:#888888;
 }
+
+.UserItem {
+    padding-left:50px;
+}
