@@ -57,6 +57,7 @@ namespace TwitchGuide.Controllers
                     TimeblockObj = tb1,
                     UserObj = db.Users.Where(p => p.Username == username).FirstOrDefault()
                 };
+                ViewBag.token = profileModel.UserObj.AuthToken;
                 return View(profileModel);
             }
 
@@ -71,20 +72,23 @@ namespace TwitchGuide.Controllers
             var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
                           p => p.TimeblockID,
                           e => e.Index,
-                          (p, e) => new Timeblock {
+                          (p, e) => new Timeblock
+                          {
                               Index = e.Index,
                               StartHour = e.StartHour,
                               StartMinute = e.StartMinute,
                               EndHour = e.EndHour,
                               EndMinute = e.EndMinute,
-                              Day = e.Day }).ToList();
+                              Day = e.Day
+                          }).ToList();
 
 
             profileModel = new ProfileModel
-                            {
-                                TimeblockObj = tb,
-                                UserObj = db.Users.FirstOrDefault()
+            {
+                TimeblockObj = tb,
+                UserObj = db.Users.FirstOrDefault()
             };
+            ViewBag.token = profileModel.UserObj.AuthToken;
             return View(profileModel);
         }
 
@@ -109,6 +113,22 @@ namespace TwitchGuide.Controllers
 
             if (ModelState.IsValid)
             {
+                if (timeblock.StartHour > 12 || timeblock.EndHour > 12)
+                {
+                    ViewBag.message = "Start Hour and End Hour must be between 1 and 12";
+                    return View(timeblock);
+                }
+
+                //Adjust times to reflect AM/PM toggle
+                if (Request["AM_Start"] != "on" && timeblock.StartHour != 12)
+                {
+                    timeblock.StartHour += 12;
+                }
+                if (Request["AM_End"] != "on" && timeblock.EndHour != 12)
+                {
+                    timeblock.EndHour += 12;
+                }
+
                 //make sure the start time is before the end time
                 if (timeblock.StartHour > timeblock.EndHour)
                 {
@@ -129,8 +149,15 @@ namespace TwitchGuide.Controllers
                     }
                 }
 
-                //Check if timeblock already exists in DB
-                var check = db.Timeblocks.Where(p =>
+                //Max timeblock length is 10 hours
+                if ((timeblock.EndHour - timeblock.StartHour) > 9)
+                {
+                    ViewBag.message = "The timeblock duration cannot be greater than 9 hours";
+                    return View(timeblock);
+                }
+
+                    //Check if timeblock already exists in DB
+                    var check = db.Timeblocks.Where(p =>
                     (p.Day == timeblock.Day) &&
                     (p.StartHour == timeblock.StartHour) &&
                     (p.StartMinute == timeblock.StartMinute) &&
@@ -162,8 +189,8 @@ namespace TwitchGuide.Controllers
                         db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = check.Index });
                         db.SaveChanges();
                         return RedirectToAction("Search");
-                    }                    
-                }     
+                    }
+                }
             }
             return View(timeblock);
         }
