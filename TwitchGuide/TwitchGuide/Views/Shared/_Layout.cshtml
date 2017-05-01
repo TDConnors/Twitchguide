@@ -23,6 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("My Profile", "Search", "Profile", new { name = "" }, new {})</li>
+                    <li>@Html.ActionLink("Search", "Search", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -35,5 +36,30 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @if (Request.IsAuthenticated)
+    {
+        <script>
+            //Gets the Logo.png for the current user, and displays it next to the name
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'https://api.twitch.tv/kraken/user',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#LogoSpot").html("<img src='" + result.logo + "' height=32 width=32></img>");
+                    },
+                    beforeSend: setAuthHeader
+                });
+            });
+
+            function setAuthHeader(xhr) {
+                var token = "@ViewBag.token";
+                xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+                xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+            };
+        </script>
+    }
 </body>
 </html>

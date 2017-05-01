@@ -1,11 +1,13 @@
-﻿@{
+﻿@if (Request.IsAuthenticated)
+{
+    @model TwitchGuide.Models.User
+}
+
+@{
     ViewBag.Title = "Home";
 }
 
 <br />
-<a href="#" class="click">Show the Top Game</a>
- | 
-<a href="#" class="click3">Show my logo</a>
 
 @if (ViewBag.Token != null)
 {
@@ -14,6 +16,27 @@
 
 <hr />
 <div id="userstats"></div>
+
+@if (Request.IsAuthenticated)
+{
+            <table class="table">
+                <tr><th>Favorites</th></tr>
+                @foreach (var user in Model.Follows)
+                {
+                    <tr><td>@user.Username</td></tr>
+
+                }
+                
+
+
+            </table>
+}
+else
+{
+    <div>Please login to see your Favorites</div>
+}
+
+
 
 @section Scripts {
 <script>

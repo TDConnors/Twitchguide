@@ -21,28 +21,3 @@ else
         <li>@Html.ActionLink("Sign in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
-
-@section Scripts {
-<script>
-    //Gets the Logo.png for the current user, and displays it next to the name
-    $.ajax({
-        url: 'https://api.twitch.tv/kraken/user',
-        type: 'GET',
-        dataType: 'json',
-        success: function (result) {
-            $("#LogoSpot").html("<img src='" + result.logo + "'></img>");
-        },
-        beforeSend: setAuthHeader
-    });
-
-    function setAuthHeader(xhr) {
-        var token = "@ViewBag.token";
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-    };
-
-</script>   
-    
-    
-}
