@@ -214,7 +214,7 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
-<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" onclick="refresh()"/>
+<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" onclick="refresh()" />
 <div id="Profile info" class="userinfo">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -222,7 +222,7 @@
                 Panel title
             </h3>
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="@ViewBag.username"> </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel="@ViewBag.username"> </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -254,22 +254,22 @@
         var username;
         var views;
         var followers;
-        $('.btn').click(function () {
+        $(document).on("load", function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
+                    $("#Username").html(result.name);
                     username = result.name;
                     @ViewBag.username = username;
                 },
                 beforeSend: setAuthHeader
             });
-            return false;
         });
         $('.btn').click(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/'+username+'/',
+                url: 'https://api.twitch.tv/kraken/channels/' + username + '/',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -282,7 +282,7 @@
         });
         $('.btn').click(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/feed/'+ username +'/posts',
+                url: 'https://api.twitch.tv/kraken/feed/' + username + '/posts',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
