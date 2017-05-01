@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TwitchGuide.Models.User>
+
+@{
+    ViewBag.Title = "UserIndex";  
+    HtmlString temp;
+}
+
+<h2>All Users</h2>
+
+    @foreach (var item in Model)
+    {
+
+        <hr />
+        <div class="UserItem">
+            @if (item.Avatar.IsEmpty()==false)
+            {
+                temp = new HtmlString(item.Avatar);
+                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span>@Html.DisplayFor(modelItem => item.Username)
+            }
+            else
+            {
+                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span>@Html.DisplayFor(modelItem => item.Username)
+            }
+        </div>
+    }

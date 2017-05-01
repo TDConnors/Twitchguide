@@ -6,29 +6,26 @@ namespace TwitchGuide.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class User
+    public partial class News
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public News()
         {
-            Schedules = new HashSet<Schedule>();
+            SiteNews = new HashSet<SiteNews>();
         }
 
-        [Key]
-        public int UserID { get; set; }
+        public int NewsID { get; set; }
 
-        public int? TwitchID { get; set; }
+        [Required]
+        [StringLength(60)]
+        public string Title { get; set; }
 
-        [StringLength(256)]
-        public string Username { get; set; }
+        [Required]
+        public string Content { get; set; }
 
-        [StringLength(40)]
-        public string AuthToken { get; set; }
-
-        [StringLength(1024)]
-        public string Avatar { get; set; }
+        public DateTime DateAdded { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Schedule> Schedules { get; set; }
+        public virtual ICollection<SiteNews> SiteNews { get; set; }
     }
 }
