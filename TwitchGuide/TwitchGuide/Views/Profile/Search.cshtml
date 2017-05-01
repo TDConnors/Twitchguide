@@ -254,7 +254,7 @@
         var username;
         var views;
         var followers;
-        $(document).on("load", function () {
+        $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
                 type: 'GET',
