@@ -23,6 +23,17 @@ textarea {
     max-width: 280px;
 }
 
+
+/*disable spinbox on number inputs*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
 .StoryItem {
     background-color:#f7f7f7;
     padding-left:10px;
