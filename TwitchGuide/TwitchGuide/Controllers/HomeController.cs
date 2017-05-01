@@ -26,13 +26,22 @@ namespace TwitchGuide.Controllers
                 ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
                 var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
                 ViewBag.token = ourUser.AuthToken;
+
+                return View(ourUser);
             }
+
             return View();
         }
 
         [HttpGet]
         public ActionResult LoginSuccess()
         {
+            return View();
+        }
+
+        public ActionResult Search()
+        {
+
             return View();
         }
 
