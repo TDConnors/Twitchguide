@@ -36,18 +36,33 @@
                 @Html.EditorFor(model => model.StartMinute, new { htmlAttributes = new { @class = "form-control", @placeholder = "00" } })
                 
             </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-success btn-sm">
+                    <input type="checkbox" name="AM_Start" id="AM_Start" autocomplete="off"> AM
+                </label>
+            </div>
         </div>
     </div>
+
     <br />
+    
     <div class="form-inline">
         <div class="form-group">
             <div class="input-group col-lg-6">
+                
                 <div class="input-group-addon">End Time</div>
+                
                 @Html.EditorFor(model => model.EndHour, new { htmlAttributes = new { @class = "form-control", @placeholder = "10" } })
+                
                 <span class="input-group-addon">:</span>
+                
                 @Html.EditorFor(model => model.EndMinute, new { htmlAttributes = new { @class = "form-control", @placeholder = "00" } })
 
-
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-success btn-sm">
+                    <input type="checkbox" name="AM_End" id="AM_End" autocomplete="off"> AM
+                </label>
             </div>
         </div>
     </div>
