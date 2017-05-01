@@ -189,7 +189,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Models\News.cs" />
-    <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SiteNews.cs" />
     <Compile Include="Models\Timeblock.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
