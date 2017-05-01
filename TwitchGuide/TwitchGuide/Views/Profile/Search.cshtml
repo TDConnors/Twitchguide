@@ -222,7 +222,7 @@
                 Panel title
             </h3>
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="bitsmiths"> </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="@ViewBag.username"> </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -261,6 +261,7 @@
                 dataType: 'json',
                 success: function (result) {
                     username = result.name;
+                    @ViewBag.username = username;
                 },
                 beforeSend: setAuthHeader
             });
@@ -268,7 +269,7 @@
         });
         $('.btn').click(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/'+username,
+                url: 'https://api.twitch.tv/kraken/channels/'+username+'/',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -304,10 +305,10 @@
         };
         function refresh() {
             document.getElementById("Username").innerHTML = username;
-            document.getElementById("Followers").innerHTML = document.getElementById("Followers").innerHTML + followers;
-            document.getElementById("Views").innerHTML = document.getElementById("Views").innerHTML + views;
+            document.getElementById("Followers").innerHTML = "Followers: " + followers;
+            document.getElementById("Views").innerHTML = "Views: " + views;
         };
-        
+
     </script>
 
 }
