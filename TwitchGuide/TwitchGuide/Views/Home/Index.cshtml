@@ -8,9 +8,6 @@
 }
 
 <br />
-<a href="#" class="click">Show the Top Game</a>
- | 
-<a href="#" class="click3">Show my logo</a>
 
 @if (ViewBag.Token != null)
 {
@@ -23,7 +20,7 @@
 @if (Request.IsAuthenticated)
 {
             <table class="table">
-                <tr><th>Users</th><th>12</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+                <tr><th>Favorites</th></tr>
                 @foreach (var user in Model.Follows)
                 {
                     <tr><td>@user.Username</td></tr>
