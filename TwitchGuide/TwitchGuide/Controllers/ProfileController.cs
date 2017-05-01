@@ -32,10 +32,6 @@ namespace TwitchGuide.Controllers
                 {
                     username = User.Identity.GetUserName();
                     ViewBag.edit = "True";
-                    var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                    ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-                    var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
-                    ViewBag.token = ourUser.AuthToken;
                 }
                 else
                 {
@@ -61,7 +57,8 @@ namespace TwitchGuide.Controllers
                     TimeblockObj = tb1,
                     UserObj = db.Users.Where(p => p.Username == username).FirstOrDefault()
                 };
-                return View(profileModel,ourUser);
+                ViewBag.token = profileModel.UserObj.AuthToken;
+                return View(profileModel);
             }
 
 
@@ -75,20 +72,23 @@ namespace TwitchGuide.Controllers
             var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
                           p => p.TimeblockID,
                           e => e.Index,
-                          (p, e) => new Timeblock {
+                          (p, e) => new Timeblock
+                          {
                               Index = e.Index,
                               StartHour = e.StartHour,
                               StartMinute = e.StartMinute,
                               EndHour = e.EndHour,
                               EndMinute = e.EndMinute,
-                              Day = e.Day }).ToList();
+                              Day = e.Day
+                          }).ToList();
 
 
             profileModel = new ProfileModel
-                            {
-                                TimeblockObj = tb,
-                                UserObj = db.Users.FirstOrDefault()
+            {
+                TimeblockObj = tb,
+                UserObj = db.Users.FirstOrDefault()
             };
+            ViewBag.token = profileModel.UserObj.AuthToken;
             return View(profileModel);
         }
 
@@ -166,8 +166,8 @@ namespace TwitchGuide.Controllers
                         db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = check.Index });
                         db.SaveChanges();
                         return RedirectToAction("Search");
-                    }                    
-                }     
+                    }
+                }
             }
             return View(timeblock);
         }
