@@ -1,11 +1,95 @@
-﻿@{
+﻿@if (Request.IsAuthenticated)
+{
+    @model TwitchGuide.Models.User
+}
+
+@{
     ViewBag.Title = "Home";
 }
-<iframe src="http://player.twitch.tv/?channel=streamerhouse&muted=true"
-        height="300"
-        width="400"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen="true"></iframe>
 
-GET https://api.twitch.tv/kraken/user
+<br />
+
+@if (ViewBag.Token != null)
+{
+    <a href="#" class="click2">Show My Info</a>
+}
+
+<hr />
+<div id="userstats"></div>
+
+@if (Request.IsAuthenticated)
+{
+            <table class="table">
+                <tr><th>Favorites</th></tr>
+                @foreach (var user in Model.Follows)
+                {
+                    <tr><td>@user.Username</td></tr>
+
+                }
+                
+
+
+            </table>
+}
+else
+{
+    <div>Please login to see your Favorites</div>
+}
+
+@section Scripts {
+<script>
+    $('.click').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/games/top?limit=1',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $("#userstats").html("Top Game: " + result.top[0].game.name);
+            },
+            beforeSend: setNoAuthHeader
+        });
+        return false;
+    });
+
+    $('.click3').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/users/148393665',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $("#userstats").html("<img src='" + result.logo + "'></img>");
+            },
+            beforeSend: setNoAuthHeader
+        });
+        return false;
+    });
+
+    $('.click2').click(function () {
+        $.ajax({
+            url: 'https://api.twitch.tv/kraken/user',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                var data = JSON.stringify(result, null, 1);
+                $("#userstats").html('<pre>' + data + '<pre>');
+            },
+            beforeSend: setAuthHeader
+        });
+        return false;
+    });
+
+
+    function setNoAuthHeader(xhr) {
+        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+    };
+
+    function setAuthHeader(xhr) {
+        var token = "@ViewBag.token";
+        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+    };
+</script>
+}
+

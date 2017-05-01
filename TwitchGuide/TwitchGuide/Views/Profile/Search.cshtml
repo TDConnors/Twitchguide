@@ -1,0 +1,311 @@
+﻿@model TwitchGuide.Models.ProfileModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
+    <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
+}
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+
+<div class="collapse in" id="Schedule">
+    @if (ViewBag.edit == "True")
+    {
+        <h5>
+            @Html.ActionLink("Add Timeblock", "Create")
+        </h5>
+    }
+
+    <div class="cd-schedule loading">
+
+
+        <div class="timeline">
+            <ul>
+                <li><span>1:00 AM</span></li>
+                <li><span>2:00 AM</span></li>
+                <li><span>3:00 AM</span></li>
+                <li><span>4:00 AM</span></li>
+                <li><span>5:00 AM</span></li>
+                <li><span>6:00 AM</span></li>
+                <li><span>7:00 AM</span></li>
+                <li><span>8:00 AM</span></li>
+                <li><span>9:00 AM</span></li>
+                <li><span>10:00 AM</span></li>
+                <li><span>11:00 AM</span></li>
+                <li><span>12:00 PM</span></li>
+                <li><span>1:00 PM</span></li>
+                <li><span>2:00 PM</span></li>
+                <li><span>3:00 PM</span></li>
+                <li><span>4:00 PM</span></li>
+                <li><span>5:00 PM</span></li>
+                <li><span>6:00 PM</span></li>
+                <li><span>7:00 PM</span></li>
+                <li><span>8:00 PM</span></li>
+                <li><span>9:00 PM</span></li>
+                <li><span>10:00 PM</span></li>
+                <li><span>11:00 PM</span></li>
+                <li><span>12:00 AM</span></li>
+                <li><span>1:00 AM</span></li>
+
+            </ul>
+        </div> <!-- .timeline -->
+        <div class="events">
+            <ul>
+                <li class="events-group">
+                    <div class="top-info"><span>Sunday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 1)
+                            {
+
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Monday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 2)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Tuesday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 3)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Wednesday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 4)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Thursday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 5)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Friday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 6)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+                <li class="events-group">
+                    <div class="top-info"><span>Saturday</span></div>
+                    <ul>
+                        @foreach (var item in Model.TimeblockObj)
+                        {
+                            if (item.Day == 7)
+                            {
+                                <li class="single-event" data-start="@item.StartHour:@String.Format("{0:D2}", item.StartMinute)" data-end="@item.EndHour:@String.Format("{0:D2}", item.EndMinute)" data-content="" data-event="event-1">
+                                    @if (ViewBag.edit == "True")
+                                    {
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Index })
+                                    }
+                                    else
+                                    {
+                                        <a href="#0" style="background: #4d94ff"></a>
+                                    }
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div> <!-- .cd-schedule -->
+</div>
+<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" />
+<div id="Profile info" class="userinfo">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 id="Username" class="panel-title">
+                Panel title
+            </h3>
+        </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="bitsmiths"> </div>
+        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+            <div class="_e725ae-transform_wrap">
+                <div class="_e725ae-status"> </div>
+            </div>
+        </div>
+        <div id="Views" class="panel-body"> Views: </div>
+        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+            <div class="_e725ae-transform_wrap">
+                <div class="_e725ae-status"> </div>
+            </div>
+        </div>
+        <div id="Followers" class="panel-body"> Followers: </div>
+        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+            <div class="_e725ae-transform_wrap">
+                <div class="_e725ae-status"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="channelposts" id="channelposts"></a>
+
+@section Scripts {
+    <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/Fugiman/Twitch-Channel-Status/1d74252edf89110507cbf3088f9c3eaa38fac9d3/twitch-channel-status.min.js"></script>
+
+    <script>
+        var username;
+        var views;
+        var followers;
+        $('.btn').click(function () {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/user',
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    username = result.name;
+                },
+                beforeSend: setAuthHeader
+            });
+            return false;
+        });
+        $('.btn').click(function () {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/channels/'+username,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    views = result.views;
+                    followers = result.followers;
+                },
+                beforeSend: setNoAuthHeader
+            });
+            return false;
+        });
+        $('.btn').click(function () {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/feed/'+ username +'/posts',
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    var data = JSON.stringify(result, null, 1);
+                    $("#channelposts").html('<pre>' + data + '<pre>');
+                },
+                beforeSend: setAuthHeader
+            });
+            return false;
+        });
+        function setAuthHeader(xhr) {
+            var token = "@ViewBag.token";
+            xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+        };
+        function setNoAuthHeader(xhr) {
+            xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+        };
+        document.getElementById("Username").innerHTML = username;
+        document.getElementById("Followers").innerHTML = document.getElementById("Followers").innerHTML + followers;
+        document.getElementById("Views").innerHTML = document.getElementById("Views").innerHTML + views;
+    </script>
+
+}
+

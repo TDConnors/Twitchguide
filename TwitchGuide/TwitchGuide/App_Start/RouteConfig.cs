@@ -14,16 +14,24 @@ namespace TwitchGuide
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                name: "UserSearch",
+                url: "Users/{name}",
+                defaults: new { controller = "Profile", action = "Search", name = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "signin-Twitch",
                 url: "signin-Twitch",
-                defaults: new {controller = "[AccountController]", action = "ExternalLoginCallback"}
-                );
+                defaults: new {controller = "[AccountController]", action = "ExternalLoginCallback", code = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+
         }
     }
 }
