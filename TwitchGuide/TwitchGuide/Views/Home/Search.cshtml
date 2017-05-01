@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+<h3>Enter the Twitch username you wish to find</h3>
+
+    Username:<br>
+    <input type="text" class="form-control" name="name" id="name"><br />
+    <button class="btn btn-info" id="btnSearch">Search</button>
+
+@section Scripts {
+<script>
+    $("#btnSearch").click(function () {
+        location.href = "../Users/" + $("#name").val();
+    });
+
+</script>
+    
+    
+}
+
