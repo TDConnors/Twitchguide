@@ -20,7 +20,7 @@ namespace TwitchGuide.Controllers
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+    public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -74,7 +74,7 @@ namespace TwitchGuide.Controllers
             };
             return View(model);
         }
-
+//This is all the pre-existing code collapsed
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
@@ -319,6 +319,10 @@ namespace TwitchGuide.Controllers
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            if (result.Succeeded)
+            {
+                var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            }
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 

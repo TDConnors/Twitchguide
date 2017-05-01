@@ -49,7 +49,6 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
-
         public ActionResult AllUsers()
         {
             return View(db.Users.ToList());

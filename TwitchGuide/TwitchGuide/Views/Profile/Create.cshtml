@@ -1,0 +1,153 @@
+﻿@model TwitchGuide.Models.Timeblock
+
+@{
+    ViewBag.Title = "Add Timeblock";
+}
+
+<h2>Add a Timeblock</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-inline">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <ul class="list-unstyled">
+            <li>@Html.ValidationMessageFor(model => model.StartHour, "", new { @class = "text-danger" })</li>
+            <li>@Html.ValidationMessageFor(model => model.StartMinute, "", new { @class = "text-danger" })</li>
+            <li>@Html.ValidationMessageFor(model => model.EndHour, "", new { @class = "text-danger" })</li>
+            <li>@Html.ValidationMessageFor(model => model.EndMinute, "", new { @class = "text-danger" })</li>
+            <li>@Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })</li>
+            <li><span class="text-danger">@ViewBag.Message</span></li>
+        </ul>       
+
+        <div class="form-group">
+            <div class="input-group col-lg-6">
+
+                <div class="input-group-addon">Start Time</div>
+
+                @Html.EditorFor(model => model.StartHour, new { htmlAttributes = new { @class = "form-control", @placeholder="8"} })
+
+                <span class="input-group-addon">:</span>
+
+                @Html.EditorFor(model => model.StartMinute, new { htmlAttributes = new { @class = "form-control", @placeholder = "00" } })
+                
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-success btn-sm">
+                    <input type="checkbox" name="AM_Start" id="AM_Start" autocomplete="off"> AM
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="input-group col-lg-6">
+                
+                <div class="input-group-addon">End Time</div>
+                
+                @Html.EditorFor(model => model.EndHour, new { htmlAttributes = new { @class = "form-control", @placeholder = "10" } })
+                
+                <span class="input-group-addon">:</span>
+                
+                @Html.EditorFor(model => model.EndMinute, new { htmlAttributes = new { @class = "form-control", @placeholder = "00" } })
+
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-success btn-sm">
+                    <input type="checkbox" name="AM_End" id="AM_End" autocomplete="off"> AM
+                </label>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="form-inline">
+        <div class="form-group">
+            @{
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Sunday",
+                    Value = "1"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Monday",
+                    Value = "2"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Tuesday",
+                    Value = "3"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Wednesday",
+                    Value = "4"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Thursday",
+                    Value = "5"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Friday",
+                    Value = "6"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Saturday",
+                    Value = "7"
+                });
+            }
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span id="selected">Day of the Week</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @foreach (var item in listItems)
+                    {
+                        <li><a href="#" data-value="@item.Value">@item.Text</a></li>
+                    }
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" name="Day" id="Day" />
+<br />
+
+<div class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="submit" value="Create" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Search")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+  
+    <script>
+    $('.dropdown-menu a').click(function(){
+        $('#selected').text($(this).text());
+        $('#Day').val($(this).data("value"));
+    });
+    </script>
+}
