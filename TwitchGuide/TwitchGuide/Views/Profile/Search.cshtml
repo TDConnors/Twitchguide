@@ -214,6 +214,7 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
+<input class="btn" type="image" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" />
 <div id="Profile info" class="userinfo">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -221,7 +222,7 @@
                 Panel title
             </h3>
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="bitsmiths"> </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -233,7 +234,7 @@
                 <div class="_e725ae-status"> </div>
             </div>
         </div>
-        <div id="Followers" class="panel-footer"> Followers: </div>
+        <div id="Followers" class="panel-body"> Followers: </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -253,7 +254,7 @@
         var username;
         var views;
         var followers;
-        $('.userinfo').on("load", function () {
+        $('.btn').click(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
                 type: 'GET',
@@ -265,7 +266,7 @@
             });
             return false;
         });
-        $('.panel').on("load", function () {
+        $('.btn').click(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/'+username,
                 type: 'GET',
@@ -278,7 +279,7 @@
             });
             return false;
         });
-        $('.channelposts').on("load",function () {
+        $('.btn').click(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/feed/'+ username +'/posts',
                 type: 'GET',
@@ -304,7 +305,6 @@
         document.getElementById("Username").innerHTML = username;
         document.getElementById("Followers").innerHTML = document.getElementById("Followers").innerHTML + followers;
         document.getElementById("Views").innerHTML = document.getElementById("Views").innerHTML + views;
-        document.getElementById("OnlineStatus").setAttribute(data-twitch-channel,username);
     </script>
 
 }
