@@ -221,7 +221,7 @@
                 Panel title
             </h3>
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel="@ViewBag.username"> </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel=""> </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -260,7 +260,7 @@
                     $("#Username").html(result.name);
                     username = result.name;
                     document.getElementById("OnlineStatus").setAttribute("data-twitch-channel", username);
-                    chanurl = chanurl + username + '/';
+                    chanurl = chanurl + username + '?';
                 },
                 beforeSend: setAuthHeader
             });
