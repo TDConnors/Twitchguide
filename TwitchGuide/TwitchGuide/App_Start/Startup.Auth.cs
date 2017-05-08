@@ -39,7 +39,7 @@ namespace TwitchGuide
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -92,9 +92,9 @@ namespace TwitchGuide
 
                         context.Identity.AddClaim(new Claim("urn:twitch:access_token", context.AccessToken));
                         return Task.FromResult(0);
-                    },
-                    Scope = { "user_read", "channel_read", "channel_editor", "user_follows_edit"}
-                }
+                    }
+                },
+                Scope = { "user_read", "channel_read", "channel_editor", "user_follows_edit" }
             };
             app.UseTwitchAuthentication(opt);
 
