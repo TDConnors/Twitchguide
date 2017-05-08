@@ -253,7 +253,7 @@
     <script>
         var username;
         var views;
-        var followers;
+        var followers;+9
         $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
@@ -267,7 +267,7 @@
                 beforeSend: setAuthHeader
             });
         });
-        $('.btn').click(function () {
+        $(window).load(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/' + username + '/',
                 type: 'GET',
@@ -280,7 +280,7 @@
             });
             return false;
         });
-        $('.btn').click(function () {
+        $(window).load(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/feed/' + username + '/posts',
                 type: 'GET',
