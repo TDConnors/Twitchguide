@@ -267,14 +267,14 @@
         });
         $(window).load(function () {
             $.ajax({
-                url: chanurl,
+                url: 'https://api.twitch.tv/kraken/channels/bitsmiths?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
-                },
-                beforeSend: setNoAuthHeader
+                }//,
+               // beforeSend: setNoAuthHeader
             });
             return false;
         });
