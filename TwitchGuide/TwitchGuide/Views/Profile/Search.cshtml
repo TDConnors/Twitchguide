@@ -250,7 +250,7 @@
 
     <script>
         var username;
-        var chanurl='https://api.twitch.tv/kraken/channels/';
+        var chanurl='https://api.twitch.tv/kraken/channels/bitsmiths';
         $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
@@ -260,7 +260,7 @@
                     $("#Username").html(result.name);
                     username = result.name;
                     document.getElementById("OnlineStatus").setAttribute("data-twitch-channel", username);
-                    chanurl = chanurl + username;
+                    //chanurl = chanurl + username;
                 },
                 beforeSend: setAuthHeader
             });
@@ -270,9 +270,6 @@
                 url: chanurl,
                 type: 'GET',
                 dataType: 'json',
-                headers: {
-                    'Client-ID': 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
-                },
                 success: function (result) {
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
