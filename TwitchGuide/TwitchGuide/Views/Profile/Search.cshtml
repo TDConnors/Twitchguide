@@ -250,6 +250,7 @@
 
     <script>
         var username;
+        var chanurl='https://api.twitch.tv/kraken/channels/';
         $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
@@ -259,13 +260,14 @@
                     $("#Username").html(result.name);
                     username = result.name;
                     document.getElementById("OnlineStatus").setAttribute("data-twitch-channel", username);
+                    chanurl = chanurl + username + '/';
                 },
                 beforeSend: setAuthHeader
             });
         });
         $(window).load(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/' + username + '/',
+                url: chanurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
