@@ -214,7 +214,7 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
-<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" />
+<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" onclick="refresh()" />
 <div id="Profile info" class="userinfo">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -222,7 +222,7 @@
                 Panel title
             </h3>
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="bitsmiths"> </div>
+        <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel="@ViewBag.username"> </div>
         <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
             <div class="_e725ae-transform_wrap">
                 <div class="_e725ae-status"> </div>
@@ -254,21 +254,22 @@
         var username;
         var views;
         var followers;
-        $('.btn').click(function () {
+        $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
+                    $("#Username").html(result.name);
                     username = result.name;
+                    @ViewBag.username = username;
                 },
                 beforeSend: setAuthHeader
             });
-            return false;
         });
         $('.btn').click(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/'+username,
+                url: 'https://api.twitch.tv/kraken/channels/' + username + '/',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -281,14 +282,14 @@
         });
         $('.btn').click(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/feed/'+ username +'/posts',
+                url: 'https://api.twitch.tv/kraken/feed/' + username + '/posts',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
                     var data = JSON.stringify(result, null, 1);
                     $("#channelposts").html('<pre>' + data + '<pre>');
                 },
-                beforeSend: setAuthHeader
+                beforeSend: setNoAuthHeader
             });
             return false;
         });
@@ -302,9 +303,12 @@
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
             xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
         };
-        document.getElementById("Username").innerHTML = username;
-        document.getElementById("Followers").innerHTML = document.getElementById("Followers").innerHTML + followers;
-        document.getElementById("Views").innerHTML = document.getElementById("Views").innerHTML + views;
+        function refresh() {
+            document.getElementById("Username").innerHTML = username;
+            document.getElementById("Followers").innerHTML = "Followers: " + followers;
+            document.getElementById("Views").innerHTML = "Views: " + views;
+        };
+
     </script>
 
 }

@@ -15,6 +15,7 @@ namespace TwitchGuide.Models
             Follows = new HashSet<User>();
         }
 
+        [Key]
         public int UserID { get; set; }
 
         public int? TwitchID { get; set; }

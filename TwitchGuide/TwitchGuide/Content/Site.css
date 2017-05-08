@@ -23,6 +23,7 @@ textarea {
     max-width: 280px;
 }
 
+
 /*disable spinbox on number inputs*/
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
@@ -32,4 +33,27 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield;
+}
+.StoryItem {
+    background-color:#f7f7f7;
+    padding-left:10px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.StoryItem h3 {
+    color:#3b5998;
+	padding-left:10px;
+}
+
+.StoryItem h4 {
+    color:#8b9dc3;
+}
+
+.StoryItem h5 {
+    color:#888888;
+}
+
+.UserItem {
+    padding-left:50px;
 }
