@@ -267,7 +267,7 @@
                 beforeSend: setAuthHeader
             });
         });
-        $('.btn').click(function () {
+        $(window).load(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/' + username + '/',
                 type: 'GET',
@@ -280,7 +280,7 @@
             });
             return false;
         });
-        $('.btn').click(function () {
+        $(window).load(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/feed/' + username + '/posts',
                 type: 'GET',
