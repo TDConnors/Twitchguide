@@ -302,7 +302,7 @@
         });
         $(window).load(function () {
             $.ajax({
-                url: chanurl,
+                url: chanurl + username + clientid,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -310,8 +310,8 @@
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
-                }//,
-                // beforeSend: setNoAuthHeader
+                },
+                 beforeSend: setNoAuthHeader
             });
             return false;
         });
