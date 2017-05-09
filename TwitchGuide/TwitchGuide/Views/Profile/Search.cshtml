@@ -248,6 +248,7 @@
             </div>
         </div>
         <div class="col-md-1">
+            <p>Click Me to Refresh</p>
         </div>
         <div class="col-md-4">
             <div id="Stream info" class="userinfo">
@@ -301,7 +302,7 @@
                 beforeSend: setAuthHeader
             });
         });
-        $(window).load(function () {
+        $("p").click(function () {
             $.ajax({
                 url: streamurl + username + clientid,
                 type: 'GET',
@@ -320,7 +321,7 @@
             });
             return false;
         });
-        $(window).load(function () {
+        $("p").click(function () {
             $.ajax({
                 url: chanurl + username + clientid,
                 type: 'GET',
