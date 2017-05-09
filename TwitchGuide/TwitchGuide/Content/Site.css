@@ -57,3 +57,10 @@ input[type=number] {
 .UserItem {
     padding-left:50px;
 }
+
+.asText {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+}

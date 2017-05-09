@@ -24,7 +24,10 @@ namespace TwitchGuide.Controllers
         // GET: News/Create
         public ActionResult Create()
         {
-            return View();
+            if (isLoggedIn())
+                return View();
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Create
@@ -40,8 +43,7 @@ namespace TwitchGuide.Controllers
                 news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
-                int current = 7;
-                current = getUserID();
+                int current = getUserID();
                 db.SiteNews.Add(new SiteNews { UserID = current, NewsID = news.NewsID });
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -56,12 +58,20 @@ namespace TwitchGuide.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            News news = db.News.Find(id);
+
+            SiteNews news = db.SiteNews.Where(p => p.NewsID == id).FirstOrDefault();
+
             if (news == null)
             {
                 return HttpNotFound();
             }
-            return View(news);
+			
+			int currentId = getUserID();
+			
+            if ((currentId == news.UserID)||(currentId == 3))
+                return View(news.News);
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Edit/5
@@ -87,12 +97,20 @@ namespace TwitchGuide.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            News news = db.News.Find(id);
+
+            SiteNews news = db.SiteNews.Where(p => p.NewsID == id).FirstOrDefault();
+
             if (news == null)
             {
                 return HttpNotFound();
             }
-            return View(news);
+			
+            int currentId = getUserID();
+			
+            if ((currentId == news.UserID)||(currentId == 3))
+                return View(news.News);
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Delete/5
