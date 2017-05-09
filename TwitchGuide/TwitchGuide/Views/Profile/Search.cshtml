@@ -226,7 +226,7 @@
                             Panel title
                         </h3>
                     </div>
-                    <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel=""> </div>
+                    <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
@@ -285,6 +285,7 @@
     <script>
         var username;
         var chanurl = 'https://api.twitch.tv/kraken/channels/';
+        var streamurl = 'https://api.twitch.tv/kraken/streams/';
         var clientid= '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         $(document).ready(function () {
             $.ajax({
@@ -294,11 +295,28 @@
                 success: function (result) {
                     $("#Username").html(result.name);
                     username = result.name;
-                    document.getElementById("OnlineStatus").setAttribute("data-twitch-channel", username);
-                    chanurl = chanurl + username + clientid;
                 },
                 beforeSend: setAuthHeader
             });
+        });
+        $(window).load(function () {
+            $.ajax({
+                url: chanurl + username + clientid,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.stream != null) {
+                        document.getElementById("OnlineStatus").src = 'http://media1.kohlsimg.com/is/image/kohls/2335032_Green_sw?wid=20&hei=20'
+                    }
+                    else {
+                        document.getElementById("OnlineStatus").src = 'http://media1.kohlsimg.com/is/image/kohls/1621140_Red_sw?wid=20&hei=20'
+
+                    }
+
+                },
+                 beforeSend: setNoAuthHeader
+            });
+            return false;
         });
         $(window).load(function () {
             $.ajax({
@@ -310,8 +328,9 @@
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
+
                 },
-                 beforeSend: setNoAuthHeader
+                beforeSend: setNoAuthHeader
             });
             return false;
         });
