@@ -10,8 +10,6 @@ using TwitchGuide.Models;
 using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-using TwitchGuide.Models;
-using TwitchGuide.DAL;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
@@ -45,13 +43,20 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Search()
         {
-
             return View();
         }
 
         public ActionResult AllUsers()
         {
             return View(db.Users.ToList());
+        }
+        public ActionResult UserLink()
+        {
+            return View();
+        }
+        public ActionResult goToUser()
+        {
+            return View();
         }
     }
 }
