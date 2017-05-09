@@ -277,7 +277,9 @@
         </div>
     </div>
 </div>
-
+<div class="list-group" id="followslist">
+    <a href="#" class="list-group-item active">Channels Followed</a>
+</div>
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -287,7 +289,9 @@
         var username = '';
         var chanurl = 'https://api.twitch.tv/kraken/channels/';
         var streamurl = 'https://api.twitch.tv/kraken/streams/';
-        var clientid= '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var followurl = 'https://api.twitch.tv/kraken/users/' ;
+        var followurl2 = '&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
         $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
@@ -332,6 +336,23 @@
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
 
+                },
+                beforeSend: setNoAuthHeader
+            });
+            return false;
+        });
+        $("p").click(function () {
+            $.ajax({
+                url: followurl + username + followurl2,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    for(var i = 0; i<result.follows){
+                        followee = $("<div class='list-group-item'></div>");
+                        $("#followslist").append(followee);
+                        followeeName = result.follows[i].channel.name;
+                        followee.append(followeename);
+                    }
                 },
                 beforeSend: setNoAuthHeader
             });
