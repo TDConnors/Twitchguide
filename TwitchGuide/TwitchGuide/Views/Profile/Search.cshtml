@@ -295,13 +295,15 @@
                 success: function (result) {
                     $("#Username").html(result.name);
                     username = result.name;
+                    chanurl = chanurl + username + clientid;
+                    streamurl = streamurl + username + clientid;
                 },
                 beforeSend: setAuthHeader
             });
         });
         $(window).load(function () {
             $.ajax({
-                url: chanurl + username + clientid,
+                url: streamurl + username + clientid,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
