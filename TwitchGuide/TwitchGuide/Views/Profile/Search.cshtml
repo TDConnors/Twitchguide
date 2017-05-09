@@ -214,34 +214,74 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
-<div id="Profile info" class="userinfo">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 id="Username" class="panel-title">
-                Panel title
-            </h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel=""> </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
+        <div class="col-md-4">
+            <div id="Profile info" class="userinfo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 id="Username" class="panel-title">
+                            Panel title
+                        </h3>
+                    </div>
+                    <div class="panel-body"> Online: <img id="OnlineStatus" data-twitch-channel=""> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Views:<p id="Views"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Followers:<p id="Followers"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="Views" class="panel-body"> Views: </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <div id="Stream info" class="userinfo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 id="Username" class="panel-title">
+                            Stream
+                        </h3>
+                    </div>
+                    <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Game: <p id="Game"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Followers: <p id="Followers"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="Followers" class="panel-body"> Followers: </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
-            </div>
+        <div class="col-md-2">
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
@@ -250,7 +290,7 @@
 
     <script>
         var username;
-        var chanurl='https://api.twitch.tv/kraken/channels/';
+        var chanurl = 'https://api.twitch.tv/kraken/channels/';
         $(document).ready(function () {
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/user',
@@ -267,14 +307,16 @@
         });
         $(window).load(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/bitsmiths?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6',
+                url: 'https://api.twitch.tv/kraken/channels/' + username + '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6',
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
+                    $("#StreamTitle").html(result.status);
+                    $("#Game").html(result.game);
                 }//,
-               // beforeSend: setNoAuthHeader
+                // beforeSend: setNoAuthHeader
             });
             return false;
         });
