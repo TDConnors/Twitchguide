@@ -347,7 +347,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
-                    for (var i = 0; i < result.follows; i++){
+                    for (var i = 0; i < result.follows.length; i++){
                         followee = $("<div class='list-group-item'></div>");
                         $("#followslist").append(followee);
                         followeeName = result.follows[i].channel.name;
