@@ -347,10 +347,10 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
-                    for (var i = 0; i < result.follows; i++){
+                    for (var i = 0; i < result.follows.channel; i++){
                         followee = $("<div class='list-group-item'></div>");
                         $("#followslist").append(followee);
-                        followeeName = result.follows[i].channel.name;
+                        followeeName = result.follows.channel[i].name;
                         followee.append(followeename);
                     }
                 },
