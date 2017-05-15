@@ -22,12 +22,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Site News", "Index", "News")</li>
+                    <li>@Html.ActionLink("My Profile", "Search", "Profile", new { name = "" }, new { })</li>
+                    <li>@Html.ActionLink("News", "Index", "News")</li>
                     <li>@Html.ActionLink("All Users", "AllUsers", "Home")</li>
-                    <li>@Html.ActionLink("My Profile", "Search", "Profile", new { name = "" }, new {})</li>
-                    <li>@Html.ActionLink("Search", "Search", "Home")</li>
+
                 </ul>
+                <span class="nav navbar-nav form-inline" style="margin-top:8px;">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Search by Username">
+                    <button class="btn btn-info" id="btnSearch">Search</button>
+                </span>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -40,6 +43,12 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
+    
+    <script>
+        $("#btnSearch").click(function () {
+            location.href = "../Users/" + $("#name").val();
+        });
+    </script>
     @if (Request.IsAuthenticated)
     {
         <script>
