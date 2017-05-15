@@ -462,7 +462,7 @@ namespace TwitchGuide.Controllers
             {
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 string userData = reader.ReadToEnd();
-                dynamic json = JsonConvert.DeserializeObject(userData);
+                var json = JsonConvert.DeserializeObject<dynamic>(userData);
                 ourUser.TwitchID = Int32.Parse(json._id);
                 ourUser.Username = json.display_name;
                 ourUser.Avatar = json.logo;
