@@ -43,15 +43,50 @@ input[type=number] {
 
 .StoryItem h3 {
     color:#3b5998;
-	padding-left:10px;
 }
 
 .StoryItem h4 {
     color:#8b9dc3;
+    padding-left:25px;
 }
 
 .StoryItem h5 {
     color:#888888;
+    padding-left:25px;
+}
+.HomeStoryItem {   
+    max-width: 500px;
+    align-content:center;
+    background-color:#f7f7f7;
+    padding-left:10px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.HomeStoryItem h3 {
+    color:#3b5998;
+}
+
+.HomeStoryItem h4 {
+    color:#8b9dc3;
+    padding-left:25px;
+}
+
+.HomeStoryItem h5 {
+    color:#888888;
+    padding-left:25px;
+}
+
+.HomeNewsTitle h5
+{ 
+    max-width: 500px;
+    font-size: 36px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:#0000D5;
+    font-weight: bold;
+    outline: #00FFFF solid thick;
+    outline-width: 15px;
+    text-align: center;
 }
 
 .UserItem {

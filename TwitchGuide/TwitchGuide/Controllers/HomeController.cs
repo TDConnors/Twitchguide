@@ -14,15 +14,22 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
 {
+    public class userAndNews
+    {
+        public IEnumerable<SiteNews> siteNews { get; set; }
+        public User user { get; set; }
+    }
     public class HomeController : Controller
     {
         private TwitchContext db = new TwitchContext();
 
         public ActionResult Index()
         {
-
+            List<SiteNews> siteNews = db.SiteNews.ToList();
+            ViewData["MyData"] = siteNews;
             if (User.Identity.IsAuthenticated)
             {
+                
                 //Get the AuthToken for the current user, store in a ViewBag
                 var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
