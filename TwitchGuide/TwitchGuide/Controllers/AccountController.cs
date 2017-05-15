@@ -13,6 +13,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net;
 using TwitchGuide.DAL;
 using System.Data.Entity;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace TwitchGuide.Controllers
 {
@@ -446,9 +449,29 @@ namespace TwitchGuide.Controllers
             }
 
             ourUser.AuthToken = token.Value;
+
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("https://api.twitch.tv/kraken/user");
+            myRequest.Method = "GET";
+            myRequest.ContentType = "application/json; charset=utf-8";
+            myRequest.Accept = "application / vnd.twitchtv.v5 + json";
+            myRequest.Headers["Client-ID"] = "kx6k6d64t0ok27s5sfyo1w5n1q3dn6";
+            myRequest.Headers["Authorization"] = "OAuth " + ourUser.AuthToken;
+            //Get Response
+            HttpWebResponse response = myRequest.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string userData = reader.ReadToEnd();
+                dynamic json = JsonConvert.DeserializeObject(userData);
+                ourUser.TwitchID = json._id;
+                ourUser.Username = json.display_name;
+                ourUser.Avatar = json.logo;
+                currentUser.UserName = json.display_name;
+            }
+
             db.Entry(ourUser).State = EntityState.Modified;
+            db.Entry(currentUser).State = EntityState.Modified;
             db.SaveChanges();
-            //TODO: Add getting the Twitch User ID and add getting the actual Twitch Username instead of email
             return RedirectToAction("LoginSuccess", "Home");
         }
 
