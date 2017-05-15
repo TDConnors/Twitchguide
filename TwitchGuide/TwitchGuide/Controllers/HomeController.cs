@@ -64,13 +64,13 @@ namespace TwitchGuide.Controllers
         {
             return View();
         }
-        public ActionResult AddAvatar(String logo)
-        { 
-            User current = GetUser();
-            current.Avatar = logo;
-            db.Entry(current).State = EntityState.Modified;
-            db.SaveChanges();
-            return Redirect(Request.UrlReferrer.ToString());
-        }
+        //public ActionResult AddAvatar(String logo)
+        //{ 
+        //    User current = GetUser();
+        //    current.Avatar = logo;
+        //    db.Entry(current).State = EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Redirect(Request.UrlReferrer.ToString());
+        //}
     }
 }
