@@ -88,7 +88,10 @@ input[type=number] {
     outline-width: 15px;
     text-align: center;
 }
-
+.FooterCenter
+{
+    text-align: center;
+}
 .UserItem {
     padding-left:50px;
 }
@@ -98,4 +101,12 @@ input[type=number] {
     border:none;
     margin:0;
     padding:0;
+}
+.AboutUsWhyWeMadeItHeader
+{
+    font-size: 36px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:#0000D5;
+    font-weight: bold;
+    text-align: center;
 }
