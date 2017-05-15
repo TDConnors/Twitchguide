@@ -463,14 +463,16 @@ namespace TwitchGuide.Controllers
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 string userData = reader.ReadToEnd();
                 var json = JsonConvert.DeserializeObject<dynamic>(userData);
-                //ourUser.TwitchID = Int32.Parse(json._id);
+                
+                ourUser.TwitchID = Int32.Parse(json._id);
                 ourUser.Username = json.display_name;
                 ourUser.Avatar = json.logo;
-                currentUser.UserName = json.display_name;
                 db.Entry(ourUser).State = EntityState.Modified;
                 db.SaveChanges();
-                db.Entry(currentUser).State = EntityState.Modified;
-                db.SaveChanges();
+
+                currentUser.UserName = json.display_name;
+                UserManager.Update(currentUser);
+
                 return RedirectToAction("LoginSuccess", "Home");
             }
 

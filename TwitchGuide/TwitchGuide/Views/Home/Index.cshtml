@@ -44,7 +44,9 @@
         <tr><th>Favorites</th></tr>
         @foreach (var user in Model.Follows)
         {
-                    <tr><td>@user.Avatar</td><td>@user.Username</td></tr>
+                    <tr>
+                        <td><img src="@user.Avatar" height="32" width="32" /> <a href="/Users/@user.Username">@user.Username</a></td>
+                    </tr>
         }
 
     </table>
@@ -53,7 +55,7 @@ else
 {
     <div>Please login to see your Favorites</div>
 }
-@if (Request.IsAuthenticated)
+@*@if (Request.IsAuthenticated)
 {
     <script>
         $(document).ready(function () {
@@ -73,7 +75,7 @@ else
         });
     </script>
 
-}
+}*@
 
 @section Scripts {
     <script>
