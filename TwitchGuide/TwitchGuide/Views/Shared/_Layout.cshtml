@@ -70,7 +70,7 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function (result) {
-                        $("#UserNameDisplay").html("<a href='/Manage'>result.name</a>");
+                        $("#UserNameDisplay").html("<a href='/Manage'>" + result.name + "</a>");
                     },
                     beforeSend: setAuthHeader
                 });
