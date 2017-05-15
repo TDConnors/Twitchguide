@@ -468,6 +468,7 @@ namespace TwitchGuide.Controllers
                 ourUser.Avatar = json.logo;
                 currentUser.UserName = json.display_name;
                 db.Entry(ourUser).State = EntityState.Modified;
+                db.SaveChanges();
                 db.Entry(currentUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("LoginSuccess", "Home");
