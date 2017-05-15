@@ -53,6 +53,27 @@ else
 {
     <div>Please login to see your Favorites</div>
 }
+@if (Request.IsAuthenticated)
+{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/user',
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    $.ajax({
+                        url: '@Url.Action("AddAvatar", "Home")',
+                        type: 'GET',
+                        data: { Id: result.logo },
+                    });
+                },
+                beforeSend: setAuthHeader
+            });
+        });
+    </script>
+
+}
 
 @section Scripts {
     <script>

@@ -19,7 +19,7 @@ namespace TwitchGuide.Controllers
         public IEnumerable<SiteNews> siteNews { get; set; }
         public User user { get; set; }
     }
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private TwitchContext db = new TwitchContext();
 
@@ -27,18 +27,12 @@ namespace TwitchGuide.Controllers
         {
             List<SiteNews> siteNews = db.SiteNews.ToList();
             ViewData["MyData"] = siteNews;
-            if (User.Identity.IsAuthenticated)
+            if (isLoggedIn())
             {
-                
-                //Get the AuthToken for the current user, store in a ViewBag
-                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-                var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+                User ourUser = GetUser();
                 ViewBag.token = ourUser.AuthToken;
-
                 return View(ourUser);
             }
-
             return View();
         }
 
@@ -68,6 +62,14 @@ namespace TwitchGuide.Controllers
         public ActionResult AboutUs()
         {
             return View();
+        }
+        public ActionResult AddAvatar(String logo)
+        { 
+            User current = GetUser();
+            current.Avatar = logo;
+            db.Entry(current).State = EntityState.Modified;
+            db.SaveChanges();
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }
