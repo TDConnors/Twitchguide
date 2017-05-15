@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity.Owin;
 
+
 namespace TwitchGuide.Controllers
 {
     public class userAndNews
@@ -27,10 +28,10 @@ namespace TwitchGuide.Controllers
         {
             List<SiteNews> siteNews = db.SiteNews.ToList();
             ViewData["MyData"] = siteNews;
-            if (isLoggedIn())
-            {
-                User ourUser = GetUser();
-                ViewBag.token = ourUser.AuthToken;
+			if(isLoggedIn())
+            { 
+				User ourUser = GetUser();
+				ViewBag.token = ourUser.AuthToken;
                 return View(ourUser);
             }
             return View();
