@@ -464,7 +464,7 @@ namespace TwitchGuide.Controllers
                 string userData = reader.ReadToEnd();
                 var json = JsonConvert.DeserializeObject<dynamic>(userData);
                 
-                ourUser.TwitchID = Int32.Parse(json._id);
+                //ourUser.TwitchID = Int32.Parse(json._id);
                 ourUser.Username = json.display_name;
                 ourUser.Avatar = json.logo;
                 db.Entry(ourUser).State = EntityState.Modified;
