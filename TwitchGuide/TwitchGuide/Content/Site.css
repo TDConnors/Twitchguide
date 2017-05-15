@@ -43,17 +43,57 @@ input[type=number] {
 
 .StoryItem h3 {
     color:#3b5998;
-	padding-left:10px;
 }
 
 .StoryItem h4 {
     color:#8b9dc3;
+    padding-left:25px;
 }
 
 .StoryItem h5 {
     color:#888888;
+    padding-left:25px;
+}
+.HomeStoryItem {   
+     margin: 0 auto;  
+    max-width: 500px;
+    align-content:center;
+    background-color:#f7f7f7;
+    padding-left:10px;
+    padding-top:1px;
+    padding-bottom:1px;
 }
 
+.HomeStoryItem h3 {
+    color:#3b5998;
+}
+
+.HomeStoryItem h4 {
+    color:#8b9dc3;
+    padding-left:25px;
+}
+
+.HomeStoryItem h5 {
+    color:#888888;
+    padding-left:25px;
+}
+
+.HomeNewsTitle h5
+{ 
+      margin: 0 auto;  
+    max-width: 500px;
+    font-size: 36px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:#0000D5;
+    font-weight: bold;
+    outline: #00FFFF solid thick;
+    outline-width: 15px;
+    text-align: center;
+}
+.FooterCenter
+{
+    text-align: center;
+}
 .UserItem {
     padding-left:50px;
 }
@@ -63,4 +103,81 @@ input[type=number] {
     border:none;
     margin:0;
     padding:0;
+}
+.AboutUsWhyWeMadeItHeader
+{
+    font-size: 36px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:#0000D5;
+    font-weight: bold;
+    text-align: center;
+}
+.AboutUsWhyWeMadeIt
+{
+    margin: 0 auto;  
+    max-width: 750px;
+    background-color:#000000;
+    font-size: 24px;
+    font-family: fantasy,serif;
+    color:#00FFD5;
+    font-weight: bold;
+    outline: #000000 double thick;
+    outline-width: 15px;
+    text-align: center;
+}
+
+.AboutUsUsers
+{
+        margin: 0 auto;  
+    max-width: 750px;
+    font-family: fantasy,serif;
+    text-align: center;
+    outline: #000000  solid;
+    outline-width: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.AboutImage
+{
+    margin: 0 auto;  
+    max-width: 200px;
+    outline: #000000  solid;
+    outline-width: 5px;
+}
+ .AboutName
+{
+    margin: 0 auto;  
+    max-width: 250px;
+    background-color:#000000;
+    font-size: 28px;
+    font-family: fantasy,serif;
+    color:#ffd800;
+    font-weight: bold;
+}
+
+.AboutDescription
+{
+    font-size: 24px;
+    margin: 0 auto;  
+    max-width: 500px;
+    background-color:#E1FFFF;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.AboutEducation
+{
+    font-size: 24px;
+    margin: 0 auto;  
+    max-width: 500px;
+    background-color:#FFD0A0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.AboutUsUsers h4
+{
+        font-size: 28px;
+        font-family: Impact;
+        outline: #000000  solid;
+        outline-width: 5px;
 }

@@ -12,26 +12,28 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity.Owin;
 
+
 namespace TwitchGuide.Controllers
 {
-    public class HomeController : Controller
+    public class userAndNews
+    {
+        public IEnumerable<SiteNews> siteNews { get; set; }
+        public User user { get; set; }
+    }
+    public class HomeController : BaseController
     {
         private TwitchContext db = new TwitchContext();
 
         public ActionResult Index()
         {
-
-            if (User.Identity.IsAuthenticated)
-            {
-                //Get the AuthToken for the current user, store in a ViewBag
-                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-                var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
-                ViewBag.token = ourUser.AuthToken;
-
+            List<SiteNews> siteNews = db.SiteNews.ToList();
+            ViewData["MyData"] = siteNews;
+			if(isLoggedIn())
+            { 
+				User ourUser = GetUser();
+				ViewBag.token = ourUser.AuthToken;
                 return View(ourUser);
             }
-
             return View();
         }
 
@@ -58,5 +60,17 @@ namespace TwitchGuide.Controllers
         {
             return View();
         }
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+        //public ActionResult AddAvatar(String logo)
+        //{ 
+        //    User current = GetUser();
+        //    current.Avatar = logo;
+        //    db.Entry(current).State = EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Redirect(Request.UrlReferrer.ToString());
+        //}
     }
 }
