@@ -11,34 +11,9 @@
 
 </head>
 <body>
-<<<<<<< HEAD
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-=======
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="HomeLogo">@Html.ActionLink("twitch Guide", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</div>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("News", "Index", "News")</li>
-                    <li>@Html.ActionLink("All Users", "AllUsers", "Home")</li>
-
-                </ul>
-                <span class="nav navbar-nav form-inline" style="margin-top:8px;">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Search by Username">
-                    <button class="btn btn-info" id="btnSearch">Search</button>
-                </span>
-                @Html.Partial("_LoginPartial")
-            </div>
->>>>>>> 128173197425182b6a03c89edb24f7f38a6bde60
         </div>
         <!--logo start-->
         <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
@@ -88,7 +63,6 @@
         </section>
     </section>
     
-<<<<<<< HEAD
             <!--footer start-->
             <footer class="myFooter">
                     <a href="@Url.Action("AboutUs", "Home")" class="AboutUsLink"><b>About Us</b></a>
@@ -151,13 +125,6 @@
                     };
                 </script>
             }
-=======
-    <script>
-        $("#btnSearch").click(function () {
-            location.href = "../Users/" + $("#name").val();
-        });
-    </script>
->>>>>>> 128173197425182b6a03c89edb24f7f38a6bde60
 </body>
 
 </html>
