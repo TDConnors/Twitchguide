@@ -34,7 +34,7 @@ namespace TwitchGuide.Controllers
                return myID;
             }
             else
-                return 7;
+                return -1;
         }
     }
 }

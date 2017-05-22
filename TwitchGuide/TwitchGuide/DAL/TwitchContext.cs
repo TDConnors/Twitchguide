@@ -21,6 +21,7 @@ namespace TwitchGuide.DAL
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<SiteNews> SiteNews { get; set; }
+        public virtual DbSet<Follower> Followers { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

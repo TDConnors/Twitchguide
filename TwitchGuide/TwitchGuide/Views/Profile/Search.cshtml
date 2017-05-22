@@ -4,12 +4,14 @@
     ViewBag.Title = "Profile";
 }
 
-<h2>Profile</h2>
-
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
+
+<h2>Profile</h2>
+
+<button class="btn btn-default" id="AddFav">Add Favorite</button>
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
 
@@ -358,6 +360,18 @@
             });
             return false;
         });
+        $("#AddFav").click(function () {
+            $.ajax({
+                url: '@Url.Action("AddFavorite", "Profile")',
+                contentType: "application/json; charset=utf-8",
+                data: { "id" : @Model.UserObj.UserID },
+                success: function () {
+                    alert("User Added to Favorites");
+                }
+            });
+            return false;
+        });
+
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');

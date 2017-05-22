@@ -15,11 +15,11 @@
             @if (item.Avatar.IsEmpty() == false)
             {
                 temp = new HtmlString(item.Avatar);
-                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span>@Html.ActionLink(item.Username, "goToUser", "Home", new { name = item.Username }, null)
+                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
             }
             else
             {
-                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span>@Html.ActionLink(item.Username,"goToUser","Home", new { name = item.Username }, null)
+                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
             }
         </div>
     }
