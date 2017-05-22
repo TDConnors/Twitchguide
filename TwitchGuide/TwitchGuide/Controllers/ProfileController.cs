@@ -157,13 +157,13 @@ namespace TwitchGuide.Controllers
                     return View(timeblock);
                 }
 
-                //Check if timeblock already exists in DB
-                var check = db.Timeblocks.Where(p =>
-                (p.Day == timeblock.Day) &&
-                (p.StartHour == timeblock.StartHour) &&
-                (p.StartMinute == timeblock.StartMinute) &&
-                (p.EndHour == timeblock.EndHour) &&
-                (p.EndMinute == timeblock.EndMinute)).FirstOrDefault();
+                    //Check if timeblock already exists in DB
+                    var check = db.Timeblocks.Where(p =>
+                    (p.Day == timeblock.Day) &&
+                    (p.StartHour == timeblock.StartHour) &&
+                    (p.StartMinute == timeblock.StartMinute) &&
+                    (p.EndHour == timeblock.EndHour) &&
+                    (p.EndMinute == timeblock.EndMinute)).FirstOrDefault();
 
                 if (check == null) //Timeblock doesn't exist yet
                 {
@@ -233,9 +233,9 @@ namespace TwitchGuide.Controllers
 
         public async Task AddFavorite(int id)
         {
-
-            db.Followers.Add(new Follower { UserID = 1, FollowingID = 25 });
-            await db.SaveChangesAsync();
+            
+                db.Followers.Add(new Follower { UserID = 1, FollowingID = 25 });
+                await db.SaveChangesAsync();
         }
 
         protected override void Dispose(bool disposing)

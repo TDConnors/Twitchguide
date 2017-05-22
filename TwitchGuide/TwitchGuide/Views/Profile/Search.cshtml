@@ -1,17 +1,21 @@
-﻿@model TwitchGuide.Models.ProfileModel
+﻿@using Microsoft.AspNet.Identity
+
+@model TwitchGuide.Models.ProfileModel
 
 @{
     ViewBag.Title = "Profile";
 }
-
-<h2>Profile</h2>
 
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
 
-<button class="btn btn-primary" id="toggleSchedule">Show/Hide Schedule</button>
+<h2>Profile</h2>
+
+<button class="btn btn-default" id="AddFav">Add Favorite</button>
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
 
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
@@ -222,9 +226,7 @@
             <div id="Profile info" class="userinfo">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 id="Username" class="panel-title">
-                            Panel title
-                        </h3>
+                        <h3 id="Username" class="panel-title"></h3>
                     </div>
                     <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
@@ -246,9 +248,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1">
-            <p>Click Me to Refresh</p>
         </div>
         <div class="col-md-4">
             <div id="Stream info" class="userinfo">
@@ -280,47 +279,34 @@
 <div class="list-group" id="followslist">
     <a href="#" class="list-group-item active">Channels Followed</a>
 </div>
-
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.rawgit.com/Fugiman/Twitch-Channel-Status/1d74252edf89110507cbf3088f9c3eaa38fac9d3/twitch-channel-status.min.js"></script>
-<script>
-                $(document).ready(function () {
-                    $("#toggleSchedule").click(function () {
-                        $("#Schedule").toggle(1000);
-                    });
-                });
-</script>
-<script>
-                $(document).ready(function () {
-                        $("#Schedule").hide();
-                });
-</script>
+
     <script>
         var username = '';
-        var chanurl = 'https://api.twitch.tv/kraken/channels/';
-        var streamurl = 'https://api.twitch.tv/kraken/streams/';
+        var chanurl = 'https://api.twitch.tv/kraken/channels/'+'@User.Identity.GetUserName()'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@User.Identity.GetUserName()'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
-        var followurl = 'https://api.twitch.tv/kraken/users/' ;
-        var followurl2 = '/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
+        var followurl = 'https://api.twitch.tv/kraken/users/'+'@User.Identity.GetUserName()'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        //$(document).ready(function () {
+        //    $.ajax({
+        //        url: 'https://api.twitch.tv/kraken/user',
+        //        type: 'GET',
+        //        dataType: 'json',
+        //        success: function (result) {
+        //            $("#Username").html(result.name);
+        //            username = result.name;
+        //            chanurl = chanurl + username + clientid;
+        //            streamurl = streamurl + username + clientid;
+        //        },
+        //        beforeSend: setAuthHeader
+        //    });
+        //});
         $(document).ready(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/user',
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    $("#Username").html(result.name);
-                    username = result.name;
-                    chanurl = chanurl + username + clientid;
-                    streamurl = streamurl + username + clientid;
-                },
-                beforeSend: setAuthHeader
-            });
-        });
-        $("p").click(function () {
-            $.ajax({
-                url: streamurl + username + clientid,
+                url: streamurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -337,12 +323,13 @@
             });
             return false;
         });
-        $("p").click(function () {
+        $(document).ready(function () {
             $.ajax({
-                url: chanurl + username + clientid,
+                url: chanurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
+                    $("#Username").html(@User.Identity.GetUserName());
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
@@ -353,9 +340,9 @@
             });
             return false;
         });
-        $("p").click(function () {
+        $(document).ready(function () {
             $.ajax({
-                url: followurl + username + followurl2,
+                url: followurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -370,6 +357,18 @@
             });
             return false;
         });
+        $("#AddFav").click(function () {
+            $.ajax({
+                url: '@Url.Action("AddFavorite", "Profile")',
+                contentType: "application/json; charset=utf-8",
+                data: { "id" : @Model.UserObj.UserID },
+                success: function () {
+                    alert("User Added to Favorites");
+                }
+            });
+            return false;
+        });
+
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
