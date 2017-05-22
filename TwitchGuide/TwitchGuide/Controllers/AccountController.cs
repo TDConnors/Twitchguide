@@ -413,11 +413,7 @@ namespace TwitchGuide.Controllers
                 {
                     if (currentClaims.Count(a => a.Type.Contains("twitch:access_token")) > 0)
                     {
-                        for (int i = 0; i < currentClaims.Count(a => a.Type.Contains("twitch:access_token"))-1; i++)
-                        {
-                            var c = currentClaims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
-                            await UserManager.RemoveClaimAsync(user.Id, c);
-                        }
+                        await UserManager.RemoveClaimAsync(user.Id, twitchToken);
                     }
 
                     await UserManager.AddClaimAsync(user.Id, twitchToken);
@@ -468,30 +464,7 @@ namespace TwitchGuide.Controllers
                 string userData = reader.ReadToEnd();
                 var json = JsonConvert.DeserializeObject<dynamic>(userData);
 
-                //ourUser.TwitchID = Int32.Parse(json._id);
-                //Testing
-                ViewBag.test1 = json._id;
-                ViewBag.test2 = Int32.Parse(json._id);
-                try
-                {
-                    ViewBag.test3 = json.id;
-                    ViewBag.test4 = Int32.Parse(json.id);
-                }
-                catch (Exception e) { ViewBag.test3 = "exception occured"; }
-                try
-                {
-                    ViewBag.test5 = Convert.ToInt32(json._id);
-                }
-                catch (Exception e) {  }
-                try
-                {
-                    ViewBag.test6 = Convert.ToInt32(json.id);
-                }
-                catch (Exception e) { }
-
-
-
-
+                ourUser.TwitchID = Int32.Parse(json.id);
                 ourUser.Username = json.display_name;
                 ourUser.Avatar = json.logo;
                 db.Entry(ourUser).State = EntityState.Modified;
