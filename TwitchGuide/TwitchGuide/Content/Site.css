@@ -1,4 +1,12 @@
-﻿body {
+﻿@font-face {
+    font-family: 'DIMIS___';
+    src: url('../fonts/DIMIS___.TTF') format('truetype');
+}
+@font-face {
+    font-family: 'twitchy-tv';
+    src: url('../fonts/twitchy-tv.ttf') format('truetype');
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -172,12 +180,26 @@ input[type=number] {
     max-width: 500px;
     background-color:#FFD0A0;
     padding-top: 15px;
-    padding-bottom: 15px;
+    
 }
 .AboutUsUsers h4
 {
-        font-size: 28px;
-        font-family: Impact;
-        outline: #000000  solid;
-        outline-width: 5px;
+    font-size: 28px;
+    font-family: Impact;
+    outline: #000000  solid;
+    outline-width: 5px;
+}
+.HomeLogo
+{ 
+    font-size-adjust: 1;
+    font-family: DIMIS___;
+
+}
+HomeLogo:hover, HomeLogo:focus {
+    text-decoration: none;
+    outline: none;
+}
+.navbar 
+{
+    background-color: #4B367C;
 }

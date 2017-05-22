@@ -11,10 +11,11 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
+using System.Threading.Tasks;
 
 namespace TwitchGuide.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         private TwitchContext db = new TwitchContext();
 
@@ -217,6 +218,24 @@ namespace TwitchGuide.Controllers
             db.Schedules.Remove(mapping);
             db.SaveChanges();
             return RedirectToAction("Search");
+        }
+
+        public async Task AddFavoriteXX(int id)
+        {
+            User ourUser = GetUser();
+            if (ourUser.UserID != id)
+            {
+                Follower newFollower = new Follower { UserID = ourUser.UserID, FollowingID = id };
+                db.Followers.Add(newFollower);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddFavorite(int id)
+        {
+            
+                db.Followers.Add(new Follower { UserID = 1, FollowingID = 25 });
+                await db.SaveChangesAsync();
         }
 
         protected override void Dispose(bool disposing)
