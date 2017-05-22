@@ -15,29 +15,22 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
 {
-    public class userAndNews
-    {
-        public IEnumerable<SiteNews> siteNews { get; set; }
-        public User user { get; set; }
-    }
     public class HomeController : BaseController
     {
         private TwitchContext db = new TwitchContext();
 
         public ActionResult Index()
         {
-            List<SiteNews> siteNews = db.SiteNews.ToList();
-            ViewData["MyData"] = siteNews;
-			if(isLoggedIn())
-            { 
-				User ourUser = GetUser();
-				ViewBag.token = ourUser.AuthToken;
+            if(isLoggedIn())
+            {
+                User ourUser = GetUser();
                 return View(ourUser);
             }
+
+            ViewData["MyData"] = db.SiteNews.ToList();
             return View();
         }
 
-        [HttpGet]
         public ActionResult LoginSuccess()
         {
             return View();
@@ -52,25 +45,10 @@ namespace TwitchGuide.Controllers
         {
             return View(db.Users.ToList());
         }
-        public ActionResult UserLink()
-        {
-            return View();
-        }
-        public ActionResult goToUser()
-        {
-            return View();
-        }
         public ActionResult AboutUs()
         {
             return View();
         }
-        //public ActionResult AddAvatar(String logo)
-        //{ 
-        //    User current = GetUser();
-        //    current.Avatar = logo;
-        //    db.Entry(current).State = EntityState.Modified;
-        //    db.SaveChanges();
-        //    return Redirect(Request.UrlReferrer.ToString());
-        //}
+
     }
 }
