@@ -7,7 +7,7 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li id="LogoSpot" style="margin-top:8px"></li>
+        <li id="LogoSpot"></li>
         <li id="UserNameDisplay">
             @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
@@ -16,8 +16,9 @@
     }
 }
 else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Sign in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+{<div class="top-menu">
+    <ul class="nav pull-right top-menu">
+        <li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>
     </ul>
+</div>
 }

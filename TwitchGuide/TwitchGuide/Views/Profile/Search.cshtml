@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
 
-<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+<button class="btn btn-primary" id="toggleSchedule">Show/Hide Schedule</button>
 
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
@@ -280,11 +280,23 @@
 <div class="list-group" id="followslist">
     <a href="#" class="list-group-item active">Channels Followed</a>
 </div>
+
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.rawgit.com/Fugiman/Twitch-Channel-Status/1d74252edf89110507cbf3088f9c3eaa38fac9d3/twitch-channel-status.min.js"></script>
-
+<script>
+                $(document).ready(function () {
+                    $("#toggleSchedule").click(function () {
+                        $("#Schedule").toggle(1000);
+                    });
+                });
+</script>
+<script>
+                $(document).ready(function () {
+                        $("#Schedule").hide();
+                });
+</script>
     <script>
         var username = '';
         var chanurl = 'https://api.twitch.tv/kraken/channels/';

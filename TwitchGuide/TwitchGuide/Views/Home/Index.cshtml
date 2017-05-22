@@ -10,127 +10,108 @@
 @{
      List<TwitchGuide.Models.SiteNews> newsList = (List<TwitchGuide.Models.SiteNews>)ViewData["MyData"]; // Cast the list
 }
-<br />
 
-
-<div class="HomeNewsTitle"><h5>What's New?</h5></div>
-<br />
-@foreach (var item in @newsList.Take(3))
-{
-    <hr />
-    <div class="HomeStoryItem">
-        <h3>@Html.DisplayFor(modelItem => item.News.Title)</h3>
-        <h4>@Html.DisplayFor(modelItem => item.News.Content)</h4>
-        <h5>Added by @Html.DisplayFor(modelItem => item.User.Username) on @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</h5>
-    </div>
-}
-<h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
-
-
-
-
-
-@*@if (ViewBag.Token != null)
+<div class="col-lg-3 ds" style="">
+    <h3>WHATS NEW</h3>
+    @foreach (var item in @newsList.Take(3))
     {
-        <a href="#" class="click2">Show My Info</a>
-    }*@
-<br />
-<hr />
-<div id="userstats"></div>
+        <div class="desc">
+            <div class="thumb">
+                <span class="badge bg-theme"><i><img src="@item.User.Avatar" alt="Avatar" height="25" width="25" /></i></span>
+            </div>
+            <div class="details">
+                <p><b>@Html.DisplayFor(modelItem => item.News.Title)</b></p>
+                <p>@Html.DisplayFor(modelItem => item.News.Content)</p>
+                <p><muted>Added by @Html.DisplayFor(modelItem => item.User.Username)<br /> @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</muted></p>
+            </div>
+        </div>
+    }
+    <h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
+</div>
 
-@if (Request.IsAuthenticated)
-{
-    <table class="table">
-        <tr><th>Favorites</th></tr>
-        @foreach (var user in Model.Follows)
+
+
+
+    @*@if (ViewBag.Token != null)
         {
-                    <tr>
-                        <td><img src="@user.Avatar" height="32" width="32" /> <a href="/Users/@user.Username">@user.Username</a></td>
-                    </tr>
-        }
+            <a href="#" class="click2">Show My Info</a>
+        }*@
+    <br />
+    <hr />
+    <div id="userstats"></div>
 
-    </table>
-}
-else
-{
-    <div>Please login to see your Favorites</div>
-}
-@*@if (Request.IsAuthenticated)
-{
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: 'https://api.twitch.tv/kraken/user',
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    $.ajax({
-                        url: '@Url.Action("AddAvatar", "Home")',
-                        type: 'GET',
-                        data: { Id: result.logo },
-                    });
-                },
-                beforeSend: setAuthHeader
+    @if (Request.IsAuthenticated)
+    {
+        <table class="table">
+            <tr><th>Favorites</th></tr>
+            @foreach (var user in Model.Follows)
+            {
+                <tr>
+                    <td><img src="@user.Avatar" height="32" width="32" /> <a href="/Users/@user.Username">@user.Username</a></td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <div>Please login to see your Favorites</div>
+    }
+
+    @section Scripts {
+        <script>
+            $('.click').click(function () {
+                $.ajax({
+                    url: 'https://api.twitch.tv/kraken/games/top?limit=1',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#userstats").html("Top Game: " + result.top[0].game.name);
+                    },
+                    beforeSend: setNoAuthHeader
+                });
+                return false;
             });
-        });
-    </script>
 
-}*@
+            $('.click3').click(function () {
+                $.ajax({
+                    url: 'https://api.twitch.tv/kraken/users/148393665',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#userstats").html("<img src='" + result.logo + "'></img>");
+                    },
+                    beforeSend: setNoAuthHeader
+                });
+                return false;
+            });
 
-@section Scripts {
-    <script>
-    $('.click').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/games/top?limit=1',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $("#userstats").html("Top Game: " + result.top[0].game.name);
-            },
-            beforeSend: setNoAuthHeader
-        });
-        return false;
-    });
-
-    $('.click3').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/users/148393665',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $("#userstats").html("<img src='" + result.logo + "'></img>");
-            },
-            beforeSend: setNoAuthHeader
-        });
-        return false;
-    });
-
-    $('.click2').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/user',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                var data = JSON.stringify(result, null, 1);
-                $("#userstats").html('<pre>' + data + '<pre>');
-            },
-            beforeSend: setAuthHeader
-        });
-        return false;
-    });
+            $('.click2').click(function () {
+                $.ajax({
+                    url: 'https://api.twitch.tv/kraken/user',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        var data = JSON.stringify(result, null, 1);
+                        $("#userstats").html('<pre>' + data + '<pre>');
+                    },
+                    beforeSend: setAuthHeader
+                });
+                return false;
+            });
 
 
-    function setNoAuthHeader(xhr) {
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-    };
+            function setNoAuthHeader(xhr) {
+                xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            };
 
-    function setAuthHeader(xhr) {
-        var token = "@ViewBag.token";
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-    };
-    </script>
-}
+            function setAuthHeader(xhr) {
+                var token = "@ViewBag.token";
+                xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+                xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+            };
+        </script>
+    }
 

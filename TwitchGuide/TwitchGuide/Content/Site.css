@@ -189,17 +189,30 @@ input[type=number] {
     outline: #000000  solid;
     outline-width: 5px;
 }
-.HomeLogo
+a.menuLinks
 { 
-    font-size-adjust: 1;
-    font-family: DIMIS___;
+    margin-top: -20px;
+    font-family:twitchy-tv;
+    font-size: 20px;
+    color: #ffffff;
+    float: left;
+}
 
-}
-HomeLogo:hover, HomeLogo:focus {
-    text-decoration: none;
-    outline: none;
-}
-.navbar 
+.myFooter
 {
-    background-color: #4B367C;
+   background: #0E9DD9;
+   padding: 10px 0;
+   position:fixed;
+   bottom:0;
+   width:100%;
+   z-index: -1; 
+}
+a.AboutUsLink
+{    
+    display: block;
+    margin: 0 auto; 
+    text-align:center;
+    font-size: 14px;
+    color: #ffffff;
+
 }

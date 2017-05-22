@@ -39,7 +39,7 @@ namespace TwitchGuide.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
@@ -65,10 +65,10 @@ namespace TwitchGuide.Controllers
             {
                 return HttpNotFound();
             }
-			
-			int currentId = getUserID();
-			
-            if ((currentId == news.UserID)||(currentId == 3))
+
+            int currentId = getUserID();
+
+            if ((currentId == news.UserID) || (currentId == 3))
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");
@@ -104,10 +104,10 @@ namespace TwitchGuide.Controllers
             {
                 return HttpNotFound();
             }
-			
+
             int currentId = getUserID();
-			
-            if ((currentId == news.UserID)||(currentId == 3))
+
+            if ((currentId == news.UserID) || (currentId == 3))
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");
