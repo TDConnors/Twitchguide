@@ -224,9 +224,7 @@
             <div id="Profile info" class="userinfo">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 id="Username" class="panel-title">
-                            @Html.ViewContext.HttpContext.User.Identity.GetUserName();
-                        </h3>
+                        <h3 id="Username" class="panel-title"></h3>
                     </div>
                     <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
@@ -329,6 +327,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
+                    $("#Username").html(@User.Identity.GetUserName());
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
