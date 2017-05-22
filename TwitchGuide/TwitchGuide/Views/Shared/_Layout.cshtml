@@ -53,39 +53,5 @@
             location.href = "../Users/" + $("#name").val();
         });
     </script>
-    @if (Request.IsAuthenticated)
-    {
-        <script>
-            //Gets the Logo.png for the current user, and displays it next to the name
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'https://api.twitch.tv/kraken/user',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (result) {
-                        $("#LogoSpot").html("<img src='" + result.logo + "' height=32 width=32></img>");
-                    },
-                    beforeSend: setAuthHeader
-                });
-            });
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'https://api.twitch.tv/kraken/user',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (result) {
-                        $("#UserNameDisplay").html("<a href='/Manage'>" + result.name + "</a>");
-                    },
-                    beforeSend: setAuthHeader
-                });
-            });
-            function setAuthHeader(xhr) {
-                var token = "@ViewBag.token";
-                xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-                xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-                xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-            };
-        </script>
-    }
 </body>
 </html>
