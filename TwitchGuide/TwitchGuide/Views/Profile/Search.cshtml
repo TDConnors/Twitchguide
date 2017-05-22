@@ -225,7 +225,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 id="Username" class="panel-title">
-                            @User.Identity.GetUserName();
+                            @Html.ViewContext.HttpContext.User.Identity.GetUserName();
                         </h3>
                     </div>
                     <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
@@ -248,9 +248,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1">
-            <p>Click Me to Refresh</p>
         </div>
         <div class="col-md-4">
             <div id="Stream info" class="userinfo">
@@ -289,28 +286,27 @@
 
     <script>
         var username = '';
-        var chanurl = 'https://api.twitch.tv/kraken/channels/';
-        var streamurl = 'https://api.twitch.tv/kraken/streams/';
+        var chanurl = 'https://api.twitch.tv/kraken/channels/'+'@User.Identity.GetUserName()'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@User.Identity.GetUserName()'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
-        var followurl = 'https://api.twitch.tv/kraken/users/' ;
-        var followurl2 = '/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6'
+        var followurl = 'https://api.twitch.tv/kraken/users/'+'@User.Identity.GetUserName()'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        //$(document).ready(function () {
+        //    $.ajax({
+        //        url: 'https://api.twitch.tv/kraken/user',
+        //        type: 'GET',
+        //        dataType: 'json',
+        //        success: function (result) {
+        //            $("#Username").html(result.name);
+        //            username = result.name;
+        //            chanurl = chanurl + username + clientid;
+        //            streamurl = streamurl + username + clientid;
+        //        },
+        //        beforeSend: setAuthHeader
+        //    });
+        //});
         $(document).ready(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/user',
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    $("#Username").html(result.name);
-                    username = result.name;
-                    chanurl = chanurl + username + clientid;
-                    streamurl = streamurl + username + clientid;
-                },
-                beforeSend: setAuthHeader
-            });
-        });
-        $("p").click(function () {
-            $.ajax({
-                url: streamurl + username + clientid,
+                url: streamurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -327,9 +323,9 @@
             });
             return false;
         });
-        $("p").click(function () {
+        $(document).ready(function () {
             $.ajax({
-                url: chanurl + username + clientid,
+                url: chanurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -343,9 +339,9 @@
             });
             return false;
         });
-        $("p").click(function () {
+        $(document).ready(function () {
             $.ajax({
-                url: followurl + username + followurl2,
+                url: followurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
