@@ -21,13 +21,12 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Index()
         {
-            if(isLoggedIn())
+            ViewData["MyData"] = db.SiteNews.ToList();
+            if (isLoggedIn())
             {
                 User ourUser = GetUser();
                 return View(ourUser);
             }
-
-            ViewData["MyData"] = db.SiteNews.ToList();
             return View();
         }
 
