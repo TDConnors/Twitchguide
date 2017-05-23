@@ -11,18 +11,24 @@
 <br />
 
 
-<div class="HomeNewsTitle"><h5>What's New?</h5></div>
-<br />
-@foreach (var item in newsList.Take(3))
-{
-    <hr />
-    <div class="HomeStoryItem">
-        <h3>@Html.DisplayFor(modelItem => item.News.Title)</h3>
-        <h4>@Html.DisplayFor(modelItem => item.News.Content)</h4>
-        <h5>Added by @Html.DisplayFor(modelItem => item.User.Username) on @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</h5>
-    </div>
-}
-<h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
+
+<div class="col-lg-3 ds" style="">
+    <h3>WHATS NEW</h3>
+    @foreach (var item in @newsList.Take(3))
+    {
+        <div class="desc">
+            <div class="thumb">
+                <span class="badge bg-theme"><i><img src="@item.User.Avatar" alt="Avatar" height="25" width="25" /></i></span>
+            </div>
+            <div class="details">
+                <p><b>@Html.DisplayFor(modelItem => item.News.Title)</b></p>
+                <p>@Html.DisplayFor(modelItem => item.News.Content)</p>
+                <p><muted>Added by @Html.DisplayFor(modelItem => item.User.Username)<br /> @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</muted></p>
+            </div>
+        </div>
+    }
+    <h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
+</div>
 
 <br />
 <hr />

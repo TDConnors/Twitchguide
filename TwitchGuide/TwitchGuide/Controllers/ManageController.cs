@@ -20,7 +20,7 @@ namespace TwitchGuide.Controllers
         {
         }
 
-    public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -32,9 +32,9 @@ namespace TwitchGuide.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -88,7 +88,7 @@ namespace TwitchGuide.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -139,6 +139,6 @@ namespace TwitchGuide.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
