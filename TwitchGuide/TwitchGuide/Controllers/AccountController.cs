@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace TwitchGuide.Controllers
 {
-    
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -31,7 +31,7 @@ namespace TwitchGuide.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -43,9 +43,9 @@ namespace TwitchGuide.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -64,11 +64,11 @@ namespace TwitchGuide.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl=null)
+        public ActionResult Login(string returnUrl = null)
         {
-            if(Request.Cookies["Identity.External"] != null)
+            if (Request.Cookies["Identity.External"] != null)
             {
-                return RedirectToAction(nameof(ExternalLoginCallback),returnUrl);
+                return RedirectToAction(nameof(ExternalLoginCallback), returnUrl);
             }
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -208,7 +208,7 @@ namespace TwitchGuide.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var token = identity.Claims.Where(a => a.Type.Contains("twitch:access_token")).FirstOrDefault();
 
-            if(token == null)
+            if (token == null)
             {
                 return RedirectToAction("TokenNULL", "Home");
             }
