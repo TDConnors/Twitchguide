@@ -1,4 +1,7 @@
-﻿@model IEnumerable<TwitchGuide.Models.User>
+﻿
+@model PagedList.IPagedList<TwitchGuide.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "TwitchGuide Users";  
@@ -23,3 +26,6 @@
             }
         </div>
     }
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("AllUsers", new { page }))
