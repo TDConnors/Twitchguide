@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
+using PagedList;
 
 namespace TwitchGuide.Controllers
 {
@@ -16,9 +17,25 @@ namespace TwitchGuide.Controllers
         private TwitchContext db = new TwitchContext();
 
         // GET: News
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.SiteNews.ToList());
+            //edit check start
+            ViewBag.canEdit = false;
+            if (isLoggedIn())
+            {
+                int temp = getUserID();
+                if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27)))
+                {
+                    ViewBag.canEdit = true;
+                }
+            }
+            //edit check end
+            //sorting
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            //paging
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(sorted.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: News/Create
