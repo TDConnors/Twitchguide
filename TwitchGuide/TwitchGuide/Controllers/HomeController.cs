@@ -26,6 +26,8 @@ namespace TwitchGuide.Controllers
             if (isLoggedIn())
             {
                 User ourUser = GetUser();
+                ViewData["MyAvatar"] = ourUser.Avatar;
+                ViewData["MyName"] = ourUser.Username;
                 return View(ourUser);
             }
             return View();
