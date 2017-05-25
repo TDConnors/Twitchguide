@@ -88,7 +88,7 @@ namespace TwitchGuide.Controllers
             profileModel = new ProfileModel
             {
                 TimeblockObj = tb,
-                UserObj = db.Users.FirstOrDefault()
+                UserObj = findUser
             };
             ViewBag.token = profileModel.UserObj.AuthToken;
             return View(profileModel);
