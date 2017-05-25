@@ -11,6 +11,10 @@
 
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
+                <li id="LogoSpot" style="margin-top:8px"></li>
+                <li id="UserNameDisplay">
+                    @Html.ActionLink(User.Identity.GetUserName(), "Search", "Profile")
+                </li>
                 <li><a class="logout" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>
         </div>
