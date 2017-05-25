@@ -25,13 +25,17 @@ namespace TwitchGuide.Controllers
             var profileModel = new ProfileModel { };
             string username = "";
             ViewBag.edit = "False";
-
+            ViewBag.PageUserName = "";
+            ViewBag.PageUserLogo = "";
             if (name == null) //load current user's profile if logged in
             {
 
-                if (User.Identity.IsAuthenticated)
+                if (isLoggedIn())
                 {
-                    username = User.Identity.GetUserName();
+                    User MyUser = GetUser();
+                    username = MyUser.Username;
+                    ViewBag.PageUserName = MyUser.Username;
+                    ViewBag.PageUserLogo = MyUser.Avatar;
                     ViewBag.edit = "True";
                 }
                 else
