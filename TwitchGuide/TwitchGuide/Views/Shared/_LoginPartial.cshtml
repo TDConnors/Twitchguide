@@ -17,7 +17,8 @@ else
 {
     <div class="top-menu">
         <ul class="nav pull-right top-menu">
-            <li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>
+            @*<li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>*@
+            <li><button type="submit" class="btn btn-default" id="Twitch" name="provider" value="Twitch" title="Log in using your Twitch account">Twitch</button></li>
         </ul>
     </div>
 }
