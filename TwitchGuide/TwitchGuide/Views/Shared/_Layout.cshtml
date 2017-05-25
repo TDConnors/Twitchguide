@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -97,7 +98,7 @@ else
                             type: 'GET',
                             dataType: 'json',
                             success: function (result) {
-                                $("#LogoSpot").html("<img src='" + result.logo + "' href='@Url.Action("Search", "Profile", new { name = "" })' class=img-circle width=60 />");
+                                $("#LogoSpot").html("<img src='" + result.logo + "' width=60 />");
                             },
                             beforeSend: setAuthHeader
                         });
