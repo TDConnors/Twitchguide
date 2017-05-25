@@ -1,19 +1,18 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - Twitch Channel Guide</title>
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
-	@Scripts.Render("~/bundles/themeScript")
-	@RenderSection("styles", required: false)
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Twitch Channel Guide</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Theme/assets/css/style-responsive.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
 
 </head>
 <body>
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
-            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            <div id ="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile"></div>
         </div>
         <!--logo start-->
         <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
@@ -25,13 +24,11 @@
                     <a href="@Url.Action("AllUsers", "Home")" class="menuLinks" data-icon="&#xe007;">  Members</a>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-theme" data-toggle="dropdown" id="toggleSearch">Looking For Someone?</button>
-                </li>
-                <li>
                     <span class="nav navbar-nav form-inline" id="SearchBar">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Search by Username">
                         <button class="btn btn-theme" id="btnSearch">Search</button>
                     </span>
+                    <script>$("#SearchBar").hide();</script>
                 </li>
             </ul>
             <!-- links end -->
@@ -46,12 +43,11 @@
     <!--top menu end-->
     <!--sidebar start-->
     <aside>
-        <div id="sidebar" class="nav-collapse ">
+        <div class="collapse in" id="sidebar">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
-                <p class="centered"><a href="@Url.Action("Search", "Profile", new { name = "" })"><img src="~/Content/TylerAvatar.png" class="img-circle" width="60"></a></p>
-                <h5 class="centered">TConnorsBitsmith</h5>
-
+                <li class="centered" id="LogoSpot" href="@Url.Action("Search", "Profile", new { name = "" })"></li>
+                <li class="centered" id="UserNameDisplay" href="@Url.Action("Search", "Profile", new { name = "" })">
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -62,38 +58,27 @@
             @RenderBody()
         </section>
     </section>
-    
-            <!--footer start-->
-            <footer class="myFooter">
-                    <a href="@Url.Action("AboutUs", "Home")" class="AboutUsLink"><b>About Us</b></a>
-            </footer>
-            <!--footer end-->
+
+    <!--footer start-->
+    <footer class="myFooter">
+        <a href="@Url.Action("AboutUs", "Home")" class="AboutUsLink"><b>About Us</b></a>
+    </footer>
+    <!--footer end-->
 
 
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
-            @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
-            <script>
-                $(document).ready(function () {
-                    $("#SearchBar").hide();
-                });
-            </script>
-            <script>
-                $(document).ready(function () {
-                    $("#toggleSearch").click(function () {
-                        $("#SearchBar").toggle(1000);
-                    });
-                });
-            </script>
-            <script>
+
+    <script>
                 $("#btnSearch").click(function () {
                     location.href = "../Users/" + $("#name").val();
                 });
-            </script>
-            @if (Request.IsAuthenticated)
+    </script>
+    @if (Request.IsAuthenticated)
             {
-                <script>
+        <script>
                     //Gets the Logo.png for the current user, and displays it next to the name
                     $(document).ready(function () {
                         $.ajax({
@@ -101,7 +86,7 @@
                             type: 'GET',
                             dataType: 'json',
                             success: function (result) {
-                                $("#LogoSpot").html("<img src='" + result.logo + "' height=32 width=32></img>");
+                                $("#LogoSpot").html("<img src='" + result.logo + "' class=img-circle width=60></img>");
                             },
                             beforeSend: setAuthHeader
                         });
@@ -123,8 +108,18 @@
                         xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
                         xhr.setRequestHeader('Authorization', 'OAuth ' + token);
                     };
-                </script>
-            }
+        </script>
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#ToggleSidebar").click();
+                $("#ToggleSidebar").hide();
+            });
+        </script>
+    }
 </body>
-
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/themeScript")
 </html>

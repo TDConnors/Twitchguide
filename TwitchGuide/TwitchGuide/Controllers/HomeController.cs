@@ -21,7 +21,8 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Index()
         {
-            ViewData["MyData"] = db.SiteNews.ToList();
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            ViewData["MyData"] = sorted;
             if (isLoggedIn())
             {
                 User ourUser = GetUser();
