@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -45,25 +44,7 @@
     </header>
     <!--top menu end-->
     <!--sidebar start-->
-    <aside>
-        <div class="collapse in" id="sidebar" style=" z-index: 2; ">
-            <!-- sidebar menu start-->
-            <ul class="sidebar-menu" id="nav-accordion">
-@if (Request.IsAuthenticated)
-            {
-                <li class="centered" id="LogoSpot" ></li>;
-                <li class="centered UsernameDisplay" id="UserNameDisplay"></li>
-}
-else
-{
-    <li class="centered" id="LogoSpot"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="100"/></li>;
-
-    <li class="centered UsernameDisplay" id="UserNameDisplay">Guest</li>
-}
-            </ul>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
+    @Html.Partial("_SideBarPartial")
     <!--sidebar end-->
     <section id="main-content">
         <section class="wrapper">
