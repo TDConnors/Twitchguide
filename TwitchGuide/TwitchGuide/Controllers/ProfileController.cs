@@ -83,7 +83,8 @@ namespace TwitchGuide.Controllers
                               Day = e.Day
                           }).ToList();
 
-
+            ViewBag.PageUserName = findUser.Username;
+            ViewBag.PageUserLogo = findUser.Avatar;
             profileModel = new ProfileModel
             {
                 TimeblockObj = tb,
