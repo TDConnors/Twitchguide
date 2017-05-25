@@ -6,8 +6,8 @@
         <div class="collapse in" id="sidebar" style=" z-index: 2; ">
             <ul class="sidebar-menu" id="nav-accordion">
                     <li id="LogoSpot" class="centered"></li>;
-                    <li id="UserNameDisplay" class="centered UsernameDisplay">
-                        @Html.ActionLink(User.Identity.GetUserName(), "Search", "Profile")
+                    <li class="centered UsernameDisplay">
+                        @User.Identity.GetUserName()
                     </li>
             </ul>
         </div>
