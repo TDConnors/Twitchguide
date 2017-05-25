@@ -43,11 +43,20 @@
     <!--top menu end-->
     <!--sidebar start-->
     <aside>
-        <div class="collapse in" id="sidebar">
+        <div class="collapse in" id="sidebar" style=" z-index: 2; ">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
-                <li class="centered" id="LogoSpot" href="@Url.Action("Search", "Profile", new { name = "" })"></li>
-                <li class="centered" id="UserNameDisplay" href="@Url.Action("Search", "Profile", new { name = "" })">
+@if (Request.IsAuthenticated)
+            {
+                <li class="centered" id="LogoSpot" href="@Url.Action("Search", "Profile", new { name = "" })"><img src="@ViewData["MyAvatar"]" alt="Avatar" class="img-circle" width="60" /></li>;
+                <li class="centered UsernameDisplay" id="UserNameDisplay" href="@Url.Action("Search", "Profile", new { name = "" })">@ViewData["MyName"]</li>
+}
+else
+{
+    <li class="centered" id="LogoSpot"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="100"/></li>;
+
+    <li class="centered UsernameDisplay" id="UserNameDisplay">Guest</li>
+}
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -76,49 +85,7 @@
                     location.href = "../Users/" + $("#name").val();
                 });
     </script>
-    @if (Request.IsAuthenticated)
-            {
-        <script>
-                    //Gets the Logo.png for the current user, and displays it next to the name
-                    $(document).ready(function () {
-                        $.ajax({
-                            url: 'https://api.twitch.tv/kraken/user',
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (result) {
-                                $("#LogoSpot").html("<img src='" + result.logo + "' class=img-circle width=60></img>");
-                            },
-                            beforeSend: setAuthHeader
-                        });
-                    });
-                    $(document).ready(function () {
-                        $.ajax({
-                            url: 'https://api.twitch.tv/kraken/user',
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (result) {
-                                $("#UserNameDisplay").html("<a href='/Manage'>" + result.name + "</a>");
-                            },
-                            beforeSend: setAuthHeader
-                        });
-                    });
-                    function setAuthHeader(xhr) {
-                        var token = "@ViewBag.token";
-                        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-                        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-                    };
-        </script>
-    }
-    else
-    {
-        <script>
-            $(document).ready(function () {
-                $("#ToggleSidebar").click();
-                $("#ToggleSidebar").hide();
-            });
-        </script>
-    }
+
 </body>
 @Scripts.Render("~/bundles/modernizr")
 @Scripts.Render("~/bundles/themeScript")
