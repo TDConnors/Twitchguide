@@ -334,7 +334,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
-                    $("#Username").html(@User.Identity.GetUserName());
+                    $("#Username").html("@User.Identity.GetUserName()");
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
