@@ -427,6 +427,7 @@
     <Content Include="Views\Home\LoginSuccess.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Shared\_SideBarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
