@@ -197,17 +197,19 @@ a.menuLinks
     color: #ffffff;
     float: left;
 }
-
+html {
+    position: relative;
+    min-height: 100%;
+}
 .myFooter
 {
+    display: block;
    background: #0E9DD9;
    padding: 10px 0;
-   position:fixed;
+   position:absolute;
    bottom:0;
    width:100%;
-   z-index: -1; 
-       background-attachment: scroll;
-    background-position: 0% 0%;
+       z-index: 1; 
 }
 a.AboutUsLink
 {    
@@ -216,5 +218,11 @@ a.AboutUsLink
     text-align:center;
     font-size: 14px;
     color: #ffffff;
-
+}
+.UsernameDisplay
+{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+    font-size: 24px;
+    color: #7EDDF9;
+    font-weight: bold;
 }
