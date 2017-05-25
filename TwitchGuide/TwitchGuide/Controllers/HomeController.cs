@@ -11,7 +11,7 @@ using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity.Owin;
-
+using PagedList;
 
 namespace TwitchGuide.Controllers
 {
@@ -21,7 +21,8 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Index()
         {
-            ViewData["MyData"] = db.SiteNews.ToList();
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            ViewData["MyData"] = sorted;
             if (isLoggedIn())
             {
                 User ourUser = GetUser();
@@ -40,9 +41,14 @@ namespace TwitchGuide.Controllers
             return View();
         }
 
-        public ActionResult AllUsers()
+        public ActionResult AllUsers(int? page)
         {
-            return View(db.Users.ToList());
+            //sorting
+            var sorted = db.Users.OrderBy((s => s.Username)).ToList();
+            //paging
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(sorted.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult AboutUs()
         {
