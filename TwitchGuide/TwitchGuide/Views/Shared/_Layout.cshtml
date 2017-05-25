@@ -50,8 +50,8 @@
             <ul class="sidebar-menu" id="nav-accordion">
 @if (Request.IsAuthenticated)
             {
-                <li class="centered" id="LogoSpot" href="@Url.Action("Search", "Profile", new { name = "" })"><img src="@ViewData["MyAvatar"]" alt="Avatar" class="img-circle" width="60" /></li>;
-                <li class="centered UsernameDisplay" id="UserNameDisplay" href="@Url.Action("Search", "Profile", new { name = "" })">@ViewData["MyName"]</li>
+                <li class="centered" id="LogoSpot" ></li>;
+                <li class="centered UsernameDisplay" id="UserNameDisplay"></li>
 }
 else
 {
@@ -87,6 +87,40 @@ else
                     location.href = "../Users/" + $("#name").val();
                 });
     </script>
+    @if (Request.IsAuthenticated)
+            {
+        <script>
+                    //Gets the Logo.png for the current user, and displays it next to the name
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: 'https://api.twitch.tv/kraken/user',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (result) {
+                                $("#LogoSpot").html("<img src='" + result.logo + "' href='@Url.Action("Search", "Profile", new { name = "" })' class=img-circle width=60 />");
+                            },
+                            beforeSend: setAuthHeader
+                        });
+                    });
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: 'https://api.twitch.tv/kraken/user',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (result) {
+                                $("#UserNameDisplay").html("<a href='/Manage'>" + result.name + "</a>");
+                            },
+                            beforeSend: setAuthHeader
+                        });
+                    });
+                    function setAuthHeader(xhr) {
+                        var token = "@ViewBag.token";
+                        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+                        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+                    };
+        </script>
+    }
 
 </body>
 
