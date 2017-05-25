@@ -11,8 +11,13 @@
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
 
-<h2>Profile</h2>
-
+<img src= ""  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><h2 id="ProfileName">Profile</h2>
+@if (ViewBag.edit == "True")
+{
+    <h5>
+        <a id="ManageLink" href='/Manage'>Manage</a>
+    </h5>
+}
 <button class="btn btn-default" id="AddFav">Add Favorite</button>
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
