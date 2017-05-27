@@ -18,9 +18,7 @@ namespace TwitchGuide
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 string temp = HttpContext.Current.User.Identity.Name;
-                User ourUser = db.Users.Where(p => p.Username == temp).FirstOrDefault();
-                filterContext.Controller.ViewBag.CurrentUsersUserName = ourUser.Username;
-                filterContext.Controller.ViewBag.CurrentUsersAvatar =  ourUser.Avatar;
+                filterContext.Controller.ViewBag.CurrentUsersUserName = temp;
             }
             else
             {
