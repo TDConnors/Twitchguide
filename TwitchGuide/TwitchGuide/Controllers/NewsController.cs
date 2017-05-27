@@ -16,20 +16,30 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
-        // GET: News
-        public ActionResult Index(int? page)
+        public bool canChange()
         {
-            //edit check start
-            ViewBag.canEdit = false;
             if (isLoggedIn())
             {
                 int temp = getUserID();
                 if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27)))
                 {
-                    ViewBag.canEdit = true;
+                    return true;
                 }
+                else
+                    return false;
             }
-            //edit check end
+            else
+                return false;
+        }
+
+        // GET: News
+        public ActionResult Index(int? page)
+        {
+            ViewBag.canEdit = false;
+            if (canChange())
+            {
+                ViewBag.canEdit = true;
+            }
             //sorting
             var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
             //paging
@@ -41,7 +51,7 @@ namespace TwitchGuide.Controllers
         // GET: News/Create
         public ActionResult Create()
         {
-            if (isLoggedIn())
+            if(canChange())
                 return View();
             else
                 return RedirectToAction("Index", "News");
@@ -54,6 +64,7 @@ namespace TwitchGuide.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NewsID,Title,Content,DateAdded")] News news)
         {
+
             if (ModelState.IsValid)
             {
 
