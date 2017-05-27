@@ -22,6 +22,8 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.CurrentUsersUserName = "TylerConnors";
+            ViewBag.CurrentUsersAvatar = "https://static-cdn.jtvnw.net/jtv_user_pictures/tconnorsbitsmith-profile_image-91feb60affd61ad5-300x300.png";
             var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
             ViewData["MyData"] = sorted;
             if (isLoggedIn())
