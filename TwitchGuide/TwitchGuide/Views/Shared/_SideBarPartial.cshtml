@@ -5,9 +5,9 @@
     <aside>
         <div class="collapse in" id="sidebar" style=" z-index: 2; ">
             <ul class="sidebar-menu" id="nav-accordion">
-                    <li id="LogoSpot" class="centered"></li>;
+                    <li class="centered"><a href="/Users/@ViewBag.CurrentUsersUserName"><img src="@ViewBag.CurrentUsersAvatar" alt="Avatar" class="img-circle" width="100" /></a></li>;
                     <li class="centered UsernameDisplay">
-                        @User.Identity.GetUserName()
+                        @ViewBag.CurrentUsersUserName
                     </li>
             </ul>
         </div>
