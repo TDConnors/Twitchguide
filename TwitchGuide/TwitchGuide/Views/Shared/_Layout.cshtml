@@ -5,17 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Twitch Channel Guide</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/themeScript")
     @RenderSection("styles", required: false)
 
 </head>
 <body>
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
-            <button id="ToggleSidebar" />
-            <label for="ToggleSidebar" data-icon="&#xe007;" style=" font-size: 20px; color: #ffffff;" "><span></span></label>
- </div>
+                <div id="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile" data-icon="&#xe007;" style=" font-size: 20px; color: #ffffff;" "></div>
+        </div>
         <!--logo start-->
         <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
         <!--logo end-->
@@ -60,6 +57,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/themeScript")
     @RenderSection("scripts", required: false)
 
 

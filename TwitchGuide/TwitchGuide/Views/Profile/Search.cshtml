@@ -14,12 +14,7 @@
 <img src= "@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150"/><span style="display:inline-block; width:25px;"></span>
 <h2 id="ProfileName">@ViewBag.PageUserName</h2>
 <br />
-@if (ViewBag.edit == "True")
-{
-    <h5>
-        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "manageLink", title = "Manage" })
-    </h5>
-}
+
 <button class="btn btn-default" id="AddFav">Add Favorite</button>
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
