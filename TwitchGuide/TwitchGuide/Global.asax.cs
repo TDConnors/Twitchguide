@@ -22,11 +22,6 @@ namespace TwitchGuide
                 filterContext.Controller.ViewBag.CurrentUsersUserName = ourUser.Username;
                 filterContext.Controller.ViewBag.CurrentUsersAvatar =  ourUser.Avatar;
             }
-            else
-            {
-                filterContext.Controller.ViewBag.CurrentUsersUserName = "TConnorsBitsmith";
-                filterContext.Controller.ViewBag.CurrentUsersAvatar = "https://static-cdn.jtvnw.net/jtv_user_pictures/tconnorsbitsmith-profile_image-91feb60affd61ad5-300x300.png";
-            }
         }
 
     }
