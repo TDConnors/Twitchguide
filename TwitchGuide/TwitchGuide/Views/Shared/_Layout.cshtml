@@ -7,15 +7,15 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/themeScript")
-    <link href="~/Content/Theme/assets/css/style-responsive.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
 
 </head>
 <body>
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
-            <div id ="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile"></div>
-        </div>
+            <button id="ToggleSidebar" />
+            <label for="ToggleSidebar" data-icon="&#xe007;" style=" font-size: 20px; color: #ffffff;" "><span></span></label>
+ </div>
         <!--logo start-->
         <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
         <!--logo end-->
@@ -23,7 +23,7 @@
             <!-- links start -->
             <ul class="nav top-menu">
                 <li>
-                    <a href="@Url.Action("AllUsers", "Home")" class="menuLinks" data-icon="&#xe007;">  Members</a>
+                    <a href="@Url.Action("AllUsers", "Home")" class="menuLinks">  Members</a>
                 </li>
                 <li>
                     <span class="nav navbar-nav form-inline" id="SearchBar">

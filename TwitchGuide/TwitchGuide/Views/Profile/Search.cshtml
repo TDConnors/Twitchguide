@@ -17,7 +17,7 @@
 @if (ViewBag.edit == "True")
 {
     <h5>
-        <a id="ManageLink" href='/Manage'>Manage</a>
+        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "manageLink", title = "Manage" })
     </h5>
 }
 <button class="btn btn-default" id="AddFav">Add Favorite</button>

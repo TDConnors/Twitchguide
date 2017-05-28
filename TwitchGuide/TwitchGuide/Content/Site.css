@@ -226,3 +226,13 @@ a.AboutUsLink
     color: #7EDDF9;
     font-weight: bold;
 }
+
+a.sideLinks
+{ 
+    margin-top: -20px;
+    font-family:twitchy-tv;
+    font-size: 20px;
+    color: #ffffff;
+    float: left;
+}
+
