@@ -27,16 +27,12 @@ namespace TwitchGuide
                       "~/Content/Theme/assets/css/bootstrap.css",
                       "~/Content/Theme/assets/css/style.css",
                       "~/Content/Theme/assets/css/style-responsive.css",
-                      "~/Content/Theme/assets/css/style.css",
                       "~/Content/Theme/assets/font-awesome/css/font-awesome.css",
                       "~/Content/Theme/assets/lineicons/style.css",
                       "~/Content/site.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/themeScript").Include(
-        "~/Content/Theme/assets/js/jquery.js",
-        "~/Content/Theme/assets/js/jquery-1.8.3.min.js",
-        "~/Content/Theme/assets/js/bootstrap.min.js",
         "~/Content/Theme/assets/js/jquery.dcjqaccordion.2.7.js",
         "~/Content/Theme/assets/js/jquery.scrollTo.min.js",
         "~/Content/Theme/assets/js/jquery.nicescroll.js",
