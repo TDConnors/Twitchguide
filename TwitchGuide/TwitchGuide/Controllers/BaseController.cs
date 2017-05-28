@@ -15,24 +15,6 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
-        protected override ViewResult View(IView view, object model)
-        {
-            if (ViewBag.CurrentUsersUserName == "")
-            {
-                if (isLoggedIn())
-                {
-                    this.ViewBag.CurrentUsersUserName = GetUser().Username;
-                    this.ViewBag.CurrentUsersAvatar = GetUser().Avatar;
-                }
-                else
-                {
-                    this.ViewBag.CurrentUsersUserName = "";
-                    this.ViewBag.CurrentUsersAvatar = "";
-                }
-            }
-            return base.View(view, model);
-        }
-
         public User GetUser()
         {
             var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
