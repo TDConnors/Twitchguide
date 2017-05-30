@@ -29,16 +29,20 @@
     </div>
     @if (ViewBag.edit == "True")
     {
-        <div class="col-md-3">
-            <br />
-            <form onsubmit="changeStreamInfo(); return false;">
-                Title:<br>
-                <input type="text" name="NewTitle" /><br>
-                Game:<br>
-                <input type="text" name="NewGame" /><br>
-                <input type="submit" value="Update" />
-            </form>
-        </div>
+        <h5>Title:</h5> <br>
+        <textarea id="NewTitle"></textarea><br>
+        <h5>Game:</h5> <br>
+        <textarea id="NewGame"></textarea><br>
+        <button class="btn btn-default" type="button" ></button>
+
+        @*<div class="col-md-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="New Title...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Update</button>
+                </span>
+            </div>
+        </div>*@
     }
 </div>
 
@@ -365,7 +369,10 @@
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
-
+                    if(@ViewBag.edit==true){
+                        $("#NewTitle").html(result.status);
+                        $("#NewGame").html(result.game);
+                    }
                 },
                 beforeSend: setNoAuthHeader
             });
@@ -397,8 +404,6 @@
                 contentType: 'application/json',
                 dataType: 'jsonp',
                 success: function(data) {
-                    console.log(data.status);
-                    console.log(data)
                 }
             });
             $.ajax({
@@ -407,21 +412,9 @@
                 contentType: 'application/json',
                 dataType: 'jsonp',
                 success: function(data) {
-                    console.log(data.status);
-                    console.log(data)
                 }
             });
         }
-        $('#StreamTitle').keypress(function(e){
-            if(e.keyCode==13&& !e.shiftKey){
-                changeStreamInfo();
-            }
-        });
-        $('#Game').keypress(function(e){
-            if(e.keyCode==13&& !e.shiftKey){
-                changeStreamInfo();
-            }
-        });
         $("#AddFav").click(function () {
             $.ajax({
                 url: '@Url.Action("AddFavorite", "Profile")',
