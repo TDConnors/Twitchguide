@@ -428,6 +428,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Shared\_SideBarPartial.cshtml" />
+    <Content Include="Views\Profile\AdvancedSearch.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
