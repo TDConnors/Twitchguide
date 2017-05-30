@@ -322,9 +322,9 @@
         var streamstatus='';
         var streamgame='';
         var titleurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[status]=';
-        var titleurl2 ='?&oauth_token='+'@ViewBag.token';
+        var titleurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
         var gameurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[game]=';
-        var gameurl2 ='?&oauth_token='+'@ViewBag.token';
+        var gameurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
 
         //$(document).ready(function () {
         //    $.ajax({
@@ -369,7 +369,7 @@
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
-                    if(@ViewBag.edit==true){
+                    if(@ViewBag.edit=="True"){
                         $("#NewTitle").html(result.status);
                         $("#NewGame").html(result.game);
                     }
@@ -400,7 +400,7 @@
             streamgame = document.getElementById("NewGame").value;
             $.ajax({
                 url: titleurl+streamstatus+titleurl2,
-                type: 'PUT',
+                type: 'GET',
                 contentType: 'application/json',
                 dataType: 'jsonp',
                 success: function(data) {
@@ -408,7 +408,7 @@
             });
             $.ajax({
                 url: gameurl+streamgame+gameurl2,
-                type: 'PUT',
+                type: 'GET',
                 contentType: 'application/json',
                 dataType: 'jsonp',
                 success: function(data) {
