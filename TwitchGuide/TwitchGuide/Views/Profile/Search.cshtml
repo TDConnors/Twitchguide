@@ -10,14 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
-<br />
-<img src= "@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150"/><span style="display:inline-block; width:25px;"></span>
-<h2 id="ProfileName">@ViewBag.PageUserName</h2>
-<br />
-
-<button class="btn btn-default" id="AddFav">Add Favorite</button>
-
-<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+<div class="row">
+    <div class="col-md-4">
+        <br />
+        <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
+        <h2 id="ProfileName">@ViewBag.PageUserName</h2>
+        <br />
+        <button class="btn btn-default" id="AddFav">Add Favorite</button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+    </div>
+    <div class="col-md-8">
+        <iframe src="http://player.twitch.tv/?channel=" + "@ViewBag.PageUserName" + "&muted=true"
+                height="300"
+                width="400"
+                frameborder="0"
+                scrolling="no"
+                allowfullscreen="true"></iframe>
+    </div>
+</div>
 
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
