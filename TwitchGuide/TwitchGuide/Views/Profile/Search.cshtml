@@ -19,7 +19,7 @@
         <button class="btn btn-default" id="AddFav">Add Favorite</button>
         <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <iframe src="https://player.twitch.tv/?channel= @ViewBag.PageUserName &muted=true"
                 height="300"
                 width="400"
@@ -27,6 +27,17 @@
                 scrolling="no"
                 allowfullscreen="true"></iframe>
     </div>
+    @if (ViewBag.edit == "True")
+    {
+        <div class="col-md-2">
+            <form onsubmit="changeStreamInfo()">
+                Title:<br>
+                <input type="text" name="NewTitle" /><br>
+                Game:<br>
+                <input type="text" name="NewGame" /><br>
+            </form>
+        </div>
+    }
 </div>
 
 <div class="collapse in" id="Schedule">
@@ -269,30 +280,13 @@
                             Stream
                         </h3>
                     </div>
-                    @{if (ViewBag.edit == "True")
-                        {
-                            <div class="panel-body"> Title: <textarea id="StreamTitle"></textarea> </div>
-                        }
-                        else
-                        {
-                            <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
-                        }
-                    }
+                    <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
                         </div>
                     </div>
-                    <div class="panel-body"> Game: <textarea id="Game"></textarea> </div>
-                    @{if (ViewBag.edit == "True")
-                        {
-                            <div class="panel-body"> Game: <textarea id="Game"></textarea> </div>
-                        }
-                        else
-                        {
-                            <div class="panel-body"> Game: <p id="Game"></p> </div>
-                        }
-                    }
+                    <div class="panel-body">Game:<p id="Game"></p></div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
@@ -388,8 +382,8 @@
             return false;
         });
         function changeStreamInfo(){
-            streamstatus = document.getElementById("#StreamTitle").valueOf.toString();
-            streamgame = document.getElementById("#Game").valueOf.toString();
+            streamstatus = document.getElementById("#NewTitle").valueOf.toString();
+            streamgame = document.getElementById("#NewGame").valueOf.toString();
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[status]=' + streamstatus + '&_method=put&oauth_token= @ViewBag.token',
                 type: 'GET',
@@ -411,7 +405,16 @@
                 }
             });
         }
-
+        $('#StreamTitle').keypress(function(e){
+            if(e.keyCode==13&& !e.shiftKey){
+                changeStreamInfo();
+            }
+        });
+        $('#Game').keypress(function(e){
+            if(e.keyCode==13&& !e.shiftKey){
+                changeStreamInfo();
+            }
+        });
         $("#AddFav").click(function () {
             $.ajax({
                 url: '@Url.Action("AddFavorite", "Profile")',
