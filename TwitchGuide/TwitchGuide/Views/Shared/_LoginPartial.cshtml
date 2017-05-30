@@ -20,8 +20,8 @@ else
 {
     <div class="top-menu">
         <ul class="nav pull-right top-menu">
-            <li>@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })</li>
-            @*<li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>*@
+            @*<li>@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })</li>*@
+            <li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>
         </ul>
     </div>
 }
