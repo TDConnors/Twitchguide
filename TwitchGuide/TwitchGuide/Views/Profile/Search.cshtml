@@ -19,7 +19,7 @@
         <button class="btn btn-default" id="AddFav">Add Favorite</button>
         <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <iframe src="https://player.twitch.tv/?channel= @ViewBag.PageUserName &muted=true"
                 height="300"
                 width="400"
@@ -29,12 +29,14 @@
     </div>
     @if (ViewBag.edit == "True")
     {
-        <div class="col-md-2">
+        <div class="col-md-3">
+            <br />
             <form onsubmit="changeStreamInfo()">
                 Title:<br>
                 <input type="text" name="NewTitle" /><br>
                 Game:<br>
                 <input type="text" name="NewGame" /><br>
+                <input type="submit" value="Update" />
             </form>
         </div>
     }
