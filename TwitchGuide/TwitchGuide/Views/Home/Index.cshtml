@@ -35,6 +35,8 @@
 
 @if (Request.IsAuthenticated)
 {
+    @ViewBag.NextTime
+    
     <table class="table">
         <tr><th>Favorites</th></tr>
         @foreach (var user in Model.Follows)
