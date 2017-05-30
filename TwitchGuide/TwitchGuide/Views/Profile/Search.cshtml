@@ -384,8 +384,8 @@
             return false;
         });
         function changeStreamInfo(){
-            streamstatus = document.getElementById("#NewTitle").valueOf.toString();
-            streamgame = document.getElementById("#NewGame").valueOf.toString();
+            streamstatus = document.getElementById("NewTitle").valueOf.toString();
+            streamgame = document.getElementById("NewGame").valueOf.toString();
             $.ajax({
                 url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[status]=' + streamstatus + '&_method=put&oauth_token= @ViewBag.token',
                 type: 'GET',
