@@ -29,11 +29,11 @@
     </div>
     @if (ViewBag.edit == "True")
     {
-        <h5>Title:</h5> <br>
+        <h5>Title:</h5>
         <textarea id="NewTitle"></textarea><br>
-        <h5>Game:</h5> <br>
+        <h5>Game:</h5>
         <textarea id="NewGame"></textarea><br>
-        <button class="btn btn-default" type="button" ></button>
+        <button class="btn btn-default" type="button" onclick="changeStreamInfo()" >Update</button>
 
         @*<div class="col-md-3">
             <div class="input-group">
