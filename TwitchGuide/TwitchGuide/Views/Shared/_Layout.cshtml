@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Twitch Channel Guide</title>
     @Styles.Render("~/Content/css")
-    <link href="~/Content/Theme/assets/css/style-responsive.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
 
 </head>
 <body>
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
-            <div id ="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile"></div>
+                <div id="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile" data-icon="&#xe007;" style=" font-size: 20px; color: #ffffff;" "></div>
         </div>
         <!--logo start-->
         <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
@@ -21,14 +20,13 @@
             <!-- links start -->
             <ul class="nav top-menu">
                 <li>
-                    <a href="@Url.Action("AllUsers", "Home")" class="menuLinks" data-icon="&#xe007;">  Members</a>
+                    <a href="@Url.Action("AllUsers", "Home")" class="menuLinks">  Members</a>
                 </li>
                 <li>
                     <span class="nav navbar-nav form-inline" id="SearchBar">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Search by Username">
                         <button class="btn btn-theme" id="btnSearch">Search</button>
                     </span>
-                    <script>$("#SearchBar").hide();</script>
                 </li>
             </ul>
             <!-- links end -->
@@ -42,25 +40,7 @@
     </header>
     <!--top menu end-->
     <!--sidebar start-->
-    <aside>
-        <div class="collapse in" id="sidebar" style=" z-index: 2; ">
-            <!-- sidebar menu start-->
-            <ul class="sidebar-menu" id="nav-accordion">
-@if (Request.IsAuthenticated)
-            {
-                <li class="centered" id="LogoSpot" href="@Url.Action("Search", "Profile", new { name = "" })"><img src="@ViewData["MyAvatar"]" alt="Avatar" class="img-circle" width="60" /></li>;
-                <li class="centered UsernameDisplay" id="UserNameDisplay" href="@Url.Action("Search", "Profile", new { name = "" })">@ViewData["MyName"]</li>
-}
-else
-{
-    <li class="centered" id="LogoSpot"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="100"/></li>;
-
-    <li class="centered UsernameDisplay" id="UserNameDisplay">Guest</li>
-}
-            </ul>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
+    @Html.Partial("_SideBarPartial")
     <!--sidebar end-->
     <section id="main-content">
         <section class="wrapper">
@@ -77,6 +57,8 @@ else
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/themeScript")
     @RenderSection("scripts", required: false)
 
 
@@ -85,8 +67,30 @@ else
                     location.href = "../Users/" + $("#name").val();
                 });
     </script>
+    @if (Request.IsAuthenticated)
+            {
+        <script>
+                    //Gets the Logo.png for the current user, and displays it next to the name
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: 'https://api.twitch.tv/kraken/user',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (result) {
+                                $("#LogoSpot").html("<img src='" + result.logo + "' width=25 />");
+                            },
+                            beforeSend: setAuthHeader
+                        });
+                    });
+                    function setAuthHeader(xhr) {
+                        var token = "@ViewBag.token";
+                        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+                        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+                    };
+        </script>
+    }
 
 </body>
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/themeScript")
+
 </html>

@@ -17,6 +17,7 @@ namespace TwitchGuide.Controllers
 {
     public class HomeController : BaseController
     {
+
         private TwitchContext db = new TwitchContext();
 
         public ActionResult Index()
@@ -26,8 +27,6 @@ namespace TwitchGuide.Controllers
             if (isLoggedIn())
             {
                 User ourUser = GetUser();
-                ViewData["MyAvatar"] = ourUser.Avatar;
-                ViewData["MyName"] = ourUser.Username;
                 return View(ourUser);
             }
             return View();

@@ -10,14 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
+<br />
+<img src= "@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150"/><span style="display:inline-block; width:25px;"></span>
+<h2 id="ProfileName">@ViewBag.PageUserName</h2>
+<br />
 
-<img src= ""  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><h2 id="ProfileName">Profile</h2>
-@if (ViewBag.edit == "True")
-{
-    <h5>
-        <a id="ManageLink" href='/Manage'>Manage</a>
-    </h5>
-}
 <button class="btn btn-default" id="AddFav">Add Favorite</button>
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
@@ -231,7 +228,7 @@
             <div id="Profile info" class="userinfo">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 id="Username" class="panel-title"></h3>
+                        <h3 id="Username" class="panel-title">@ViewBag.PageUserName</h3>
                     </div>
                     <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
@@ -334,7 +331,6 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
-                    $("#Username").html("@Model.UserObj.Username");
                     $("#Views").html(result.views);
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
