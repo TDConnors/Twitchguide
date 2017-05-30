@@ -269,13 +269,30 @@
                             Stream
                         </h3>
                     </div>
-                    <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
+                    @{if (ViewBag.edit == "True")
+                        {
+                            <div class="panel-body"> Title: <textarea id="StreamTitle"></textarea> </div>
+                        }
+                        else
+                        {
+                            <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
+                        }
+                    }
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
                         </div>
                     </div>
-                    <div class="panel-body"> Game: <p id="Game"></p> </div>
+                    <div class="panel-body"> Game: <textarea id="Game"></textarea> </div>
+                    @{if (ViewBag.edit == "True")
+                        {
+                            <div class="panel-body"> Game: <textarea id="Game"></textarea> </div>
+                        }
+                        else
+                        {
+                            <div class="panel-body"> Game: <p id="Game"></p> </div>
+                        }
+                    }
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
@@ -302,6 +319,8 @@
         var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var followurl = 'https://api.twitch.tv/kraken/users/'+'@Model.UserObj.Username'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var streamstatus='';
+        var streamgame='';
         //$(document).ready(function () {
         //    $.ajax({
         //        url: 'https://api.twitch.tv/kraken/user',
@@ -368,6 +387,31 @@
             });
             return false;
         });
+        function changeStreamInfo(){
+            streamstatus = document.getElementById("#StreamTitle").valueOf.toString();
+            streamgame = document.getElementById("#Game").valueOf.toString();
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[status]=' + streamstatus + '&_method=put&oauth_token= @ViewBag.token',
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                    console.log(data.status);
+                    console.log(data)
+                }
+            });
+            $.ajax({
+                url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[game]=' + streamgame + '&_method=put&oauth_token= @ViewBag.token',
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                    console.log(data.status);
+                    console.log(data)
+                }
+            });
+        }
+
         $("#AddFav").click(function () {
             $.ajax({
                 url: '@Url.Action("AddFavorite", "Profile")',
