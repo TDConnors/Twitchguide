@@ -387,7 +387,7 @@
             streamstatus = document.getElementById("NewTitle").valueOf.toString();
             streamgame = document.getElementById("NewGame").valueOf.toString();
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[status]=' + streamstatus + '&_method=put&oauth_token= @ViewBag.token',
+                url: 'https://api.twitch.tv/kraken/channels/@ViewBag.PageUserName?channel[status]=' + streamstatus + '&_method=put&oauth_token=@ViewBag.token',
                 type: 'GET',
                 contentType: 'application/json',
                 dataType: 'jsonp',
@@ -397,7 +397,7 @@
                 }
             });
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/ @ViewBag.PageUserName ?channel[game]=' + streamgame + '&_method=put&oauth_token= @ViewBag.token',
+                url: 'https://api.twitch.tv/kraken/channels @ViewBag.PageUserName?channel[game]=' + streamgame + '&_method=put&oauth_token=@ViewBag.token',
                 type: 'GET',
                 contentType: 'application/json',
                 dataType: 'jsonp',
