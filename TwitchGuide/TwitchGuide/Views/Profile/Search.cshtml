@@ -10,14 +10,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
-<br />
-<img src= "@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150"/><span style="display:inline-block; width:25px;"></span>
-<h2 id="ProfileName">@ViewBag.PageUserName</h2>
-<br />
+<div class="row">
+    <div class="col-md-4">
+        <br />
+        <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
+        <h2 id="ProfileName">@ViewBag.PageUserName</h2>
+        <br />
+        <button class="btn btn-default" id="AddFav">Add Favorite</button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+    </div>
+    <div class="col-md-5">
+        <iframe src="https://player.twitch.tv/?channel= @ViewBag.PageUserName &muted=true"
+                height="300"
+                width="400"
+                frameborder="0"
+                scrolling="no"
+                allowfullscreen="true"></iframe>
+    </div>
+    @if (ViewBag.edit == "True")
+    {
+        <h5>Title:</h5>
+        <textarea id="NewTitle"></textarea><br>
+        <h5>Game:</h5>
+        <textarea id="NewGame"></textarea><br>
+        <button class="btn btn-default" type="button" onclick="changeStreamInfo()" >Update</button>
 
-<button class="btn btn-default" id="AddFav">Add Favorite</button>
-
-<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+        @*<div class="col-md-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="New Title...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Update</button>
+                </span>
+            </div>
+        </div>*@
+    }
+</div>
 
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
@@ -265,7 +292,7 @@
                             <div class="_e725ae-status"> </div>
                         </div>
                     </div>
-                    <div class="panel-body"> Game: <p id="Game"></p> </div>
+                    <div class="panel-body">Game:<p id="Game"></p></div>
                     <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
                         <div class="_e725ae-transform_wrap">
                             <div class="_e725ae-status"> </div>
@@ -292,6 +319,13 @@
         var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
         var followurl = 'https://api.twitch.tv/kraken/users/'+'@Model.UserObj.Username'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var streamstatus='';
+        var streamgame='';
+        var titleurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[status]=';
+        var titleurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
+        var gameurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[game]=';
+        var gameurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
+
         //$(document).ready(function () {
         //    $.ajax({
         //        url: 'https://api.twitch.tv/kraken/user',
@@ -335,7 +369,10 @@
                     $("#Followers").html(result.followers);
                     $("#StreamTitle").html(result.status);
                     $("#Game").html(result.game);
-
+                    if(@ViewBag.edit=="True"){
+                        $("#NewTitle").html(result.status);
+                        $("#NewGame").html(result.game);
+                    }
                 },
                 beforeSend: setNoAuthHeader
             });
@@ -358,6 +395,26 @@
             });
             return false;
         });
+        function changeStreamInfo(){
+            streamstatus = document.getElementById("NewTitle").value;
+            streamgame = document.getElementById("NewGame").value;
+            $.ajax({
+                url: titleurl+streamstatus+titleurl2,
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                }
+            });
+            $.ajax({
+                url: gameurl+streamgame+gameurl2,
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                }
+            });
+        }
         $("#AddFav").click(function () {
             $.ajax({
                 url: '@Url.Action("AddFavorite", "Profile")',

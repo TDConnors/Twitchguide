@@ -27,6 +27,63 @@ namespace TwitchGuide.Controllers
             if (isLoggedIn())
             {
                 User ourUser = GetUser();
+                var today = DateTime.Now;
+                int m = today.Minute;
+                int h = today.Hour;
+                int d = (int)today.DayOfWeek;
+                int minH = 99;
+                int minM = 99;
+
+
+
+                var favs = ourUser.Follows.ToArray();
+
+                for (int i = 0; i < favs.Length; i++)
+                {
+                    var tbs = favs[i].Schedules.ToArray().Join(db.Timeblocks,
+                          p => p.TimeblockID,
+                          e => e.Index,
+                          (p, e) => new Timeblock
+                          {
+                              Index = e.Index,
+                              StartHour = e.StartHour,
+                              StartMinute = e.StartMinute,
+                              EndHour = e.EndHour,
+                              EndMinute = e.EndMinute,
+                              Day = e.Day
+                          }).ToArray();
+
+                    for (int k = 0; k < tbs.Length; k++)
+                    {
+                        if (tbs[k].Day == d) //get today's blocks
+                        {
+                            if (tbs[k].StartHour > h)
+                            {
+                                if (tbs[k].StartHour < minH)
+                                {
+                                    minH = tbs[k].StartHour;
+                                    minM = tbs[k].StartMinute;
+                                }
+                            }
+                            if (tbs[k].StartHour == h)
+                            {
+                                if (tbs[k].StartMinute > m)
+                                {
+                                    minH = tbs[k].StartHour;
+                                    minM = tbs[k].StartMinute;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (minH != 99)
+                {
+                    ViewBag.NextTime = "Today's next upcoming stream begins at " + minH + ":" + minM;
+                }
+                else
+                    ViewBag.NextTime = "None of your favorites have upcoming streams today.";
+
+
                 return View(ourUser);
             }
             return View();

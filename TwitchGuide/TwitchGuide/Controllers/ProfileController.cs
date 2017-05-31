@@ -27,6 +27,7 @@ namespace TwitchGuide.Controllers
             ViewBag.edit = "False";
             ViewBag.PageUserName = "";
             ViewBag.PageUserLogo = "";
+
             if (name == null) //load current user's profile if logged in
             {
 
@@ -71,7 +72,7 @@ namespace TwitchGuide.Controllers
 
             if (findUser == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("AdvancedSearch", new { name = name });
             }
 
             var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
@@ -98,6 +99,15 @@ namespace TwitchGuide.Controllers
             return View(profileModel);
         }
 
+        public ActionResult AdvancedSearch(string name)
+        {
+            var names = db.Users.Where(p => p.Username.Contains(name)).ToList();
+            if (names.Count < 1)
+            {
+                ViewBag.none = "True";
+            }
+            return View(names);
+        }
 
         //
         //CRUD Functionality Below
