@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
+using PagedList;
 
 namespace TwitchGuide.Controllers
 {
@@ -15,16 +16,42 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
-        // GET: News
-        public ActionResult Index()
+        public bool canChange()
         {
-            return View(db.SiteNews.ToList());
+            if (isLoggedIn())
+            {
+                int temp = getUserID();
+                if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27)))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        // GET: News
+        public ActionResult Index(int? page)
+        {
+            ViewBag.canEdit = false;
+            if (canChange())
+            {
+                ViewBag.canEdit = true;
+            }
+            //sorting
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            //paging
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(sorted.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: News/Create
         public ActionResult Create()
         {
-            if (isLoggedIn())
+            if(canChange())
                 return View();
             else
                 return RedirectToAction("Index", "News");
@@ -37,9 +64,10 @@ namespace TwitchGuide.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NewsID,Title,Content,DateAdded")] News news)
         {
+
             if (ModelState.IsValid)
             {
-                
+
                 news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
@@ -65,10 +93,10 @@ namespace TwitchGuide.Controllers
             {
                 return HttpNotFound();
             }
-			
-			int currentId = getUserID();
-			
-            if ((currentId == news.UserID)||(currentId == 3))
+
+            int currentId = getUserID();
+
+            if ((currentId == news.UserID) || (currentId == 3))
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");
@@ -104,10 +132,10 @@ namespace TwitchGuide.Controllers
             {
                 return HttpNotFound();
             }
-			
+
             int currentId = getUserID();
-			
-            if ((currentId == news.UserID)||(currentId == 3))
+
+            if ((currentId == news.UserID) || (currentId == 3))
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");

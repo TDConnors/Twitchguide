@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    <aside>
+        <div class="collapse in" id="sidebar" style=" z-index: 2; ">
+            <ul class="sidebar-menu" id="nav-accordion">
+                    <li class="centered"><a href="/Users"><img src="@ViewBag.CurrentUsersAvatar" alt="Avatar" class="img-circle" width="100" /></a></li>;
+                    <li class="centered UsernameDisplay">
+                        @ViewBag.CurrentUsersUserName
+                    </li>
+            </ul>
+        </div>
+    </aside>
+}
+else
+{
+    <aside>
+        <div class="collapse in" id="sidebar" style=" z-index: 2; ">
+            <ul class="sidebar-menu" id="nav-accordion">
+                    <li class="centered"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="100" /></li>;
+                    <li class="centered UsernameDisplay" >Guest</li>
+            </ul>
+        </div>
+    </aside>
+}

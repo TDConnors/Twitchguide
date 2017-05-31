@@ -1,14 +1,20 @@
-﻿@model IEnumerable<TwitchGuide.Models.SiteNews>
-
+﻿
+@model PagedList.IPagedList<TwitchGuide.Models.SiteNews>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "NewsIndex";
 }
 
-<h2>Index</h2>
+<h2>Site Updates</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+    @if (ViewBag.canEdit)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
 
     @foreach (var item in Model)
     {
@@ -18,8 +24,15 @@
             <h4>@Html.DisplayFor(modelItem => item.News.Content)</h4>
             <h5>Added by @Html.DisplayFor(modelItem => item.User.Username) on @Html.DisplayFor(modelItem => item.News.DateAdded.Date)</h5>
             <br />
-            @Html.ActionLink("Edit", "Edit", new { id = item.NewsID })              @Html.ActionLink("Delete", "Delete", new { id = item.NewsID })
-
+            @if (ViewBag.canEdit)
+            {
+                 @Html.ActionLink("Edit", "Edit", new { id = item.NewsID })<nbsp></nbsp>
+                 @Html.ActionLink("Delete", "Delete", new { id = item.NewsID })
+            }
 
         </div>
-    }
+}
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new {page}))
+<br />

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<TwitchGuide.Models.User>
+
+@{
+    ViewBag.Title = "Advanced Search";
+}
+
+<h2>Advanced Search</h2>
+
+
+@if (ViewBag.none != "True")
+{
+    <p>That username didn't match anybody we have, did you mean one of these people?</p>
+
+    <table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@item.Avatar" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+else
+{
+    <br />
+    <h4>We couldn't find any users with a name similar to that! Maybe they haven't created a TCG account yet?</h4>
+}

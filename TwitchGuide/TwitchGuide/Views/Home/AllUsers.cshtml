@@ -1,4 +1,7 @@
-﻿@model IEnumerable<TwitchGuide.Models.User>
+﻿
+@model PagedList.IPagedList<TwitchGuide.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "TwitchGuide Users";  
@@ -15,11 +18,14 @@
             @if (item.Avatar.IsEmpty() == false)
             {
                 temp = new HtmlString(item.Avatar);
-                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span>@Html.ActionLink(item.Username, "goToUser", "Home", new { name = item.Username }, null)
+                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
             }
             else
             {
-                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span>@Html.ActionLink(item.Username,"goToUser","Home", new { name = item.Username }, null)
+                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
             }
         </div>
     }
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("AllUsers", new { page }))
