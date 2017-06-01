@@ -33,24 +33,15 @@
 <hr />
 <div id="userstats"></div>
 
-@if (Request.IsAuthenticated)
-{
-    @ViewBag.NextTime
-    
-    <table class="table">
-        <tr><th>Favorites</th></tr>
-        @foreach (var user in Model.Follows)
-        {
-                    <tr>
-                        <td><img src="@user.Avatar" height="32" width="32" /> <a href="/Users/@user.Username">@user.Username</a></td>
-                    </tr>
-        }
+<h3>Featured Streamer</h3>
+<div class="col-md-5">
+    <iframe src="https://player.twitch.tv/?channel=streamerhouse&muted=true"
+            height="640"
+            width="960"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="true"></iframe>
+</div>
 
-    </table>
-}
-else
-{
-    <div>Please login to see your Favorites</div>
-}
 
 
