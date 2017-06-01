@@ -235,4 +235,12 @@ a.sideLinks
     color: #ffffff;
     float: left;
 }
-
+.AboutUsSource
+{
+    margin: 0 auto;  
+    max-width: 250px;
+    font-size: 28px;
+    font-family: DIMIS___;
+    color: #0E9DD9;
+    font-weight: bold;
+}

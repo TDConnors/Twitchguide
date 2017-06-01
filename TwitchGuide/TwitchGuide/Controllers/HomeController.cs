@@ -104,7 +104,7 @@ namespace TwitchGuide.Controllers
             //sorting
             var sorted = db.Users.OrderBy((s => s.Username)).ToList();
             //paging
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(sorted.ToPagedList(pageNumber, pageSize));
         }
