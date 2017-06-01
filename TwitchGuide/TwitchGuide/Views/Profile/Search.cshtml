@@ -16,7 +16,6 @@
         <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
         <h2 id="ProfileName">@ViewBag.PageUserName</h2>
         <br />
-        <button class="btn btn-default" id="AddFav">Add Favorite</button>
         <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
     </div>
     <div class="col-md-5">
@@ -27,23 +26,7 @@
                 scrolling="no"
                 allowfullscreen="true"></iframe>
     </div>
-    @if (ViewBag.edit == "True")
-    {
-        <h5>Title:</h5>
-        <textarea id="NewTitle"></textarea><br>
-        <h5>Game:</h5>
-        <textarea id="NewGame"></textarea><br>
-        <button class="btn btn-default" type="button" onclick="changeStreamInfo()" >Update</button>
 
-        @*<div class="col-md-3">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="New Title...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Update</button>
-                </span>
-            </div>
-        </div>*@
-    }
 </div>
 
 <div class="collapse in" id="Schedule">
