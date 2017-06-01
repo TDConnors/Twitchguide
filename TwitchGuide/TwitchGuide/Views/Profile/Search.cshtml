@@ -16,7 +16,6 @@
         <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
         <h2 id="ProfileName">@ViewBag.PageUserName</h2>
         <br />
-        <button class="btn btn-default" id="AddFav">Add Favorite</button>
         <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
     </div>
     <div class="col-md-5">
@@ -415,17 +414,6 @@
                 }
             });
         }
-        $("#AddFav").click(function () {
-            $.ajax({
-                url: '@Url.Action("AddFavorite", "Profile")',
-                contentType: "application/json; charset=utf-8",
-                data: { "id" : @Model.UserObj.UserID },
-                success: function () {
-                    alert("User Added to Favorites");
-                }
-            });
-            return false;
-        });
 
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
