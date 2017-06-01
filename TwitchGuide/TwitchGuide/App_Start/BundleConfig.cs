@@ -9,7 +9,7 @@ namespace TwitchGuide
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        //"~/Scripts/jquery-{version}.js"
+                        "~/Scripts/jquery-{version}.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -34,15 +34,12 @@ namespace TwitchGuide
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/themeScript").Include(
-        "~/Content/Theme/assets/js/jquery-1.8.3.min.js",
         "~/Content/Theme/assets/js/bootstrap.min.js",
         "~/Content/Theme/assets/js/jquery.dcjqaccordion.2.7.js",
         "~/Content/Theme/assets/js/jquery.scrollTo.min.js",
         "~/Content/Theme/assets/js/jquery.nicescroll.js",
         "~/Content/Theme/assets/js/jquery.sparkline.js",
-        "~/Content/Theme/assets/js/common-scripts.js",
-        "~/Content/Theme/assets/js/gritter/js/jquery.gritter.js",
-        "~/Content/Theme/assets/js/gritter-conf.js"
+        "~/Content/Theme/assets/js/common-scripts.js"
         ));
             
         }
