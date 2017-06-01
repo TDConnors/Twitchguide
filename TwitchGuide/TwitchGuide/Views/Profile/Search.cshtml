@@ -398,17 +398,6 @@
                 }
             });
         }
-        $("#AddFav").click(function () {
-            $.ajax({
-                url: '@Url.Action("AddFavorite", "Profile")',
-                contentType: "application/json; charset=utf-8",
-                data: { "id" : @Model.UserObj.UserID },
-                success: function () {
-                    alert("User Added to Favorites");
-                }
-            });
-            return false;
-        });
 
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
