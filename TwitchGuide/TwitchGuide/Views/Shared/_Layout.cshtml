@@ -66,6 +66,10 @@
                 $("#btnSearch").click(function () {
                     location.href = "../Users/" + $("#name").val();
                 });
+                $("#btnChl").click(function () {
+                    var tempViewChannel = "https://player.twitch.tv/?channel=" + $("#chlID").val() + "&muted=true";
+                    document.getElementById("streamer").src = tempViewChannel;
+                });
     </script>
     @if (Request.IsAuthenticated)
             {

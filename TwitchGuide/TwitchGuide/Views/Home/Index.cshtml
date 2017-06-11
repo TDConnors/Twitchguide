@@ -11,7 +11,7 @@
 
 
 
-<div class="col-lg-3 ds">
+<div class="col-lg-3 ds" style="z-index:3;">
     <h3>WHATS NEW</h3>
     @foreach (var item in @newsList.Take(3))
     {
@@ -28,19 +28,21 @@
     }
     <h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
 </div>
-
 <br />
-<div id="userstats"></div>
-
-<h3>Featured Streamer: A_Seagull</h3>
+<span class="form-inline" id="ChannelController">
+    <input type="text" class="form-control" name="chlID" id="chlID" placeholder="lowercase username here"  style ="padding-right: 100px;">
+    <button class="btn btn-theme" id="btnChl">Change Channel</button>
+    </span>
+<br />
+<br />
 
 <div class="col-md-5 collapse in" id="Stream">
-    <iframe src="https://player.twitch.tv/?channel=a_seagull&muted=true"
-            height="480"
-            width="640"
+    <iframe id="streamer"
+            src="https://player.twitch.tv/?channel=a_seagull"
+            height="420"
+            width="560"
             frameborder="0"
             scrolling="no"
             allowfullscreen="true"></iframe>
 </div>
-
 

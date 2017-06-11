@@ -216,12 +216,14 @@
   <ItemGroup>
     <Content Include="App_Data\CreateDB.sql" />
     <Content Include="App_Data\Snippets.txt" />
+    <Content Include="Content\404-page-error.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BrandonAvatar.png" />
     <Content Include="Content\default-avatar.png" />
+    <Content Include="Content\error1.jpg" />
     <Content Include="Content\KyleAvatar.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\ProfileSchedule.css" />
@@ -311,6 +313,7 @@
     <Content Include="Content\Theme\assets\lineicons\index.html" />
     <Content Include="Content\Theme\assets\lineicons\lte-ie7.js" />
     <Content Include="Content\Theme\assets\lineicons\style.css" />
+    <Content Include="Content\Twitch_logo.png" />
     <Content Include="Content\TylerAvatar.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -413,6 +416,9 @@
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Shared\_SideBarPartial.cshtml" />
     <Content Include="Views\Profile\AdvancedSearch.cshtml" />
+    <Content Include="Views\Home\my404Page.cshtml" />
+    <Content Include="Views\Home\_ErrorLayout.cshtml" />
+    <Content Include="Views\Home\errorPage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -445,6 +451,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties Content_4bootstrap_1min_1css_1map__JSONSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
