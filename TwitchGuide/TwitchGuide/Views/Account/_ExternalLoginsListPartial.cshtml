@@ -5,8 +5,7 @@
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
             @Html.AntiForgeryToken()
-
-            <div id="socialLoginList" style="margin-left:20px;margin-top:15px">
+            <div id="socialLoginList" style="margin-left:20px">
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders) {
                         <button type="submit" class="btn btn-theme" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">Log in with @p.AuthenticationType</button>
