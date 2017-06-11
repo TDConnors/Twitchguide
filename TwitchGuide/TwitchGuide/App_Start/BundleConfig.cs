@@ -39,9 +39,11 @@ namespace TwitchGuide
         "~/Content/Theme/assets/js/jquery.scrollTo.min.js",
         "~/Content/Theme/assets/js/jquery.nicescroll.js",
         "~/Content/Theme/assets/js/jquery.sparkline.js",
-        "~/Content/Theme/assets/js/common-scripts.js"
+        "~/Content/Theme/assets/js/common-scripts.js",
+        "~/Content/Theme/assets/js/gritter/js/jquery.gritter.js",
+        "~/Content/Theme/assets/js/gritter-conf.js"
         ));
-            
+
         }
     }
 }
