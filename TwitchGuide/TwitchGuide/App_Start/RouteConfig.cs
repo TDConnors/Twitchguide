@@ -24,7 +24,19 @@ namespace TwitchGuide
                 url: "signin-Twitch",
                 defaults: new {controller = "[AccountController]", action = "ExternalLoginCallback", code = UrlParameter.Optional }
             );
-			
+
+            routes.MapRoute(
+                  name: "Errors",
+                  url: "doesNotCompute",
+                  defaults: new { controller = "Home", action = "errorPage"}
+            );
+
+            routes.MapRoute(
+                  name: "404Error",
+                  url: "404",
+                  defaults: new { controller = "Home", action = "my404Page"}
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

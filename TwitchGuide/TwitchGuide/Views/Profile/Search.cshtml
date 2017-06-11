@@ -14,7 +14,7 @@
     <div class="col-md-4">
         <br />
         <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
-        <h2 id="ProfileName">@ViewBag.PageUserName</h2>
+        <h2 id="ProfileName" class="textify tshad">@ViewBag.PageUserName</h2>
         <br />
         <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
     </div>
@@ -26,7 +26,7 @@
                 scrolling="no"
                 allowfullscreen="true"></iframe>
     </div>
-
+    <a href="https://www.twitch.tv/@ViewBag.PageUserName"><img src="~/Content/Twitch_logo.png" height="100" width="150" style="margin-top:75px" /></a>
 </div>
 
 <div class="collapse in" id="Schedule">
@@ -309,20 +309,6 @@
         var gameurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[game]=';
         var gameurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
 
-        //$(document).ready(function () {
-        //    $.ajax({
-        //        url: 'https://api.twitch.tv/kraken/user',
-        //        type: 'GET',
-        //        dataType: 'json',
-        //        success: function (result) {
-        //            $("#Username").html(result.name);
-        //            username = result.name;
-        //            chanurl = chanurl + username + clientid;
-        //            streamurl = streamurl + username + clientid;
-        //        },
-        //        beforeSend: setAuthHeader
-        //    });
-        //});
         $(document).ready(function () {
             $.ajax({
                 url: streamurl,
