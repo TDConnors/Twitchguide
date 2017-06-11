@@ -1,15 +1,15 @@
 ﻿@using Microsoft.AspNet.Identity
-
-
+@using Microsoft.Owin.Security
+@using TwitchGuide.Models
+@model LoginViewModel
 
 
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-
-        <div class="top-menu">
+        @Html.AntiForgeryToken()
+    <div class="top-menu">
             <ul class="nav pull-right top-menu">
                 <li><a class="logout" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>
@@ -18,9 +18,5 @@
 }
 else
 {
-    <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-            <li><a class="logout" href="@Url.Action("Login", "Account", routeValues: new { id = "loginLink" })">Sign in</a></li>
-        </ul>
-    </div>
+    @Html.Partial("~/Views/Account/_ExternalLoginsListPartial.cshtml", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
 }
