@@ -112,6 +112,17 @@ namespace TwitchGuide.Controllers
         {
             return View();
         }
-
+        public ActionResult my404Page(string aspxerrorpath)
+        {
+            if (!string.IsNullOrWhiteSpace(aspxerrorpath))
+                return RedirectToAction("my404Page");
+            return View();
+        }
+        public ActionResult errorPage(string aspxerrorpath)
+        {
+            if (!string.IsNullOrWhiteSpace(aspxerrorpath))
+                return RedirectToAction("errorPage");
+            return View();
+        }
     }
 }

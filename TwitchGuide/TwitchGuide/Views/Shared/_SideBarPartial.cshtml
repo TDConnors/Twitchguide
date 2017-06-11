@@ -5,10 +5,13 @@
     <aside>
         <div class="collapse in" id="sidebar" style=" z-index: 2; ">
             <ul class="sidebar-menu" id="nav-accordion">
-                    <li class="centered"><a href="/Users"><img src="@ViewBag.CurrentUsersAvatar" alt="Avatar" class="img-circle" width="100" /></a></li>;
-                    <li class="centered UsernameDisplay">
-                        @ViewBag.CurrentUsersUserName
-                    </li>
+                <li class="centered"><a href="/Users"><img src="@ViewBag.CurrentUsersAvatar" alt="Avatar" class="img-circle" width="150" /></a></li>
+                <li class="centered UsernameDisplay textify tshad">
+                    @ViewBag.CurrentUsersUserName
+                </li>
+            </ul>
+            <ul class="sidebar-menu sideTwitch" id="nav-accordion">
+                <li class="centered sideTwitch"><a href="@ViewBag.CurrentUsersTwitchPage"><img src="~/Content/Twitch_logo.png" width="125" /></a></li>
             </ul>
         </div>
     </aside>
@@ -18,8 +21,8 @@ else
     <aside>
         <div class="collapse in" id="sidebar" style=" z-index: 2; ">
             <ul class="sidebar-menu" id="nav-accordion">
-                    <li class="centered"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="100" /></li>;
-                    <li class="centered UsernameDisplay" >Guest</li>
+                    <li class="centered"><img src="~/Content/default-avatar.png" alt="Avatar" class="img-circle" width="150" /></li>
+                    <li class="centered UsernameDisplay textify tshad" >Guest</li>
             </ul>
         </div>
     </aside>
