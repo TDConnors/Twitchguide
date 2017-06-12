@@ -187,7 +187,7 @@ namespace TwitchGuide.Controllers
 
                     var username = User.Identity.GetUserName();
                     var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
-
+                    
                     db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = timeblock.Index });
                     db.SaveChanges();
                     return RedirectToAction("Search");
