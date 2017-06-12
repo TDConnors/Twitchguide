@@ -71,21 +71,11 @@
                     document.getElementById("streamer").src = tempViewChannel;
                 });
     </script>
+
+
     @if (Request.IsAuthenticated)
             {
         <script>
-                    //Gets the Logo.png for the current user, and displays it next to the name
-                    $(document).ready(function () {
-                        $.ajax({
-                            url: 'https://api.twitch.tv/kraken/user',
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (result) {
-                                $("#LogoSpot").html("<img src='" + result.logo + "' width=25 />");
-                            },
-                            beforeSend: setAuthHeader
-                        });
-                    });
                     function setAuthHeader(xhr) {
                         var token = "@ViewBag.token";
                         xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');

@@ -1,16 +1,32 @@
 ﻿@using TwitchGuide.Models
 @model LoginViewModel
 @{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
     ViewBag.Title = "Log in";
 }
 
-<h2>Login With Twitch</h2>
-<div class="row">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+
+    <div id="login-page">
+        <div class="container">
+            <div class="form-login" style="outline:5px solid black">
+                <h2 class="form-login-heading titleFormatter">Sign into Twitch</h2>
+                <div class="login-wrap">
+                    <div class="login-social-link centered">
+                            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                    </div>
+                    <div class="registration">
+                        Don't have a Twitch account yet?<br />
+                        <a class="" href="https://www.twitch.tv/signup">
+                            Create an account
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+@Scripts.Render("~/bundles/jqueryval")
+
+    

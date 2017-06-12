@@ -224,7 +224,10 @@
     <Content Include="Content\BrandonAvatar.png" />
     <Content Include="Content\default-avatar.png" />
     <Content Include="Content\error1.jpg" />
+    <Content Include="Content\GlitchBadge.png" />
     <Content Include="Content\KyleAvatar.jpg" />
+    <Content Include="Content\loginblak.jpg" />
+    <Content Include="Content\loginpurp.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\ProfileSchedule.css" />
     <Content Include="Content\Theme\assets\css\bootstrap.css" />
@@ -315,6 +318,10 @@
     <Content Include="Content\Theme\assets\lineicons\style.css" />
     <Content Include="Content\Twitch_logo.png" />
     <Content Include="Content\TylerAvatar.png" />
+    <Content Include="Content\_loginTheme\bootstrap.css" />
+    <Content Include="Content\_loginTheme\font-awesome.css" />
+    <Content Include="Content\_loginTheme\style-responsive.css" />
+    <Content Include="Content\_loginTheme\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -385,6 +392,7 @@
     <Content Include="Scripts\scheduler.js" />
     <Content Include="Scripts\username.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Account\login.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -419,6 +427,7 @@
     <Content Include="Views\Home\my404Page.cshtml" />
     <Content Include="Views\Home\_ErrorLayout.cshtml" />
     <Content Include="Views\Home\errorPage.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
