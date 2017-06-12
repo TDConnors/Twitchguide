@@ -1,0 +1,66 @@
+﻿@using TwitchGuide.Models
+@model LoginViewModel
+@{
+    Layout = "";
+    ViewBag.Title = "Log in";
+}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <!-- Bootstrap core CSS -->
+      @Styles.Render("~/Content/css")
+      @RenderSection("styles", required: false)
+  </head>
+
+  <body>
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+
+	  <div id="login-page">
+	  	<div class="container">
+		      <form class="form-login" action="index.html">
+		        <h2 class="form-login-heading">sign in now</h2>
+		        <div class="login-wrap">   
+		            <div class="login-social-link centered">
+                        <section id="socialLoginForm">
+                            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                        </section>
+                    </div>
+		            <div class="registration">
+		                Don't have a Twitch account yet?<br/>
+		                <a class="" href="https://www.twitch.tv/signup">
+		                    Create an account
+		                </a>
+		            </div>
+		
+		        </div>
+		      </form>	  	
+	  	
+	  	</div>
+	  </div>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
+    <script>
+        $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+    </script>
+      @Scripts.Render("~/bundles/jquery")
+      @Scripts.Render("~/bundles/jqueryval")
+      @Scripts.Render("~/bundles/bootstrap")
+      @Scripts.Render("~/bundles/modernizr")
+      @Scripts.Render("~/bundles/themeScript")
+      @RenderSection("scripts", required: false)
+  </body>
+
+</html>
