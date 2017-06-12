@@ -189,6 +189,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Site ER Diagram.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Site ER Diagram.edmx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -372,6 +377,13 @@
     <Content Include="Content\Theme\assets\lineicons\fonts\linecons.eot" />
     <Content Include="Content\Theme\assets\lineicons\fonts\linecons.ttf" />
     <Content Include="Content\Theme\assets\lineicons\fonts\linecons.woff" />
+    <EntityDeploy Include="App_Start\Site ER Diagram.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Site ER Diagram.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="App_Start\Site ER Diagram.edmx.diagram">
+      <DependentUpon>Site ER Diagram.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -429,7 +441,9 @@
     <Content Include="Views\Home\errorPage.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Data;
 using System.Web.Mvc;
+using TwitchGuide.DAL;
+using TwitchGuide.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TwitchGuide;
 using TwitchGuide.Controllers;
@@ -23,8 +25,6 @@ namespace TwitchGuide.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-        }
-
-        
+        }     
     }
 }
