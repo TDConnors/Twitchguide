@@ -1,6 +1,46 @@
 ﻿@{
-    ViewBag.Title = "Login Successful!";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Log in";
 }
 
-<h3>Login Successful!</h3>
-<h4>Congratulations, you've successfully logged in. You may return to the @Html.ActionLink("home page.", "Index", "Home")</h4>
+<div id="login-page">
+    <div class="container">
+        <div class="form-login" style="outline:5px solid black">
+            <h2 class="form-login-heading titleFormatter">Login Successful!</h2>
+            <div class="login-wrap">
+                <div class="registration">
+                    <h4 style="font-size-adjust:.75; color:black; font-weight:800">Return to Home Page</h4>
+                    <a href="@Url.Action("Index", "Home")" class="logo" style="color:#6441A4;  font-size-adjust:1.25; margin-left: 40px" align="center" >Twitch Guide</a>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        var unique_id = $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'Welcome to Twitch Guide!',
+            // (string | mandatory) the text inside the notification
+            text: 'Welcome @ViewBag.CurrentUsersUserName !',
+            // (string | optional) the image to display on the left
+            image: '@ViewBag.CurrentUsersAvatar',
+            // (bool | optional) if you want it to fade out on its own or just sit there
+            sticky: false,
+            // (int | optional) the time you want it to be alive for before fading out
+            time: '10',
+            // (string | optional) the class name you want to apply to that specific message
+            class_name: 'my-sticky-class'
+        });
+        return false;
+        });
+    </script>
+}

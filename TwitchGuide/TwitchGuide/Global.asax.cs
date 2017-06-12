@@ -21,6 +21,7 @@ namespace TwitchGuide
                 User ourUser = db.Users.Where(p => p.Username == temp).FirstOrDefault();
                 filterContext.Controller.ViewBag.CurrentUsersUserName = ourUser.Username;
                 filterContext.Controller.ViewBag.CurrentUsersAvatar =  ourUser.Avatar;
+                filterContext.Controller.ViewBag.CurrentUsersTwitchPage = "https://www.twitch.tv/"+ ourUser.Username.ToLower();
             }
         }
 

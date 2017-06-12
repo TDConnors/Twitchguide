@@ -6,9 +6,11 @@
     ViewBag.Title = "NewsIndex";
 }
 
-<h2>Site Updates</h2>
 
+<h2><a class="logo"><b class="titleFormatter" style="margin-left: 125px;">Site Updates</b></a></h2>
 
+<br />
+<br />
     @if (ViewBag.canEdit)
     {
         <p>
@@ -18,7 +20,7 @@
 
     @foreach (var item in Model)
     {
-        <hr />
+        <hr align="left" />
         <div class="StoryItem">
             <h3>@Html.DisplayFor(modelItem => item.News.Title)</h3>
             <h4>@Html.DisplayFor(modelItem => item.News.Content)</h4>

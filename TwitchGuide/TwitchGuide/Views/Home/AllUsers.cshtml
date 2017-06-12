@@ -8,21 +8,24 @@
     HtmlString temp;
 }
 
-<h2>All Users</h2>
+<h2><a class="logo"><b class="titleFormatter" style="margin-left: 125px;">All Users</b></a></h2>
+
+<br />
+<br />
 
     @foreach (var item in Model)
     {
 
-        <hr />
+        <hr align="left"/>
         <div class="UserItem">
             @if (item.Avatar.IsEmpty() == false)
             {
                 temp = new HtmlString(item.Avatar);
-                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
+                <img src= "@item.Avatar"  alt="Avatar" height="50" width="50"/><span style="display:inline-block; width:25px;"></span><a class="textifyMuted toutline" href="/Users/@item.Username">@item.Username</a>
             }
             else
             {
-                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span><a href="/Users/@item.Username">@item.Username</a>
+                <img src="~/Content/default-avatar.png" alt="Avatar" height="50" width="50" /><span style="display:inline-block; width:25px;"></span><a class="textifyMuted toutline" href="/Users/@item.Username">@item.Username</a>
             }
         </div>
     }
