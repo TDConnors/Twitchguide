@@ -20,7 +20,6 @@
         <AssociationConnector Association="TCGdbModel.FK__Schedules__UserI__1F98B2C1" ManuallyRouted="false" />
         <AssociationConnector Association="TCGdbModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="TCGdbModel.SiteNews" ManuallyRouted="false" />
-        <AssociationConnector Association="TCGdbModel.ScheduleTimeblock" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

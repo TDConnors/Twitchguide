@@ -353,7 +353,6 @@ warning 6035: The relationship 'FK__Schedules__Timeb__7B5B524B' has columns that
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="TimeblockID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK__Schedules__UserI__1F98B2C1" FromRole="Schedules" ToRole="Users" />
-          <NavigationProperty Name="Timeblock" Relationship="TCGdbModel.ScheduleTimeblock" FromRole="Schedule" ToRole="Timeblock" />
         </EntityType>
         <EntityType Name="Timeblock">
           <Key>
@@ -369,7 +368,6 @@ warning 6035: The relationship 'FK__Schedules__Timeb__7B5B524B' has columns that
           <Property Name="EndHour" Type="Byte" Nullable="false" />
           <Property Name="EndMinute" Type="Byte" Nullable="false" />
           <Property Name="Day" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Schedule" Relationship="TCGdbModel.ScheduleTimeblock" FromRole="Timeblock" ToRole="Schedule" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -482,15 +480,7 @@ warning 6035: The relationship 'FK__Schedules__Timeb__7B5B524B' has columns that
             <End Role="News" EntitySet="News" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="ScheduleTimeblock" Association="TCGdbModel.ScheduleTimeblock">
-            <End Role="Schedule" EntitySet="Schedules" />
-            <End Role="Timeblock" EntitySet="Timeblocks" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="ScheduleTimeblock">
-          <End Type="TCGdbModel.Schedule" Role="Schedule" Multiplicity="1" />
-          <End Type="TCGdbModel.Timeblock" Role="Timeblock" Multiplicity="1" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

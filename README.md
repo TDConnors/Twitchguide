@@ -40,7 +40,21 @@ We will be using Scrum to build our project. Reference [here](http://scrumrefere
     * Ninject
     * Moq
     
+### Gource Video
 
+<iframe id="streamer"
+
+           src="https://drive.google.com/file/d/0BztzhKdfyjQMSzRlRGFkT2c4WXc/preview"
+
+           height="420"
+
+           width="560"
+
+           frameborder="0"
+
+           scrolling="no"
+
+           allowfullscreen="true"></iframe>
 * * *
 
 ## Team Members

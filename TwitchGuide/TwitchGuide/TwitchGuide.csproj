@@ -206,6 +206,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Models\Follower.cs" />
+    <Compile Include="Models\ITimeBlock.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\SiteNews.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
