@@ -7,63 +7,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-/* ************************* */ 
 
-CREATE TABLE [dbo].[Schedules](
-	[UserID] [int] NOT NULL,
-	[TimeblockID] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC,
-	[TimeblockID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-)
 
-GO
-
-ALTER TABLE [dbo].[Schedules]  WITH CHECK ADD FOREIGN KEY([TimeblockID])
-REFERENCES [dbo].[Timeblocks] ([Index])
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [dbo].[Schedules]  WITH CHECK ADD FOREIGN KEY([UserID])
-REFERENCES [dbo].[Users] ([UserID])
-ON DELETE CASCADE
-GO
-
-/* *********************** */
-
-CREATE TABLE [dbo].[Timeblocks](
-	[Index] [int] IDENTITY(1,1) NOT NULL,
-	[StartHour] [tinyint] NOT NULL,
-	[StartMinute] [tinyint] NOT NULL,
-	[EndHour] [tinyint] NOT NULL,
-	[EndMinute] [tinyint] NOT NULL,
-	[Day] [tinyint] NOT NULL,
- CONSTRAINT [pk_TimeblockID] PRIMARY KEY CLUSTERED 
-(
-	[StartHour] ASC,
-	[StartMinute] ASC,
-	[EndHour] ASC,
-	[EndMinute] ASC,
-	[Day] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-)
-
-GO
-
-/* *********************** */
-
-CREATE TABLE [dbo].[Users](
-	[UserID] [int] IDENTITY(1,1) NOT NULL,
-	[TwitchID] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-)
-
-GO
 
 /* IDENTITY TABLES */
 
@@ -98,6 +43,9 @@ CREATE TABLE [dbo].[AspNetUsers]
 );
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers]([UserName] ASC);
+
+
+
 
 -- ############# AspNetUserClaims #############
 CREATE TABLE [dbo].[AspNetUserClaims]
@@ -139,4 +87,95 @@ GO
 CREATE NONCLUSTERED INDEX [IX_RoleId] ON [dbo].[AspNetUserRoles]([RoleId] ASC);
 
 
+
+
+/* *********** Users ************ */
+
+CREATE TABLE [dbo].[Users] (
+    [UserID]    INT            IDENTITY (1, 1) NOT NULL,
+    [TwitchID]  INT            NULL,
+    [Username]  NVARCHAR (256) NULL,
+    [AuthToken] NVARCHAR (40)  NULL,
+    [Avatar]    VARCHAR (1024) NULL,
+    PRIMARY KEY CLUSTERED ([UserID] ASC)
+);
+
+/* *********** timeblocks ************ */
+
+
+CREATE TABLE [dbo].[Timeblocks] (
+    [Index]       INT     IDENTITY (1, 1) NOT NULL,
+    [StartHour]   TINYINT NOT NULL,
+    [StartMinute] TINYINT NOT NULL,
+    [EndHour]     TINYINT NOT NULL,
+    [EndMinute]   TINYINT NOT NULL,
+    [Day]         TINYINT NOT NULL,
+    CONSTRAINT [pk_TimeblockID] PRIMARY KEY CLUSTERED ([StartHour] ASC, [StartMinute] ASC, [EndHour] ASC, [EndMinute] ASC, [Day] ASC)
+);
+
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [ux_schedules_Index]
+    ON [dbo].[Timeblocks]([Index] ASC);
+
+
+
+/* ************Schedules************* */ 
+
+CREATE TABLE [dbo].[Schedules](
+	[UserID] [int] NOT NULL,
+	[TimeblockID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[TimeblockID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+
+GO
+
+ALTER TABLE [dbo].[Schedules]  WITH CHECK ADD FOREIGN KEY([TimeblockID])
+REFERENCES [dbo].[Timeblocks] ([Index])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Schedules]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+ON DELETE CASCADE
+GO
+
+
+
+-- ############# Followers #############
+
+CREATE TABLE [dbo].[Followers] (
+    [UserID]      INT NOT NULL,
+    [FollowingID] INT NOT NULL,
+    CONSTRAINT [PK_Followers] PRIMARY KEY CLUSTERED ([UserID] ASC, [FollowingID] ASC),
+    CONSTRAINT [FK_Followers_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID]) ON DELETE CASCADE
+); 
+
+-- ############# News #############
+
+CREATE TABLE [dbo].[News] (
+    [NewsID]    INT            IDENTITY (1, 1) NOT NULL,
+    [Title]     NVARCHAR (60)  NOT NULL,
+    [Content]   NVARCHAR (MAX) NOT NULL,
+    [DateAdded] DATETIME       NOT NULL,
+    PRIMARY KEY CLUSTERED ([NewsID] DESC)
+);
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [ux_sitenews_Index]
+    ON [dbo].[News]([NewsID] DESC);
+
+-- ############# SiteNews #############
+
+CREATE TABLE [dbo].[SiteNews] (
+    [UserID] INT NOT NULL,
+    [NewsID] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserID] ASC, [NewsID] DESC),
+    FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID]),
+    FOREIGN KEY ([NewsID]) REFERENCES [dbo].[News] ([NewsID]) ON DELETE CASCADE
+);
 

@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Twitch Channel Guide</title>
+    @Styles.Render("~/Content/loginTheme")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    @RenderBody()
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/themeScript")
+    @RenderSection("scripts", required: false)
+
+
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script>
+        $.backstretch('../../Content/loginblak.jpg', {speed: 500});
+    </script>
+
+    @if (Request.IsAuthenticated)
+            {
+        <script>
+                    function setAuthHeader(xhr) {
+                        var token = "@ViewBag.token";
+                        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
+                        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+                    };
+        </script>
+    }
+</body>
+</html>

@@ -11,10 +11,11 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
+using System.Threading.Tasks;
 
 namespace TwitchGuide.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         private TwitchContext db = new TwitchContext();
 
@@ -24,20 +25,25 @@ namespace TwitchGuide.Controllers
             var profileModel = new ProfileModel { };
             string username = "";
             ViewBag.edit = "False";
+            ViewBag.PageUserName = "";
+            ViewBag.PageUserLogo = "";
 
             if (name == null) //load current user's profile if logged in
             {
 
-                if (User.Identity.IsAuthenticated)
+                if (isLoggedIn())
                 {
-                    username = User.Identity.GetUserName();
+                    User MyUser = GetUser();
+                    username = MyUser.Username;
+                    ViewBag.PageUserName = MyUser.Username;
+                    ViewBag.PageUserLogo = MyUser.Avatar;
                     ViewBag.edit = "True";
                 }
                 else
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
+                //get timeblocks
                 var sched1 = db.Users.Where(p => p.Username == username).FirstOrDefault().Schedules.ToList();
                 var tb1 = sched1.Join(db.Timeblocks,
                          p => p.TimeblockID,
@@ -52,6 +58,7 @@ namespace TwitchGuide.Controllers
                              Day = e.Day
                          }).ToList();
 
+                //compile
                 profileModel = new ProfileModel
                 {
                     TimeblockObj = tb1,
@@ -61,14 +68,15 @@ namespace TwitchGuide.Controllers
                 return View(profileModel);
             }
 
+            //find other users
 
             var findUser = db.Users.Where(p => p.Username == name).FirstOrDefault();
 
             if (findUser == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("AdvancedSearch", new { name = name });
             }
-
+            //get user schedule
             var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
                           p => p.TimeblockID,
                           e => e.Index,
@@ -82,16 +90,26 @@ namespace TwitchGuide.Controllers
                               Day = e.Day
                           }).ToList();
 
-
+            ViewBag.PageUserName = findUser.Username;
+            ViewBag.PageUserLogo = findUser.Avatar;
             profileModel = new ProfileModel
             {
                 TimeblockObj = tb,
-                UserObj = db.Users.FirstOrDefault()
+                UserObj = findUser
             };
             ViewBag.token = profileModel.UserObj.AuthToken;
             return View(profileModel);
         }
 
+        public ActionResult AdvancedSearch(string name)
+        {
+            var names = db.Users.Where(p => p.Username.Contains(name)).ToList();
+            if (names.Count < 1)
+            {
+                ViewBag.none = "True";
+            }
+            return View(names);
+        }
 
         //
         //CRUD Functionality Below
@@ -171,7 +189,7 @@ namespace TwitchGuide.Controllers
 
                     var username = User.Identity.GetUserName();
                     var currentUser = db.Users.Where(p => p.Username == username).FirstOrDefault();
-
+                    
                     db.Schedules.Add(new Schedule { UserID = currentUser.UserID, TimeblockID = timeblock.Index });
                     db.SaveChanges();
                     return RedirectToAction("Search");
@@ -217,6 +235,24 @@ namespace TwitchGuide.Controllers
             db.Schedules.Remove(mapping);
             db.SaveChanges();
             return RedirectToAction("Search");
+        }
+
+        public async Task AddFavoriteXX(int id)
+        {
+            User ourUser = GetUser();
+            if (ourUser.UserID != id)
+            {
+                Follower newFollower = new Follower { UserID = ourUser.UserID, FollowingID = id };
+                db.Followers.Add(newFollower);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddFavorite(int id)
+        {
+            
+                db.Followers.Add(new Follower { UserID = 1, FollowingID = 25 });
+                await db.SaveChangesAsync();
         }
 
         protected override void Dispose(bool disposing)

@@ -1,18 +1,34 @@
-﻿@model TwitchGuide.Models.ProfileModel
+﻿@using Microsoft.AspNet.Identity
+
+@model TwitchGuide.Models.ProfileModel
 
 @{
     ViewBag.Title = "Profile";
 }
 
-<h2>Profile</h2>
-
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- so it works with phones -->
     <link rel="stylesheet" href="~/Content/ProfileSchedule.css"> <!-- Resource style -->
 }
-
-<button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
-
+<div class="row">
+    <div class="col-md-4">
+        <br />
+        <img src="@ViewBag.PageUserLogo" class="img-circle" alt="Avatar" height="150" width="150" /><span style="display:inline-block; width:25px;"></span>
+        <h2 id="ProfileName" class="textify tshad">@ViewBag.PageUserName</h2>
+        <br />
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#Schedule">Show/Hide Schedule</button>
+    </div>
+    <div class="col-md-5">
+        <iframe src="https://player.twitch.tv/?channel= @ViewBag.PageUserName &muted=true"
+                height="300"
+                width="400"
+                frameborder="0"
+                scrolling="no"
+                allowfullscreen="true"></iframe>
+    </div>
+    <a href="https://www.twitch.tv/@ViewBag.PageUserName"><img src="~/Content/Twitch_logo.png" height="100" width="150" style="margin-top:75px" /></a>
+</div>
+<!-- TimeBlock Start -->
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
     {
@@ -214,100 +230,179 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
-<input class="btn" type="image" id="refresh" src="https://cdn3.iconfinder.com/data/icons/faticons/32/refresh-01-128.png" onclick="refresh()"/>
-<div id="Profile info" class="userinfo">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 id="Username" class="panel-title">
-                Panel title
-            </h3>
+<!-- TimeBlock End -->
+
+<!-- UserStats Start -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
         </div>
-        <div class="panel-body"> Online: <img id="OnlineStatus"data-twitch-channel="bitsmiths"> </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
+        <div class="col-md-4">
+            <div id="Profile info" class="userinfo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 id="Username" class="panel-title">@ViewBag.PageUserName</h3>
+                    </div>
+                    <div class="panel-body"> Online: <img id="OnlineStatus"> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Views:<p id="Views"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body"> Followers:<p id="Followers"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="Views" class="panel-body"> Views: </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
+        <div class="col-md-4">
+            <div id="Stream info" class="userinfo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 id="Username" class="panel-title">
+                            Stream
+                        </h3>
+                    </div>
+                    <div class="panel-body"> Title: <p id="StreamTitle"></p> </div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">Game:<p id="Game"></p></div>
+                    <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+                        <div class="_e725ae-transform_wrap">
+                            <div class="_e725ae-status"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="Followers" class="panel-body"> Followers: </div>
-        <div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
-            <div class="_e725ae-transform_wrap">
-                <div class="_e725ae-status"> </div>
-            </div>
+        <div class="col-md-2">
         </div>
     </div>
 </div>
+<!-- UserStats Start -->
 
-<a class="channelposts" id="channelposts"></a>
+<div class="list-group" id="followslist">
+    <a href="#" class="list-group-item active">Channels Followed</a>
+</div>
 
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.rawgit.com/Fugiman/Twitch-Channel-Status/1d74252edf89110507cbf3088f9c3eaa38fac9d3/twitch-channel-status.min.js"></script>
 
+    <!-- UserStats -->
     <script>
-        var username;
-        var views;
-        var followers;
-        $('.btn').click(function () {
+        var username = '';
+        var chanurl = 'https://api.twitch.tv/kraken/channels/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var followurl = 'https://api.twitch.tv/kraken/users/'+'@Model.UserObj.Username'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var streamstatus='';
+        var streamgame='';
+        var titleurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[status]=';
+        var titleurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
+        var gameurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[game]=';
+        var gameurl2 ='?&method=put&oauth_token='+'@ViewBag.token';
+
+        $(document).ready(function () {
             $.ajax({
-                url: 'https://api.twitch.tv/kraken/user',
+                url: streamurl,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
-                    username = result.name;
-                },
-                beforeSend: setAuthHeader
-            });
-            return false;
-        });
-        $('.btn').click(function () {
-            $.ajax({
-                url: 'https://api.twitch.tv/kraken/channels/'+username,
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    views = result.views;
-                    followers = result.followers;
-                },
-                beforeSend: setNoAuthHeader
-            });
-            return false;
-        });
-        $('.btn').click(function () {
-            $.ajax({
-                url: 'https://api.twitch.tv/kraken/feed/'+ username +'/posts',
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    var data = JSON.stringify(result, null, 1);
-                    $("#channelposts").html('<pre>' + data + '<pre>');
+                    if (result.stream != null) {
+                        document.getElementById("OnlineStatus").src = 'http://media1.kohlsimg.com/is/image/kohls/2335032_Green_sw?wid=20&hei=20'
+                    }
+                    else {
+                        document.getElementById("OnlineStatus").src = 'http://media1.kohlsimg.com/is/image/kohls/1621140_Red_sw?wid=20&hei=20'
+
+                    }
+
                 },
                 beforeSend: setNoAuthHeader
             });
             return false;
         });
+        $(document).ready(function () {
+            $.ajax({
+                url: chanurl,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    $("#Views").html(result.views);
+                    $("#Followers").html(result.followers);
+                    $("#StreamTitle").html(result.status);
+                    $("#Game").html(result.game);
+                    if(@ViewBag.edit=="True"){
+                        $("#NewTitle").html(result.status);
+                        $("#NewGame").html(result.game);
+                    }
+                },
+                beforeSend: setNoAuthHeader
+            });
+            return false;
+        });
+        $(document).ready(function () {
+            $.ajax({
+                url: followurl,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    for (var i = 0; i < result.follows.length; i++){
+                        followee = $("<div class='list-group-item'></div>");
+                        $("#followslist").append(followee);
+                        followeeName = result.follows[i].channel.name;
+                        followee.append(followeeName);
+                    }
+                },
+                beforeSend: setNoAuthHeader
+            });
+            return false;
+        });
+        function changeStreamInfo(){
+            streamstatus = document.getElementById("NewTitle").value;
+            streamgame = document.getElementById("NewGame").value;
+            $.ajax({
+                url: titleurl+streamstatus+titleurl2,
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                }
+            });
+            $.ajax({
+                url: gameurl+streamgame+gameurl2,
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'jsonp',
+                success: function(data) {
+                }
+            });
+        }
+
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
             xhr.setRequestHeader('Authorization', 'OAuth ' + token);
         };
         function setNoAuthHeader(xhr) {
-            xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v3+json');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
         };
-        function refresh() {
-            document.getElementById("Username").innerHTML = username;
-            document.getElementById("Followers").innerHTML = document.getElementById("Followers").innerHTML + followers;
-            document.getElementById("Views").innerHTML = document.getElementById("Views").innerHTML + views;
-        };
-        
+
     </script>
 
 }

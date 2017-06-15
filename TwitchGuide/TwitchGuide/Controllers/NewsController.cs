@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TwitchGuide.DAL;
 using TwitchGuide.Models;
+using PagedList;
 
 namespace TwitchGuide.Controllers
 {
@@ -15,16 +16,46 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
-        // GET: News
-        public ActionResult Index()
+        //determines who can add to news
+        public bool canChange()
         {
-            return View(db.SiteNews.ToList());
+            if (isLoggedIn())
+            {
+                int temp = getUserID();
+                if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27))) //replace numbers with your admins user ids
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        // GET: News
+        public ActionResult Index(int? page)
+        {
+            ViewBag.canEdit = false;
+            if (canChange())
+            {
+                ViewBag.canEdit = true;
+            }
+            //sorting
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            //paging
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(sorted.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: News/Create
         public ActionResult Create()
         {
-            return View();
+            if(canChange())
+                return View();
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Create
@@ -34,14 +65,14 @@ namespace TwitchGuide.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "NewsID,Title,Content,DateAdded")] News news)
         {
+
             if (ModelState.IsValid)
             {
-                
+
                 news.DateAdded = DateTime.Now;
                 db.News.Add(news);
                 db.SaveChanges();
-                int current = 7;
-                current = getUserID();
+                int current = getUserID();
                 db.SiteNews.Add(new SiteNews { UserID = current, NewsID = news.NewsID });
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -56,12 +87,20 @@ namespace TwitchGuide.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            News news = db.News.Find(id);
+
+            SiteNews news = db.SiteNews.Where(p => p.NewsID == id).FirstOrDefault();
+
             if (news == null)
             {
                 return HttpNotFound();
             }
-            return View(news);
+
+            int currentId = getUserID();
+
+            if ((currentId == news.UserID) || (currentId == 3)) //only item creator or news admin you choose can edit
+                return View(news.News);
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Edit/5
@@ -87,12 +126,20 @@ namespace TwitchGuide.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            News news = db.News.Find(id);
+
+            SiteNews news = db.SiteNews.Where(p => p.NewsID == id).FirstOrDefault();
+
             if (news == null)
             {
                 return HttpNotFound();
             }
-            return View(news);
+
+            int currentId = getUserID();
+
+            if ((currentId == news.UserID) || (currentId == 3))//only item creator or news admin you choose can edit
+                return View(news.News);
+            else
+                return RedirectToAction("Index", "News");
         }
 
         // POST: News/Delete/5

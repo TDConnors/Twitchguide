@@ -5,64 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Twitch Channel Guide</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Twitch Guide", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Site News", "Index", "News")</li>
-                    <li>@Html.ActionLink("All Users", "AllUsers", "Home")</li>
-                    <li>@Html.ActionLink("My Profile", "Search", "Profile", new { name = "" }, new {})</li>
-                    <li>@Html.ActionLink("Search", "Search", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+                <div id="ToggleSidebar" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Profile" data-icon="&#xe007;" style=" font-size: 20px; color: #ffffff;" "></div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+        <!--logo start-->
+        <a href="@Url.Action("Index", "Home")" class="logo"><b>Twitch Guide</b></a>
+        <!--logo end-->
+        <div class="nav notify-row" id="top_menu">
+            <!-- links start -->
+            <ul class="nav top-menu">
+                <li>
+                    <a href="@Url.Action("AllUsers", "Home")" class="menuLinks">  Members</a>
+                </li>
+                <li>
+                    <span class="nav navbar-nav form-inline" id="SearchBar">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Search by Username">
+                        <button class="btn btn-theme" id="btnSearch">Search</button>
+                    </span>
+                </li>
+            </ul>
+            <!-- links end -->
+
+        </div>
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li>@Html.Partial("_LoginPartial")</li>
+            </ul>
+        </div>
+    </header>
+    <!--top menu end-->
+    <!--sidebar start-->
+    @Html.Partial("_SideBarPartial")
+    <!--sidebar end-->
+    <section id="main-content">
+        <section class="wrapper">
+            @RenderBody()
+        </section>
+    </section>
+
+    <!--footer start-->
+    <footer class="myFooter">
+        <a href="@Url.Action("AboutUs", "Home")" class="AboutUsLink"><b>About Us</b></a>
+    </footer>
+    <!--footer end-->
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/themeScript")
     @RenderSection("scripts", required: false)
 
-    @if (Request.IsAuthenticated)
-    {
-        <script>
-            //Gets the Logo.png for the current user, and displays it next to the name
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'https://api.twitch.tv/kraken/user',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (result) {
-                        $("#LogoSpot").html("<img src='" + result.logo + "' height=32 width=32></img>");
-                    },
-                    beforeSend: setAuthHeader
-                });
-            });
 
-            function setAuthHeader(xhr) {
-                var token = "@ViewBag.token";
-                xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-                xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-                xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-            };
+    <script>
+                $("#btnSearch").click(function () {
+                    location.href = "../Users/" + $("#name").val();
+                });
+                $("#btnChl").click(function () {//change channel button
+                    var tempViewChannel = "https://player.twitch.tv/?channel=" + $("#chlID").val() + "&muted=true";
+                    document.getElementById("streamer").src = tempViewChannel;
+                });
+    </script>
+
+
+    @if (Request.IsAuthenticated)
+            {
+        <script>
+                    function setAuthHeader(xhr) {
+                        var token = "@ViewBag.token";
+                        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
+                        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
+                    };
         </script>
     }
+
 </body>
+
 </html>

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using TwitchGuide.Models;
 using TwitchGuide.DAL;
 using Microsoft.AspNet.Identity;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TwitchGuide.Controllers
 {
@@ -13,29 +15,31 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
+        //get current user as user item
         public User GetUser()
         {
-            string Username = (Session["UserId"] != null) ? Session["Username"].ToString() : User.Identity.GetUserName();
-
-            var Data = from a in db.Users
-                       where a.Username.Equals(Username)
-                       select a;
-
-            return Data.FirstOrDefault();
+            var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+            var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
+            return ourUser;
         }
+
+        //check if logged in
         public bool isLoggedIn()
         {
             return User.Identity.IsAuthenticated;
         }
+
+        //get current users id
         public int getUserID()
         {
-            //if (isLoggedIn())
-            //{
-            //   int myID = GetUser().UserID;
-            //   return myID;
-            //}
-            //else
-                return 7;
+            if (isLoggedIn())
+            {
+               int myID = GetUser().UserID;
+               return myID;
+            }
+            else
+                return -1;
         }
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f7543049908b45da8f9d00ec92f835b6" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="TCGdbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.AspNetUserLogin" Width="1.5" PointX="5.375" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.AspNetUser" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.Follower" Width="1.5" PointX="11.625" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.News" Width="1.5" PointX="7.375" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.Schedule" Width="1.5" PointX="9.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.Timeblock" Width="1.5" PointX="7.625" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TCGdbModel.User" Width="1.5" PointX="9.625" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="TCGdbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TCGdbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TCGdbModel.FK_Followers_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TCGdbModel.FK__Schedules__UserI__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="TCGdbModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="TCGdbModel.SiteNews" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

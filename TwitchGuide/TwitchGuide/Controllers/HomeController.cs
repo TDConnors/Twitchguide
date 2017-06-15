@@ -10,34 +10,23 @@ using TwitchGuide.Models;
 using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-using TwitchGuide.Models;
-using TwitchGuide.DAL;
 using Microsoft.AspNet.Identity.Owin;
+using PagedList;
 
 namespace TwitchGuide.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+
         private TwitchContext db = new TwitchContext();
 
         public ActionResult Index()
         {
-
-            if (User.Identity.IsAuthenticated)
-            {
-                //Get the AuthToken for the current user, store in a ViewBag
-                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
-                var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
-                ViewBag.token = ourUser.AuthToken;
-
-                return View(ourUser);
-            }
-
+            var sorted = db.SiteNews.OrderByDescending((s => s.NewsID)).ToList();
+            ViewData["MyData"] = sorted;
             return View();
         }
 
-        [HttpGet]
         public ActionResult LoginSuccess()
         {
             return View();
@@ -45,13 +34,33 @@ namespace TwitchGuide.Controllers
 
         public ActionResult Search()
         {
-
             return View();
         }
 
-        public ActionResult AllUsers()
+        public ActionResult AllUsers(int? page)
         {
-            return View(db.Users.ToList());
+            //sorting
+            var sorted = db.Users.OrderBy((s => s.Username)).ToList();
+            //paging
+            int pageSize = 5;//number of users per page, should raise when number of users becomes significant
+            int pageNumber = (page ?? 1);
+            return View(sorted.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+        public ActionResult my404Page(string aspxerrorpath)
+        {
+            if (!string.IsNullOrWhiteSpace(aspxerrorpath))
+                return RedirectToAction("my404Page");
+            return View();
+        }
+        public ActionResult errorPage(string aspxerrorpath)
+        {
+            if (!string.IsNullOrWhiteSpace(aspxerrorpath))
+                return RedirectToAction("errorPage");
+            return View();
         }
     }
 }

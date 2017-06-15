@@ -5,91 +5,46 @@
 
 @{
     ViewBag.Title = "Home";
+    //make a newsList using controller ViewData
+    List<TwitchGuide.Models.SiteNews> newsList = (List<TwitchGuide.Models.SiteNews>)ViewData["MyData"];
 }
+
+
+<!-- news goes here -->
+<div class="col-lg-3 ds" style="z-index:3;">
+    <h3>WHATS NEW</h3>
+    @foreach (var item in @newsList.Take(3))
+    {
+        <div class="desc">
+            <div class="thumb">
+                <span><i><img class="img-circle" src="@item.User.Avatar" alt="Avatar" height="25" width="25" /></i></span>
+            </div>
+            <div class="details">
+                <p><b>@Html.DisplayFor(modelItem => item.News.Title)</b></p>
+                <p>@Html.DisplayFor(modelItem => item.News.Content)</p>
+                <p><muted>Added by @Html.DisplayFor(modelItem => item.User.Username)<br /> @Html.DisplayFor(modelItem => item.News.DateAdded)</muted></p>
+            </div>
+        </div>
+    }
+    <h5><b>@Html.ActionLink("<----- Older News", "Index", "News")</b></h5>
+</div>
 
 <br />
+<!-- Change Channel -->
+<span class="form-inline" id="ChannelController">
+    <input type="text" class="form-control" name="chlID" id="chlID" placeholder="put a Username here" >
+    <button class="btn btn-theme" id="btnChl">Change Channel</button>
+    </span>
+<br />
+<br />
 
-@if (ViewBag.Token != null)
-{
-    <a href="#" class="click2">Show My Info</a>
-}
-
-<hr />
-<div id="userstats"></div>
-
-@if (Request.IsAuthenticated)
-{
-            <table class="table">
-                <tr><th>Favorites</th></tr>
-                @foreach (var user in Model.Follows)
-                {
-                    <tr><td>@user.Username</td></tr>
-
-                }
-                
-
-
-            </table>
-}
-else
-{
-    <div>Please login to see your Favorites</div>
-}
-
-@section Scripts {
-<script>
-    $('.click').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/games/top?limit=1',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $("#userstats").html("Top Game: " + result.top[0].game.name);
-            },
-            beforeSend: setNoAuthHeader
-        });
-        return false;
-    });
-
-    $('.click3').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/users/148393665',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $("#userstats").html("<img src='" + result.logo + "'></img>");
-            },
-            beforeSend: setNoAuthHeader
-        });
-        return false;
-    });
-
-    $('.click2').click(function () {
-        $.ajax({
-            url: 'https://api.twitch.tv/kraken/user',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                var data = JSON.stringify(result, null, 1);
-                $("#userstats").html('<pre>' + data + '<pre>');
-            },
-            beforeSend: setAuthHeader
-        });
-        return false;
-    });
-
-
-    function setNoAuthHeader(xhr) {
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-    };
-
-    function setAuthHeader(xhr) {
-        var token = "@ViewBag.token";
-        xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
-        xhr.setRequestHeader('Authorization', 'OAuth ' + token);
-    };
-</script>
-}
+<div class="col-md-5 collapse in" id="Stream">
+    <iframe id="streamer"
+            src="https://player.twitch.tv/?channel=a_seagull"
+            height="420"
+            width="560"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="true"></iframe>
+</div>
 
