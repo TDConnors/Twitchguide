@@ -36,7 +36,7 @@ After that, use our sql script located in the App_Data folder to create the tabl
 Add your connection string to the web.config file that you get from your database server, replacing the other links.
 
 
-	##Getting Twitch Access
+     ###Getting Twitch Access
 		First, create a [Twitch](https://www.twitch.tv) account.
 		After that, register the app [here](https://www.twitch.tv/kraken/oauth2/clients/new)
 		Take the new client_id they give you and Find and replace 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6' in the project with that client id.
@@ -60,20 +60,7 @@ If you have any trouble with twitch you can look at their page on authentication
     
 ### Gource Video
 
-
-<iframe id="streamer"
-
-           src="https://drive.google.com/file/d/0BztzhKdfyjQMSzRlRGFkT2c4WXc/preview"
-
-           height="420"
-
-           width="560"
-
-           frameborder="0"
-
-           scrolling="no"
-
-           allowfullscreen="true"></iframe>
+<iframe src="https://drive.google.com/file/d/0BztzhKdfyjQMSzRlRGFkT2c4WXc/preview" width="640" height="480"></iframe>
 
 * * *
 
