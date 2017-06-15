@@ -28,7 +28,7 @@
     </div>
     <a href="https://www.twitch.tv/@ViewBag.PageUserName"><img src="~/Content/Twitch_logo.png" height="100" width="150" style="margin-top:75px" /></a>
 </div>
-
+<!-- TimeBlock Start -->
 <div class="collapse in" id="Schedule">
     @if (ViewBag.edit == "True")
     {
@@ -230,6 +230,9 @@
         </div>
     </div> <!-- .cd-schedule -->
 </div>
+<!-- TimeBlock End -->
+
+<!-- UserStats Start -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1">
@@ -288,20 +291,24 @@
         </div>
     </div>
 </div>
+<!-- UserStats Start -->
+
 <div class="list-group" id="followslist">
     <a href="#" class="list-group-item active">Channels Followed</a>
 </div>
+
 @section Scripts {
     <script src="~/Scripts/scheduler.js"></script> <!-- Resource jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.rawgit.com/Fugiman/Twitch-Channel-Status/1d74252edf89110507cbf3088f9c3eaa38fac9d3/twitch-channel-status.min.js"></script>
 
+    <!-- UserStats -->
     <script>
         var username = '';
-        var chanurl = 'https://api.twitch.tv/kraken/channels/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
-        var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
-        var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
-        var followurl = 'https://api.twitch.tv/kraken/users/'+'@Model.UserObj.Username'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';
+        var chanurl = 'https://api.twitch.tv/kraken/channels/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var streamurl = 'https://api.twitch.tv/kraken/streams/'+'@Model.UserObj.Username'+'?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var clientid = '?&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
+        var followurl = 'https://api.twitch.tv/kraken/users/'+'@Model.UserObj.Username'+'/follows/channels?&limit=25&client_id=kx6k6d64t0ok27s5sfyo1w5n1q3dn6';//YourClientIDHere
         var streamstatus='';
         var streamgame='';
         var titleurl = 'https://api.twitch.tv/kraken/channels/' + '@Model.UserObj.Username'+'?channel[status]=';
@@ -388,12 +395,12 @@
         function setAuthHeader(xhr) {
             var token = "@ViewBag.token";
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
             xhr.setRequestHeader('Authorization', 'OAuth ' + token);
         };
         function setNoAuthHeader(xhr) {
             xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v3+json');
-            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+            xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
         };
 
     </script>

@@ -16,12 +16,13 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
+        //determines who can add to news
         public bool canChange()
         {
             if (isLoggedIn())
             {
                 int temp = getUserID();
-                if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27)))
+                if ((temp == (1)) || (temp == (3)) || (temp == (4)) || (temp == (27))) //replace numbers with your admins user ids
                 {
                     return true;
                 }
@@ -96,7 +97,7 @@ namespace TwitchGuide.Controllers
 
             int currentId = getUserID();
 
-            if ((currentId == news.UserID) || (currentId == 3))
+            if ((currentId == news.UserID) || (currentId == 3)) //only item creator or news admin you choose can edit
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");
@@ -135,7 +136,7 @@ namespace TwitchGuide.Controllers
 
             int currentId = getUserID();
 
-            if ((currentId == news.UserID) || (currentId == 3))
+            if ((currentId == news.UserID) || (currentId == 3))//only item creator or news admin you choose can edit
                 return View(news.News);
             else
                 return RedirectToAction("Index", "News");

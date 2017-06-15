@@ -42,7 +42,7 @@ namespace TwitchGuide.Controllers
             //sorting
             var sorted = db.Users.OrderBy((s => s.Username)).ToList();
             //paging
-            int pageSize = 5;
+            int pageSize = 5;//number of users per page, should raise when number of users becomes significant
             int pageNumber = (page ?? 1);
             return View(sorted.ToPagedList(pageNumber, pageSize));
         }

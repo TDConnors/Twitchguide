@@ -131,7 +131,7 @@ namespace TwitchGuide.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    await StoreTwitchToken(await UserManager.FindAsync(loginInfo.Login));
+                    await StoreTwitchToken(await UserManager.FindAsync(loginInfo.Login));//stores the users twitch token
                     return RedirectToAction("addTokenToDB", "Account");
                 case SignInStatus.Failure:
                 default:

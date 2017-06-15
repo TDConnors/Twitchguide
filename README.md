@@ -29,8 +29,24 @@ Please build our project using Visual Studio 2015
 * Don't commit code that doesn't compile.
 
 ### Construction Process
-We will be using Scrum to build our project. Reference [here](http://scrumreferencecard.com/ScrumReferenceCard.pdf).
 
+Create a database server.
+After that, use our sql script located in the App_Data folder to create the tables
+
+Add your connection string to the web.config file that you get from your database server, replacing the other links.
+
+
+	##Getting Twitch Access
+		First, create a [Twitch](https://www.twitch.tv) account.
+		After that, register the app [here](https://www.twitch.tv/kraken/oauth2/clients/new)
+		Take the new client_id they give you and Find and replace 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6' in the project with that client id.
+
+When all that is done just publish the website to a server.
+
+If you have any trouble with twitch you can look at their page on authentication [here](https://dev.twitch.tv/docs/v5/guides/authentication/)
+
+	
+		
 ### Tools Used
 * Microsoft Visual Studio 2015
 * Twitch API

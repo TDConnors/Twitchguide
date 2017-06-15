@@ -15,6 +15,7 @@ namespace TwitchGuide.Controllers
     {
         private TwitchContext db = new TwitchContext();
 
+        //get current user as user item
         public User GetUser()
         {
             var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -22,10 +23,14 @@ namespace TwitchGuide.Controllers
             var ourUser = db.Users.Where(p => p.Username == currentUser.UserName).FirstOrDefault();
             return ourUser;
         }
+
+        //check if logged in
         public bool isLoggedIn()
         {
             return User.Identity.IsAuthenticated;
         }
+
+        //get current users id
         public int getUserID()
         {
             if (isLoggedIn())

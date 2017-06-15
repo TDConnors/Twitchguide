@@ -409,7 +409,6 @@
     <Content Include="Scripts\scheduler.js" />
     <Content Include="Scripts\username.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Account\login.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -451,7 +450,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

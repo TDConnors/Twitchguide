@@ -66,7 +66,7 @@
                 $("#btnSearch").click(function () {
                     location.href = "../Users/" + $("#name").val();
                 });
-                $("#btnChl").click(function () {
+                $("#btnChl").click(function () {//change channel button
                     var tempViewChannel = "https://player.twitch.tv/?channel=" + $("#chlID").val() + "&muted=true";
                     document.getElementById("streamer").src = tempViewChannel;
                 });
@@ -79,7 +79,7 @@
                     function setAuthHeader(xhr) {
                         var token = "@ViewBag.token";
                         xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');
+                        xhr.setRequestHeader('Client-ID', 'kx6k6d64t0ok27s5sfyo1w5n1q3dn6');//YourClientIDHere
                         xhr.setRequestHeader('Authorization', 'OAuth ' + token);
                     };
         </script>

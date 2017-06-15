@@ -43,7 +43,7 @@ namespace TwitchGuide.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
+                //get timeblocks
                 var sched1 = db.Users.Where(p => p.Username == username).FirstOrDefault().Schedules.ToList();
                 var tb1 = sched1.Join(db.Timeblocks,
                          p => p.TimeblockID,
@@ -58,6 +58,7 @@ namespace TwitchGuide.Controllers
                              Day = e.Day
                          }).ToList();
 
+                //compile
                 profileModel = new ProfileModel
                 {
                     TimeblockObj = tb1,
@@ -67,6 +68,7 @@ namespace TwitchGuide.Controllers
                 return View(profileModel);
             }
 
+            //find other users
 
             var findUser = db.Users.Where(p => p.Username == name).FirstOrDefault();
 
@@ -74,7 +76,7 @@ namespace TwitchGuide.Controllers
             {
                 return RedirectToAction("AdvancedSearch", new { name = name });
             }
-
+            //get user schedule
             var tb = findUser.Schedules.ToList().Join(db.Timeblocks,
                           p => p.TimeblockID,
                           e => e.Index,
