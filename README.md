@@ -13,6 +13,8 @@ Base construction beginning soon!
 
 Deployed site: [TwitchChannelGuide.Azurewebsites.net](TwitchChannelGuide.Azurewebsites.net)
 
+Log in using a Twitch account. Change your schedule on your profile page and see others using the search bar.
+
 ### Building
 Please build our project using Visual Studio 2015
 
@@ -42,6 +44,7 @@ We will be using Scrum to build our project. Reference [here](http://scrumrefere
     
 ### Gource Video
 
+
 <iframe id="streamer"
 
            src="https://drive.google.com/file/d/0BztzhKdfyjQMSzRlRGFkT2c4WXc/preview"
@@ -55,6 +58,7 @@ We will be using Scrum to build our project. Reference [here](http://scrumrefere
            scrolling="no"
 
            allowfullscreen="true"></iframe>
+
 * * *
 
 ## Team Members
